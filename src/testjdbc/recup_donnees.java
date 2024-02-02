@@ -59,14 +59,14 @@ public class recup_donnees {
 
             try {
                 Statement st = conn.createStatement();
-                String query = "SELECT ID FROM blabla";
+                String query = "SELECT mdp FROM Peersonnel";
                 ResultSet rs = st.executeQuery(query);
                 while (rs.next()) {
 //                    String nom = rs.getString(1);
 //                    String prenom = rs.getString("prenom");
 //                    String age = rs.getInt(3);
                     
-                    String id = rs.getString("ID");
+                    String id = rs.getString("mdp");
                     System.out.printf(id);
                 }
             } finally {
