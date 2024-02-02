@@ -184,7 +184,7 @@ public class DMR extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonRetourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRetourActionPerformed
-        AcceuilMR nouveauJFrame = new AcceuilMR();
+        Acceuil nouveauJFrame = new Acceuil();
         nouveauJFrame.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButtonRetourActionPerformed

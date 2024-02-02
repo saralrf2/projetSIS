@@ -257,7 +257,7 @@ public class AjoutPatient extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldAdresseActionPerformed
 
     private void jButtonRetourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRetourActionPerformed
-        AcceuilMR nouveauJFrame = new AcceuilMR();
+        Acceuil nouveauJFrame = new Acceuil();
         nouveauJFrame.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButtonRetourActionPerformed
