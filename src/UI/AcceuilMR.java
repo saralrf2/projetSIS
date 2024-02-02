@@ -76,6 +76,7 @@ public class AcceuilMR extends javax.swing.JFrame {
                 new AcceuilMR().setVisible(true);
                 
                 String jifhdg;
+                String jifhdg2;
                 
             }
         });
