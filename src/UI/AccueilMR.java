@@ -75,10 +75,7 @@ public class AccueilMR extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new AccueilMR().setVisible(true);
-                
-                String jifhdg;
-                String jifhdg2;
-                
+                               
             }
         });
     }
