@@ -67,27 +67,27 @@ public class TestConnexionEtRequetes {
                     System.out.println(resultSet.getString(1));
                 }
 
-                // Vérifier si la table "PATIENT" existe déjà
+                // Vérifier si la table "blabla" existe déjà
                 resultSet = statement.executeQuery(
                         "SELECT table_name "
                         + "FROM user_tables "
-                        + "WHERE table_name = 'PATIENT'");
-                // Si la réponse est vide, alors il n'y a pas de table PATIENT
+                        + "WHERE table_name = 'blabla'");
+                // Si la réponse est vide, alors il n'y a pas de table blabla
                 if (!resultSet.isBeforeFirst()) {
-                    System.out.println("La table \"PATIENT\" n'existe pas.");
+                    System.out.println("La table \"blabla\" n'existe pas.");
 
-                    System.out.println("Creation de la table \"PATIENT\"");
+                    System.out.println("Creation de la table \"blabla\"");
 
                     // Création d'une nouvelle table
                     statement.executeUpdate(
-                            "CREATE TABLE PATIENT "
+                            "CREATE TABLE blabla "
                             + "(ID integer NOT NULL, "
                             + " NAME varchar(80) NOT NULL, "
                             + " FIRSTNAME varchar(80) NOT NULL, "
                             + " PRIMARY KEY (ID))");
 
                 } else {
-                    System.out.println("La table \"PATIENT\" existe.");
+                    System.out.println("La table \"blabla\" existe.");
                 }
 
                 // Ajout d'une nouvelle ligne (avec valeurs générées à chaque nouvelle exécution)
@@ -105,13 +105,13 @@ public class TestConnexionEtRequetes {
                         .toString();
 
                 statement.executeUpdate(
-                        "INSERT INTO PATIENT "
+                        "INSERT INTO blabla "
                         + "values(" + id + ", '" + name + "', '" + firstName + "')");
 
-                // Lister le contenu de la table PATIENT
+                // Lister le contenu de la table blabla
                 resultSet = statement.executeQuery(
                         "SELECT ID, NAME, FIRSTNAME "
-                        + "FROM PATIENT");
+                        + "FROM blabla");
                 while (resultSet.next()) {
                     id = resultSet.getInt("ID");
                     name = resultSet.getString("NAME");
