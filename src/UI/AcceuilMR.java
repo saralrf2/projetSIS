@@ -74,6 +74,9 @@ public class AcceuilMR extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new AcceuilMR().setVisible(true);
+                
+                String jifhdg;
+                
             }
         });
     }
