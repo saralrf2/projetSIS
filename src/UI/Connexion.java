@@ -154,9 +154,21 @@ public class Connexion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnexionActionPerformed
-       JOptionPane.showMessageDialog(Connexion.this,
-                            "Identifiant ou mot de passe invalide",
-                            "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
+       String IDSaisi = jTextIdd.getText();
+        String MDPSaisi = jTextMdp.getText();
+
+        if (IDSaisi.equals("IDMed") && MDPSaisi.equals("abc")) {
+            //Ouverture d'une nouvelle page d'accueil Medecin
+            System.out.println("connexion medecin possible");
+        } else if (IDSaisi.equals("admin") && MDPSaisi.equals("123")) {
+            //Ouverture d'une nouvelle page d'accueil admin
+            System.out.println("connexion admin possible");
+        } else {
+            System.out.println("connexion impossible");
+            JOptionPane.showMessageDialog(Connexion.this,
+                    "Identifiant ou mot de passe invalide",
+                    "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButtonConnexionActionPerformed
 
     private void jTextMdpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextMdpActionPerformed
