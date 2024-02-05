@@ -15,8 +15,9 @@ import java.util.Scanner;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.DatabaseMetaData;
 
-public class recup_donnees {
+public class Recup_Colonne {
 
     public static void main(String[] args) throws SQLException {
         // Nom de la classe pour le pilote Oracle
@@ -58,30 +59,21 @@ public class recup_donnees {
             System.out.println("Connexion établie.");
 
             try {
-                Statement st = conn.createStatement();
+                String nomTable = "BLABLA"; // Remplacez par le nom de votre table
 
-                String nomTable = "BLABLA";
-                String attributs = "ID";
-                String requete = "SELECT "+ attributs + " FROM " + nomTable;
+                // Récupérer les métadonnées de la base de données
+                DatabaseMetaData metaData = conn.getMetaData();
 
-                ResultSet rs = st.executeQuery(requete);
-                while (rs.next()) {
-//                    String nom = rs.getString(1);
-//                    String prenom = rs.getString("prenom");
-//                    String age = rs.getInt(3);
-
-                    String resultat = rs.getString(attributs);
-                    System.out.printf("résultats : " + resultat);
+                // Récupérer les noms de colonnes de la table spécifiée
+                try (ResultSet resultats = metaData.getColumns(null, null, nomTable, null)) {
+                    while (resultats.next()) {
+                        // Afficher le nom de la colonne
+                        String nomColonne = resultats.getString("COLUMN_NAME");
+                        System.out.println("Nom de la colonne : " + nomColonne);
+                    }
                 }
-            } finally {
-                // close statement and connection
-                Statement st = conn.createStatement();
-                if (st != null) {
-                    st.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
 
