@@ -1,6 +1,5 @@
 package UI;
 
-
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -8,19 +7,19 @@ import javax.swing.JOptionPane;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author alexiaidrac
  */
 public class Connexion extends javax.swing.JFrame {
 
-    String id; 
+    String id;
     String mdp;
+
     public Connexion() {
         initComponents();
         id = "idraca";
-        mdp= "123";
+        mdp = "123";
     }
 
     /**
@@ -154,15 +153,21 @@ public class Connexion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnexionActionPerformed
-       String IDSaisi = jTextIdd.getText();
+        String IDSaisi = jTextIdd.getText();
         String MDPSaisi = jTextMdp.getText();
 
         if (IDSaisi.equals("IDMed") && MDPSaisi.equals("abc")) {
             //Ouverture d'une nouvelle page d'accueil Medecin
             System.out.println("connexion medecin possible");
+            Acceuil nouveauJFrame = new Acceuil();
+            nouveauJFrame.setVisible(true);
+            dispose();
         } else if (IDSaisi.equals("admin") && MDPSaisi.equals("123")) {
             //Ouverture d'une nouvelle page d'accueil admin
             System.out.println("connexion admin possible");
+            Acceuil nouveauJFrame = new Acceuil();
+            nouveauJFrame.setVisible(true);
+            dispose();
         } else {
             System.out.println("connexion impossible");
             JOptionPane.showMessageDialog(Connexion.this,

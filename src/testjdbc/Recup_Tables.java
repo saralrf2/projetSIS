@@ -15,8 +15,9 @@ import java.util.Scanner;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.DatabaseMetaData;
 
-public class recup_donnees {
+public class Recup_Tables {
 
     public static void main(String[] args) throws SQLException {
         // Nom de la classe pour le pilote Oracle
@@ -58,28 +59,23 @@ public class recup_donnees {
             System.out.println("Connexion établie.");
 
             try {
-                Statement st = conn.createStatement();
-                String query = "SELECT * FROM *";
-                ResultSet rs = st.executeQuery(query);
-                while (rs.next()) {
-//                    String nom = rs.getString(1);
-//                    String prenom = rs.getString("prenom");
-//                    String age = rs.getInt(3);
-                    
-                    String id = rs.getString("*");
-                    System.out.printf(id);
+                DatabaseMetaData meta = conn.getMetaData();
+
+                // Récupérer le nom du schéma (base de données) actuel
+                String schema = conn.getSchema();
+
+                // Récupérer les noms de toutes les tables dans le schéma actuel
+                ResultSet resultats = meta.getTables(null, schema, "%", new String[]{"TABLE"});
+
+                // Afficher les noms des tables
+                while (resultats.next()) {
+                    String nomTable = resultats.getString("TABLE_NAME");
+                    System.out.println("Nom de la table : " + nomTable);
                 }
-            } finally {
-                // close statement and connection
-                Statement st = conn.createStatement();
-                if (st != null) {
-                    st.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
-
     }
+
 }
