@@ -3,7 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package UI;
-
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author alexiaidrac
@@ -15,6 +21,7 @@ public class Acceuil extends javax.swing.JFrame {
      */
     public Acceuil() {
         initComponents();
+        recuperation_donnees();
     }
 
     /**
@@ -200,14 +207,67 @@ public class Acceuil extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonDeconnexionActionPerformed
 
     private void jTableDMRMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDMRMouseClicked
-        int ligne = jTableDMR.getSelectedRow();
-        int colonne = jTableDMR.getSelectedColumn();
+        int ligne = jTableDMR.getSelectedRow(); //récuperation information ligne
+        int colonne = jTableDMR.getSelectedColumn(); // récuperation information colonne
         if (evt.getClickCount() == 2) { // Double clic sur une ligne
-               DMR nouveauJFrame = new DMR();
-               nouveauJFrame.setVisible(true);
-               dispose();
+            
+            int ligneSelectionnee = jTableDMR.getSelectedRow();// récuperation information de la ligne sélectionnée
+            
+                //information de la ligne sélectionnée
+                int idpatient = Integer.parseInt(jTableDMR.getValueAt(ligneSelectionnee, 0).toString());
+                String nom = jTableDMR.getValueAt(ligneSelectionnee, 1).toString();
+                String prenom = jTableDMR.getValueAt(ligneSelectionnee, 2).toString();
+                Date datenaissance = Date.valueOf(jTableDMR.getValueAt(ligneSelectionnee, 3).toString());
+                String adresse = jTableDMR.getValueAt(ligneSelectionnee, 4).toString();
+                
+                
+                Object data = jTableDMR.getValueAt(ligne, colonne);
+                
+//                //ouvrir la fiche patient avec les informations sélectionnées
+
+                DMR nouveauJFrame = new DMR(idpatient, nom, prenom, datenaissance, adresse);
+                nouveauJFrame.setVisible(true);
+                nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+               
         }
+
     }//GEN-LAST:event_jTableDMRMouseClicked
+
+    private void recuperation_donnees() {
+        DefaultTableModel model = new DefaultTableModel(){
+            public boolean isCellEditable(int row, int column) {
+            return false; // Rend toutes les cellules non éditables
+        }
+        };
+        //ajouter les colonnes à notre nouveau tableau
+        model.addColumn("ID");
+        model.addColumn("Name");
+        model.addColumn("Prenom");
+        model.addColumn("Date Naissance");
+        model.addColumn("Adresse");
+
+        try {
+            //connexion à la base de donnée
+            Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
+            
+            Statement stmt = conn.createStatement();
+            //exécutation de la requête
+            ResultSet rs = stmt.executeQuery("SELECT * FROM PATIENT");
+            //on ajoute à la ligne les informations de la tableau
+            while (rs.next()) {
+                Object[] row = new Object[]{rs.getInt("IDPATIENT"), rs.getString("NOM"), rs.getString("PRENOM"),rs.getDate("DATENAISSANCE"), rs.getString("ADRESSE")};
+                model.addRow(row);
+            }
+            // on applique le model du defaulttable au jTable de l'interface
+            jTableDMR.setModel(model);
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * @param args the command line arguments
