@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.Random;
 
 public class GestionTable {
-    public static void creerTable(Connection connection,String nomTable) throws SQLException {
+    public static void creerTable(Connection connection,String nomTable) throws SQLException{
         try {
             Statement statement = connection.createStatement();
 
@@ -36,7 +36,7 @@ public class GestionTable {
         }
     }
 
-    private static boolean tableExiste(Statement statement, String table_name) throws SQLException {
+    public static boolean tableExiste(Statement statement, String table_name) throws SQLException {
         String sql = "SELECT table_name FROM user_tables WHERE table_name = '" + table_name + "'";
         return statement.executeQuery(sql).isBeforeFirst();
     }
