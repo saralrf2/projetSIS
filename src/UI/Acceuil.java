@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -37,6 +38,7 @@ public class Acceuil extends javax.swing.JFrame {
         jLabelBienvenue = new javax.swing.JLabel();
         jLabelSession = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jTextFieldRecherche = new javax.swing.JTextField();
         jButtonAjout = new javax.swing.JButton();
@@ -45,7 +47,8 @@ public class Acceuil extends javax.swing.JFrame {
         jButtonDeconnexion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(600, 600));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabelBienvenue.setFont(new java.awt.Font("Galvji", 3, 18)); // NOI18N
         jLabelBienvenue.setText("Bienvenue dans votre espace");
@@ -56,20 +59,26 @@ public class Acceuil extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Galvji", 0, 14)); // NOI18N
         jLabel3.setText("jLabel3");
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/images/RadioTech Petite.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelBienvenue)
-                .addContainerGap(147, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabelSession)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addGap(15, 15, 15))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabelBienvenue)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 213, Short.MAX_VALUE)
+                        .addComponent(jLabelSession)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
+                        .addGap(15, 15, 15))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -77,16 +86,19 @@ public class Acceuil extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelSession)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabelBienvenue)
-                .addGap(19, 19, 19))
+                .addContainerGap())
         );
 
         jPanel2.setBackground(new java.awt.Color(182, 210, 219));
+        jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jTextFieldRecherche.setFont(new java.awt.Font("Galvji", 0, 14)); // NOI18N
-        jTextFieldRecherche.setText("Recherche");
+        jTextFieldRecherche.setText("Rechercher un patient...");
+        jTextFieldRecherche.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jTextFieldRecherche.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldRechercheActionPerformed(evt);
@@ -95,7 +107,8 @@ public class Acceuil extends javax.swing.JFrame {
 
         jButtonAjout.setFont(new java.awt.Font("Galvji", 0, 14)); // NOI18N
         jButtonAjout.setText("Ajouter");
-        jButtonAjout.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonAjout.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonAjout.setBorderPainted(false);
         jButtonAjout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAjoutActionPerformed(evt);
@@ -131,7 +144,8 @@ public class Acceuil extends javax.swing.JFrame {
 
         jButtonDeconnexion.setFont(new java.awt.Font("Galvji", 0, 14)); // NOI18N
         jButtonDeconnexion.setText("Deconnexion");
-        jButtonDeconnexion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonDeconnexion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonDeconnexion.setBorderPainted(false);
         jButtonDeconnexion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonDeconnexionActionPerformed(evt);
@@ -146,29 +160,31 @@ public class Acceuil extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1)
                         .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jTextFieldRecherche)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonAjout, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(89, 89, 89))))
+                        .addComponent(jButtonAjout, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(79, 79, 79))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonDeconnexion, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonDeconnexion, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonAjout))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jButtonAjout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jTextFieldRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
-                .addGap(25, 25, 25)
-                .addComponent(jButtonDeconnexion)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonDeconnexion, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -182,7 +198,7 @@ public class Acceuil extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -192,7 +208,8 @@ public class Acceuil extends javax.swing.JFrame {
 
     private void jButtonAjoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjoutActionPerformed
         AjoutPatient nouveauJFrame = new AjoutPatient();
-        nouveauJFrame.setVisible(true);     
+        nouveauJFrame.setVisible(true);  
+        dispose();
         
     }//GEN-LAST:event_jButtonAjoutActionPerformed
 
@@ -201,9 +218,30 @@ public class Acceuil extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldRechercheActionPerformed
 
     private void jButtonDeconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeconnexionActionPerformed
-        Connexion nouveauJFrame = new Connexion();
-        nouveauJFrame.setVisible(true);     
-        dispose();
+         // Créer des boutons personnalisés
+        Object[] options = {"Valider", "Annuler"};
+
+        // Afficher la boîte de dialogue avec les boutons personnalisés
+        int choix = JOptionPane.showOptionDialog(
+                null, // Parent component
+                "Vous allez être déconnecté. Êtes-vous sûr ?", // Message
+                "Confirmation", // Titre
+                JOptionPane.YES_NO_CANCEL_OPTION, // Type de boîte de dialogue
+                JOptionPane.QUESTION_MESSAGE, // Type d'icône
+                null, // Icône personnalisée (null pour utiliser l'icône par défaut)
+                options, // Boutons personnalisés
+                options[0]); // Bouton par défaut
+
+        // Gérer la réponse de l'utilisateur
+        if (choix == JOptionPane.YES_OPTION) {
+            Connexion nouveauJFrame = new Connexion();
+            nouveauJFrame.setVisible(true);     
+            dispose();   
+        }  else if (choix == JOptionPane.CANCEL_OPTION || choix == JOptionPane.CLOSED_OPTION) {
+            // Action si l'utilisateur clique sur "Annuler" ou ferme la boîte de dialogue
+            JOptionPane.getRootFrame().dispose();
+        }
+        
     }//GEN-LAST:event_jButtonDeconnexionActionPerformed
 
     private void jTableDMRMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDMRMouseClicked
@@ -307,6 +345,7 @@ public class Acceuil extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAjout;
     private javax.swing.JButton jButtonDeconnexion;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelBienvenue;
     private javax.swing.JLabel jLabelSession;
