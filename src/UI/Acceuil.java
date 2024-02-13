@@ -337,7 +337,7 @@ public class Acceuil extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-A                new Acceuil().setVisible(true);
+                new Acceuil().setVisible(true);
             }
         });
     }
