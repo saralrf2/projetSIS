@@ -63,7 +63,7 @@ public class Connexion extends javax.swing.JFrame {
         jButtonConnexion.setBackground(new java.awt.Color(204, 204, 204));
         jButtonConnexion.setFont(new java.awt.Font("Galvji", 0, 14)); // NOI18N
         jButtonConnexion.setText("connexion");
-        jButtonConnexion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonConnexion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(102, 255, 102), null));
         jButtonConnexion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonConnexionActionPerformed(evt);
@@ -130,7 +130,7 @@ public class Connexion extends javax.swing.JFrame {
                     .addComponent(jTextMdp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonConnexion)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
