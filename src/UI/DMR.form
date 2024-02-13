@@ -117,15 +117,21 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="jPanel3" alignment="0" max="32767" attributes="0"/>
-              <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" pref="476" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButtonRetour" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Component id="jScrollPane2" pref="476" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -134,9 +140,11 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane2" min="-2" pref="152" max="-2" attributes="0"/>
-                  <EmptySpace pref="54" max="32767" attributes="0"/>
+                  <EmptySpace pref="53" max="32767" attributes="0"/>
                   <Component id="jButtonRetour" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -310,10 +318,30 @@
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="4" rowCount="4">
-                    <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                    <Column editable="true" title="Code" type="java.lang.Object">
+                      <Data value="EAQJ001"/>
+                      <Data value="ZZQM001"/>
+                      <Data value="DHQM002"/>
+                      <Data value="null"/>
+                    </Column>
+                    <Column editable="true" title="Signification" type="java.lang.Object">
+                      <Data value="Remnographie des vaisseaux enc&#xe9;phaliques [Angio-IRM c&#xe9;r&#xe9;brale]"/>
+                      <Data value="&#xc9;chographie-doppler transcutan&#xe9;e, au lit du malade"/>
+                      <Data value="&#xc9;chographie-doppler de la veine cave inf&#xe9;rieure et de ses affluents&#x9;"/>
+                      <Data value="null"/>
+                    </Column>
+                    <Column editable="true" title="Tarification" type="java.lang.Object">
+                      <Data value="69,00"/>
+                      <Data value="69,93"/>
+                      <Data value="69,93"/>
+                      <Data value="null"/>
+                    </Column>
+                    <Column editable="true" title="Date" type="java.lang.Object">
+                      <Data value="17/02/2023"/>
+                      <Data value="04/05/2022"/>
+                      <Data value="28/11/2021"/>
+                      <Data value="null"/>
+                    </Column>
                   </Table>
                 </Property>
               </Properties>
@@ -330,6 +358,14 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRetourActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel6">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Galvji" size="14" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Actes "/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
