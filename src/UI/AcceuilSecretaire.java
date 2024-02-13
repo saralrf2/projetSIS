@@ -274,7 +274,7 @@ public class AcceuilSecretaire extends javax.swing.JFrame {
                 
 //                //ouvrir la fiche patient avec les informations sélectionnées
 
-                DMR nouveauJFrame = new DMR(idpatient, nom, prenom, datenaissance, adresse);
+                SecretaireDMR nouveauJFrame = new SecretaireDMR(idpatient, nom, prenom, datenaissance, adresse);
                 nouveauJFrame.setVisible(true);
                 nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
                
