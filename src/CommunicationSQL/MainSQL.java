@@ -28,7 +28,7 @@ public class MainSQL {
         
         Statement st = conn.createStatement();
         
-        test.tableExiste(st, "PAULINdE");
+        test.creationTable(st, "manonp");
         
         
 

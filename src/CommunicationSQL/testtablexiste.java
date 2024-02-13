@@ -17,7 +17,7 @@ public class testtablexiste {
     public testtablexiste() {
     }
 
-    public void tableExiste(Statement statement, String table_name) throws SQLException {
+    public void creationTable(Statement statement, String table_name) throws SQLException {
        statement.executeUpdate(
                         "CREATE TABLE "+ table_name.toLowerCase()
                                 + "(ID integer NOT NULL, "
