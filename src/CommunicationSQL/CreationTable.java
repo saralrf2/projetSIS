@@ -12,9 +12,9 @@ import java.sql.Statement;
  *
  * @author alana
  */
-public class testtablexiste {
+public class CreationTable {
 
-    public testtablexiste() {
+    public CreationTable() {
     }
 
     public void creationTable(Statement statement, String table_name) throws SQLException {
