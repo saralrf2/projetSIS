@@ -318,19 +318,20 @@
         <Component class="javax.swing.JComboBox" name="jComboBoxMois">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="12">
-                <StringItem index="0" value="Janvier"/>
-                <StringItem index="1" value="F&#xe9;vrier "/>
-                <StringItem index="2" value="Mars"/>
-                <StringItem index="3" value="Avril"/>
-                <StringItem index="4" value="Mai"/>
-                <StringItem index="5" value="Juin"/>
-                <StringItem index="6" value="Juillet"/>
-                <StringItem index="7" value="Ao&#xfb;t "/>
-                <StringItem index="8" value="Septembre"/>
-                <StringItem index="9" value="Octobre"/>
-                <StringItem index="10" value="Novembre"/>
-                <StringItem index="11" value="D&#xe9;cembre"/>
+              <StringArray count="13">
+                <StringItem index="0" value="01"/>
+                <StringItem index="1" value="02"/>
+                <StringItem index="2" value="03"/>
+                <StringItem index="3" value="04"/>
+                <StringItem index="4" value="05"/>
+                <StringItem index="5" value="06"/>
+                <StringItem index="6" value="07"/>
+                <StringItem index="7" value="08"/>
+                <StringItem index="8" value="09"/>
+                <StringItem index="9" value="10"/>
+                <StringItem index="10" value="11"/>
+                <StringItem index="11" value="12"/>
+                <StringItem index="12" value=" "/>
               </StringArray>
             </Property>
           </Properties>
@@ -339,6 +340,16 @@
           </AuxValues>
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBoxAnnee">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="2000"/>
+                <StringItem index="1" value="2002"/>
+                <StringItem index="2" value="2001"/>
+                <StringItem index="3" value=" "/>
+              </StringArray>
+            </Property>
+          </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -360,6 +371,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAjoutActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonRetour">
           <Properties>

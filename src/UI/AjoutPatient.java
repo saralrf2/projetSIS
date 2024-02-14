@@ -3,7 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package UI;
-import javax.swing.DefaultComboBoxModel;
+
+import CommunicationSQL.CreationPatient; 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import projetsis.DateNaissance;
 
 /**
  *
@@ -117,7 +131,9 @@ public class AjoutPatient extends javax.swing.JFrame {
 
         jComboBoxJour.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 ", "2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ", "10 ", "11 ", "12 ", "13 ", "14 ", "15 ", "16 ", "17 ", "18 ", "19 ", "20 ", "21 ", "22 ", "23 ", "24 ", "25 ", "26 ", "27 ", "28 ", "29 ", "30 ", "31" }));
 
-        jComboBoxMois.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Janvier", "Février ", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août ", "Septembre", "Octobre", "Novembre", "Décembre" }));
+        jComboBoxMois.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", " " }));
+
+        jComboBoxAnnee.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2000", "2002", "2001", " " }));
 
         jTextFieldAdresse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,6 +144,11 @@ public class AjoutPatient extends javax.swing.JFrame {
         jButtonAjout.setFont(new java.awt.Font("Galvji", 0, 13)); // NOI18N
         jButtonAjout.setText("Ajouter");
         jButtonAjout.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonAjout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAjoutActionPerformed(evt);
+            }
+        });
 
         jButtonRetour.setFont(new java.awt.Font("Galvji", 0, 13)); // NOI18N
         jButtonRetour.setText("Retour");
@@ -260,6 +281,49 @@ public class AjoutPatient extends javax.swing.JFrame {
         nouveauJFrame.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButtonRetourActionPerformed
+
+    private void jButtonAjoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjoutActionPerformed
+        
+            String id = jTextFieldNumIdd.getText();
+            String nom = jTextFieldNom.getText();
+            String prenom = jTextFieldPrenom.getText();
+            String adresse = jTextFieldAdresse.getText();
+            
+            
+            String jourCombo = jComboBoxJour.getSelectedItem().toString().trim();
+            String moisCombo = jComboBoxMois.getSelectedItem().toString().trim();;
+            String anneeCombo = jComboBoxAnnee.getSelectedItem().toString().trim();
+            String dateCombo = anneeCombo+"-"+moisCombo+"-"+jourCombo;
+            
+            //conversion de la date de naissance en type DateNaissance
+            String[] composantesDate = dateCombo.split("-");
+            int annee = Integer.parseInt(composantesDate[0]);
+            int mois = Integer.parseInt(composantesDate[1]);
+            int jour = Integer.parseInt(composantesDate[2]);
+            
+            DateNaissance dateNaissance = new DateNaissance(jour, mois, annee);
+         
+            CreationPatient nouveauPatient = new CreationPatient(id, nom, prenom, dateNaissance, adresse);
+            
+            // Établir une connexion à la base de données et préparer une requête d'insertion
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
+            String sql = "INSERT INTO PATIENT (IDPATIENT, NOM, PRENOM, DATENAISSANCE, ADRESSE) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            
+            // Appeler la méthode CreerPatient() pour insérer les données dans la base de données
+            nouveauPatient.CreerPatient(preparedStatement);
+            
+            // Fermer la connexion
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        Acceuil nouveauJFrame = new Acceuil();
+        nouveauJFrame.setVisible(true);
+        dispose();
+        
+    }//GEN-LAST:event_jButtonAjoutActionPerformed
 
     /**
      * @param args the command line arguments
