@@ -29,7 +29,7 @@ public class SuppressionTable {
 
             try {
                 Statement statement = conn.createStatement();
-                String nomTable = "BLABLA";
+                String nomTable = "MANON";
 
                 // Utilisation de PreparedStatement pour éviter les problèmes d'injection SQL
                 PreparedStatement preparedStatement = conn.prepareStatement(

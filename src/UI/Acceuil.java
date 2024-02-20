@@ -268,7 +268,7 @@ public class Acceuil extends javax.swing.JFrame {
 
         // Gérer la réponse de l'utilisateur
         if (choix == JOptionPane.YES_OPTION) {
-            Connexion nouveauJFrame = new Connexion();
+            NewJFrame nouveauJFrame = new NewJFrame();
             nouveauJFrame.setVisible(true);     
             dispose();   
         }  else if (choix == JOptionPane.CANCEL_OPTION || choix == JOptionPane.CLOSED_OPTION) {
