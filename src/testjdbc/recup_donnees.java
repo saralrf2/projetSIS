@@ -59,7 +59,7 @@ public class recup_donnees {
 
             try {
                 Statement st = conn.createStatement();
-                String query = "SELECT nom FROM PATIENT";
+                String query = "SELECT nom FROM PATIENT WHERE IDPATIENT = 202031325523";
                 ResultSet rs = st.executeQuery(query);
                 while (rs.next()) {
 //                    String nom = rs.getString(1);

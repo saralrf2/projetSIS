@@ -12,16 +12,15 @@ package CommunicationSQL;
 
 import projetsis.DateNaissance;
 import java.sql.PreparedStatement;
-
 import java.sql.SQLException;
 
 
 public class CreationPatient {
-    String ID;
-    String nom;
-    String prenom;
-    DateNaissance dateNaissance;
-    String adresse;
+    private String ID;
+    private String nom;
+    private String prenom;
+    private DateNaissance dateNaissance;
+    private String adresse;
     
     public CreationPatient(String id, String nom, String prenom, DateNaissance dateNaissance, String adresse){
         this.ID = id;

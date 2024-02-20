@@ -18,12 +18,12 @@ import testjdbc.TestConnexionEtRequetes;
  *
  * @author alana
  */
-public class NewJFrame extends javax.swing.JFrame {
+public class ConnexionVerifie extends javax.swing.JFrame {
 
     /**
      * Creates new form NewJFrame
      */
-    public NewJFrame() {
+    public ConnexionVerifie() {
         initComponents();
     }
 
@@ -42,7 +42,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jTextIdd1 = new javax.swing.JTextField();
-        jTextMdp = new javax.swing.JPasswordField();
+        JTextMOTDEPASSE = new javax.swing.JPasswordField();
         jLabelIdd = new javax.swing.JLabel();
         jLabelMdp = new javax.swing.JLabel();
         connexion = new javax.swing.JButton();
@@ -63,9 +63,9 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jTextIdd1.setFont(new java.awt.Font("Galvji", 0, 14)); // NOI18N
 
-        jTextMdp.addActionListener(new java.awt.event.ActionListener() {
+        JTextMOTDEPASSE.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextMdpActionPerformed(evt);
+                JTextMOTDEPASSEActionPerformed(evt);
             }
         });
 
@@ -98,7 +98,7 @@ public class NewJFrame extends javax.swing.JFrame {
                             .addComponent(jLabelMdp))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextMdp, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                            .addComponent(JTextMOTDEPASSE, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
                             .addComponent(jTextIdd1))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -123,7 +123,7 @@ public class NewJFrame extends javax.swing.JFrame {
                             .addComponent(jLabelIdd))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextMdp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JTextMOTDEPASSE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelMdp)))
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
@@ -134,9 +134,9 @@ public class NewJFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextMdpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextMdpActionPerformed
+    private void JTextMOTDEPASSEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextMOTDEPASSEActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextMdpActionPerformed
+    }//GEN-LAST:event_JTextMOTDEPASSEActionPerformed
 
     private void connexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connexionActionPerformed
         Connection conn = null;
@@ -151,7 +151,7 @@ public class NewJFrame extends javax.swing.JFrame {
             Logger.getLogger(TestConnexionEtRequetes.class.getName()).log(Level.SEVERE, null, ex);
 
         } catch (SQLException ex) {
-            Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+
 
         }
         if (conn != null) {
@@ -168,8 +168,23 @@ public class NewJFrame extends javax.swing.JFrame {
                         System.out.println("test = " + ID);
                     }
                 } catch (SQLException ex) {
-                    Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ConnexionVerifie.class.getName()).log(Level.SEVERE, null, ex);
                 }
+
+//            String ID = rs.getString("ID");
+//            System.out.println(ID);
+//
+//            if (IDSaisi.equals(ID)) { //&& MDPSaisi.equals("abc")
+//                //Ouverture d'une nouvelle page d'accueil Medecin
+//                System.out.println("connexion medecin possible");
+//                Acceuil nouveauJFrame = new Acceuil();
+//                nouveauJFrame.setVisible(true);
+//                dispose();
+//
+//               
+//                }
+                // } catch (SQLException ex) {
+                //  Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
 
 //            String ID = rs.getString("ID");
 //            System.out.println(ID);
@@ -196,7 +211,7 @@ public class NewJFrame extends javax.swing.JFrame {
                         conn.close();
                     }
                 } catch (SQLException ex) {
-                    Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ConnexionVerifie.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         } else {
@@ -224,25 +239,27 @@ public class NewJFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConnexionVerifie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConnexionVerifie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConnexionVerifie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConnexionVerifie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewJFrame().setVisible(true);
+                new ConnexionVerifie().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPasswordField JTextMOTDEPASSE;
     private javax.swing.JButton connexion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -252,6 +269,5 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelMdp;
     private javax.swing.JTextField jTextIdd;
     private javax.swing.JTextField jTextIdd1;
-    private javax.swing.JPasswordField jTextMdp;
     // End of variables declaration//GEN-END:variables
 }
