@@ -10,7 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 /**
  *
  * @author alexiaidrac
@@ -20,8 +22,12 @@ public class Acceuil extends javax.swing.JFrame {
     /**
      * Creates new form Acceuil
      */
+    private DefaultTableModel model;
     public Acceuil() {
         initComponents();
+        model = new DefaultTableModel(new Object[]{"ID", "Name", "Prenom", "Date Naissance", "Adresse"}, 0);
+        jTableDMR.setModel(model); // Appliquer le modèle au jTableDMR
+        jTableDMR.setDefaultEditor(Object.class, null); // Rendre toutes les cellules non éditables
         recuperation_donnees();
     }
 
@@ -180,6 +186,11 @@ public class Acceuil extends javax.swing.JFrame {
         });
 
         jButtonRecherche.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/images/loupe.png"))); // NOI18N
+        jButtonRecherche.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRechercheActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -305,12 +316,24 @@ public class Acceuil extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTableDMRMouseClicked
 
-    private void recuperation_donnees() {
-        DefaultTableModel model = new DefaultTableModel(){
-            public boolean isCellEditable(int row, int column) {
-            return false; // Rend toutes les cellules non éditables
+    private void jButtonRechercheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRechercheActionPerformed
+        String rech = jTextFieldRecherche.getText();
+        System.out.println(rech);
+        
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>( model);
+        jTableDMR.setRowSorter(sorter);
+        if (rech.length() == 0) {
+            sorter.setRowFilter(null);
+            System.out.println("ça ne correspond à aucun patient");
+        } else {
+            sorter.setRowFilter(RowFilter.regexFilter(rech));
+            System.out.println("patient trouvé");
         }
-        };
+           
+    }//GEN-LAST:event_jButtonRechercheActionPerformed
+
+    private void recuperation_donnees() {
+        
         //ajouter les colonnes à notre nouveau tableau
         model.addColumn("ID");
         model.addColumn("Name");
