@@ -11,7 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -22,8 +24,14 @@ public class AcceuilSecretaire extends javax.swing.JFrame {
     /**
      * Creates new form AcceuilMR
      */
+    private DefaultTableModel model;
+    
     public AcceuilSecretaire() {
         initComponents();
+        model = new DefaultTableModel(new Object[]{"ID", "Name", "Prenom", "Date Naissance", "Adresse"}, 0);
+        jTableDMR.setModel(model); // Appliquer le modèle au jTableDMR
+        jTableDMR.setDefaultEditor(Object.class, null); // Rendre toutes les cellules non éditables
+        
         recuperation_donnees();
     }
 
@@ -97,6 +105,11 @@ public class AcceuilSecretaire extends javax.swing.JFrame {
         });
 
         jButtonRecherche.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/images/loupe.png"))); // NOI18N
+        jButtonRecherche.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRechercheActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -159,12 +172,12 @@ public class AcceuilSecretaire extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel6)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(81, Short.MAX_VALUE)
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addGap(16, 16, 16))
         );
@@ -204,14 +217,14 @@ public class AcceuilSecretaire extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(jLabel3))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(32, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -286,12 +299,24 @@ public class AcceuilSecretaire extends javax.swing.JFrame {
         nouveauJFrame.setVisible(true);  
         dispose();
     }//GEN-LAST:event_jButtonAjoutPatientActionPerformed
-private void recuperation_donnees() {
-        DefaultTableModel model = new DefaultTableModel(){
-            public boolean isCellEditable(int row, int column) {
-            return false; // Rend toutes les cellules non éditables
+
+    private void jButtonRechercheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRechercheActionPerformed
+        String rech = jTextFieldRecherche.getText();
+        System.out.println(rech);
+        
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>( model);
+        jTableDMR.setRowSorter(sorter);
+        if (rech.length() == 0) {
+            sorter.setRowFilter(null);
+            System.out.println("ça ne correspond à aucun patient");
+        } else {
+            sorter.setRowFilter(RowFilter.regexFilter(rech));
+            System.out.println("patient trouvé");
         }
-        };
+        
+    }//GEN-LAST:event_jButtonRechercheActionPerformed
+private void recuperation_donnees() {
+        
         //ajouter les colonnes à notre nouveau tableau
         model.addColumn("ID");
         model.addColumn("Name");

@@ -23,6 +23,7 @@ public class Acceuil extends javax.swing.JFrame {
      * Creates new form Acceuil
      */
     private DefaultTableModel model;
+    
     public Acceuil() {
         initComponents();
         model = new DefaultTableModel(new Object[]{"ID", "Name", "Prenom", "Date Naissance", "Adresse"}, 0);
