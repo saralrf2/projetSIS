@@ -61,8 +61,8 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="JTextMOTDEPASSE" pref="232" max="32767" attributes="0"/>
-                          <Component id="jTextIdd1" max="32767" attributes="0"/>
+                          <Component id="jTextMdp" pref="232" max="32767" attributes="0"/>
+                          <Component id="jTextId" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -73,7 +73,7 @@
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="241" max="-2" attributes="0"/>
-              <Component id="connexion" min="-2" max="-2" attributes="0"/>
+              <Component id="jButtonConnexion" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -88,20 +88,20 @@
                           <Group type="102" attributes="0">
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jTextIdd1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jTextId" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jLabelIdd" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="JTextMOTDEPASSE" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextMdp" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabelMdp" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="connexion" min="-2" max="-2" attributes="0"/>
+              <Component id="jButtonConnexion" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="116" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -123,16 +123,16 @@
         <Property name="text" type="java.lang.String" value="Bienvenue sur votre espace de connexion"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextIdd1">
+    <Component class="javax.swing.JTextField" name="jTextId">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Galvji" size="14" style="0"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JPasswordField" name="JTextMOTDEPASSE">
+    <Component class="javax.swing.JPasswordField" name="jTextMdp">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JTextMOTDEPASSEActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextMdpActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelIdd">
@@ -151,12 +151,12 @@
         <Property name="text" type="java.lang.String" value="Mot de passe"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="connexion">
+    <Component class="javax.swing.JButton" name="jButtonConnexion">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jButton1"/>
+        <Property name="text" type="java.lang.String" value="Connexion"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="connexionActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonConnexionActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -21,14 +21,35 @@ public class DateNaissance {
     
     }
     public String toString(){
-        return jour+"/"+mois+"/"+annee;
+        return getJour()+"/"+getMois()+"/"+getAnnee();
         
     }
     
     public long toMillis() {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(annee, mois - 1, jour, 0, 0, 0); // -1 pour le mois car janvier est 0
+        calendar.set(getAnnee(), getMois() - 1, getJour(), 0, 0, 0); // -1 pour le mois car janvier est 0
         calendar.set(Calendar.MILLISECOND, 0); // Remettre les millisecondes à zéro
         return calendar.getTimeInMillis();
+    }
+
+    /**
+     * @return the jour
+     */
+    public int getJour() {
+        return jour;
+    }
+
+    /**
+     * @return the mois
+     */
+    public int getMois() {
+        return mois;
+    }
+
+    /**
+     * @return the annee
+     */
+    public int getAnnee() {
+        return annee;
     }
 }

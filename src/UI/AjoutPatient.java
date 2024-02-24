@@ -5,6 +5,7 @@
 package UI;
 
 import CommunicationSQL.CreationPatient; 
+import static java.lang.Integer.parseInt;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -284,7 +285,7 @@ public class AjoutPatient extends javax.swing.JFrame {
 
     private void jButtonAjoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjoutActionPerformed
         
-            String id = jTextFieldNumIdd.getText();
+            int id = parseInt(jTextFieldNumIdd.getText());
             String nom = jTextFieldNom.getText();
             String prenom = jTextFieldPrenom.getText();
             String adresse = jTextFieldAdresse.getText();

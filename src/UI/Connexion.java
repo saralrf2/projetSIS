@@ -5,26 +5,55 @@
  */
 package UI;
 
+import UI.Acceuil;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import testjdbc.TestConnexionEtRequetes;
 
 /**
  *
- * @author alana
+ * @author Sara
  */
-public class ConnexionVerifie extends javax.swing.JFrame {
+public class Connexion extends javax.swing.JFrame {
+
+    private Connection conn = null;
+    boolean idcorrect;
+    boolean mdpcorrect;
+
+    private JFrame currentPage;
 
     /**
      * Creates new form NewJFrame
      */
-    public ConnexionVerifie() {
+    public Connexion() {
         initComponents();
+//        String ID = null;
+//        String MDP = null;
+        idcorrect = false;
+        mdpcorrect = false;
+        currentPage = this;
+       try {
+        conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
+    } catch (SQLException ex) {
+        Logger.getLogger(AjoutPatient.class.getName()).log(Level.SEVERE, null, ex);
+    }
+        if (conn != null) {
+            System.out.println("Connexion établie");
+
+            currentPage.setVisible(true);
+        } else {
+            System.out.println("connexion impossible");
+          
+        }
+
     }
 
     /**
@@ -41,11 +70,11 @@ public class ConnexionVerifie extends javax.swing.JFrame {
         jTextIdd = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextIdd1 = new javax.swing.JTextField();
-        JTextMOTDEPASSE = new javax.swing.JPasswordField();
+        jTextId = new javax.swing.JTextField();
+        jTextMdp = new javax.swing.JPasswordField();
         jLabelIdd = new javax.swing.JLabel();
         jLabelMdp = new javax.swing.JLabel();
-        connexion = new javax.swing.JButton();
+        jButtonConnexion = new javax.swing.JButton();
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/images/house-princeton-plainsboro-brand-a-transparent.png"))); // NOI18N
 
@@ -61,11 +90,11 @@ public class ConnexionVerifie extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Galvji", 1, 18)); // NOI18N
         jLabel4.setText("Bienvenue sur votre espace de connexion");
 
-        jTextIdd1.setFont(new java.awt.Font("Galvji", 0, 14)); // NOI18N
+        jTextId.setFont(new java.awt.Font("Galvji", 0, 14)); // NOI18N
 
-        JTextMOTDEPASSE.addActionListener(new java.awt.event.ActionListener() {
+        jTextMdp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTextMOTDEPASSEActionPerformed(evt);
+                jTextMdpActionPerformed(evt);
             }
         });
 
@@ -75,10 +104,10 @@ public class ConnexionVerifie extends javax.swing.JFrame {
         jLabelMdp.setFont(new java.awt.Font("Galvji", 0, 14)); // NOI18N
         jLabelMdp.setText("Mot de passe");
 
-        connexion.setText("jButton1");
-        connexion.addActionListener(new java.awt.event.ActionListener() {
+        jButtonConnexion.setText("Connexion");
+        jButtonConnexion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                connexionActionPerformed(evt);
+                jButtonConnexionActionPerformed(evt);
             }
         });
 
@@ -98,15 +127,15 @@ public class ConnexionVerifie extends javax.swing.JFrame {
                             .addComponent(jLabelMdp))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(JTextMOTDEPASSE, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-                            .addComponent(jTextIdd1))
+                            .addComponent(jTextMdp, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                            .addComponent(jTextId))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addGap(31, 31, 31))
             .addGroup(layout.createSequentialGroup()
                 .addGap(241, 241, 241)
-                .addComponent(connexion)
+                .addComponent(jButtonConnexion)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -119,108 +148,106 @@ public class ConnexionVerifie extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextIdd1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTextId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabelIdd))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(JTextMOTDEPASSE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextMdp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelMdp)))
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
-                .addComponent(connexion)
+                .addComponent(jButtonConnexion)
                 .addContainerGap(116, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void JTextMOTDEPASSEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextMOTDEPASSEActionPerformed
+    private void jTextMdpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextMdpActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JTextMOTDEPASSEActionPerformed
+    }//GEN-LAST:event_jTextMdpActionPerformed
 
-    private void connexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connexionActionPerformed
-        Connection conn = null;
-        String dbUrl = "jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag";//se connecter à oracle 
-        String jdbcDriver = "oracle.jdbc.driver.OracleDriver";//se connecter à notre BD`
+    private void jButtonConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnexionActionPerformed
+        String IDSaisi = "";
+        IDSaisi = jTextId.getText();
+        String MDPSaisi = "";
+        MDPSaisi = jTextMdp.getText();
+               
+        System.out.println(jTextId.getText());
+        System.out.println(IDSaisi);
+        System.out.println(jTextMdp.getText());
+        System.out.println(MDPSaisi);
+
+        String ID = "";
+        String MDP = "";
 
         try {
-            Class.forName(jdbcDriver);//pour charger le driver 
-            DriverManager.setLoginTimeout(4);//temps max de chargement 4 sec
-            conn = DriverManager.getConnection(dbUrl, "qezbourn", "d87b488b99");//pour se connecter à la BD
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TestConnexionEtRequetes.class.getName()).log(Level.SEVERE, null, ex);
-
-        } catch (SQLException ex) {
-
-
-        }
-        if (conn != null) {
-            System.out.println("Connexion établie");
+            Statement stID;
+            Statement stMDP;
 
             try {
-                Statement st;
-                try {
-                    st = conn.createStatement();
-                    String query = "SELECT ID FROM Personnel";
-                    ResultSet rs = st.executeQuery(query);
-                    while (rs.next()) {
-                        String ID = rs.getString("ID");
-                        System.out.println("test = " + ID);
+                //récupère les identifiants de la BD
+                stID = conn.createStatement();
+                String query = "SELECT ID FROM PERSONNEL";
+                ResultSet rs = stID.executeQuery(query);
+
+                while (rs.next()) {
+                    ID = rs.getString("ID");
+//                    System.out.println("testID = " + ID);// ça te ressort bien toutes les ID
+                    if (IDSaisi.equals(ID)) {
+                        //Ouverture d'une nouvelle page d'accueil Medecin
+                        idcorrect = true;
+//                        System.out.println("ID Existe");
+
+                    }
+                }
+                //récupère le mot de passe de la BD correspondant à cet id
+                stMDP = conn.createStatement();
+                String query1 = "SELECT MDP FROM PERSONNEL WHERE ID=?";
+                try ( PreparedStatement ps = conn.prepareStatement(query1)) {
+                    ps.setString(1, IDSaisi);
+                    ResultSet rs1 = ps.executeQuery();
+                    while (rs1.next()) {
+                        MDP = rs1.getString("MDP");
+                        System.out.println("-" + MDP + "-");//ça te ressort bien tous les MDP
+                        if (MDP.equals(MDPSaisi + "                                              ")) {
+                            mdpcorrect = true;
+                            System.out.println("MDP Existe");
+                        }
                     }
                 } catch (SQLException ex) {
-                    Logger.getLogger(ConnexionVerifie.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if (idcorrect == true && mdpcorrect == true) {
+                    Acceuil nouveauJFrame = new Acceuil();
+                    nouveauJFrame.setVisible(true);
+                    dispose();
+                } else {
+                    System.out.println("connexion impossible");
+                    JOptionPane.showMessageDialog(Connexion.this,
+                            "Identifiant ou mot de passe invalide",
+                            "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
+
                 }
 
-//            String ID = rs.getString("ID");
-//            System.out.println(ID);
-//
-//            if (IDSaisi.equals(ID)) { //&& MDPSaisi.equals("abc")
-//                //Ouverture d'une nouvelle page d'accueil Medecin
-//                System.out.println("connexion medecin possible");
-//                Acceuil nouveauJFrame = new Acceuil();
-//                nouveauJFrame.setVisible(true);
-//                dispose();
-//
-//               
-//                }
-                // } catch (SQLException ex) {
-                //  Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
-
-//            String ID = rs.getString("ID");
-//            System.out.println(ID);
-//
-//            if (IDSaisi.equals(ID)) { //&& MDPSaisi.equals("abc")
-//                //Ouverture d'une nouvelle page d'accueil Medecin
-//                System.out.println("connexion medecin possible");
-//                Acceuil nouveauJFrame = new Acceuil();
-//                nouveauJFrame.setVisible(true);
-//                dispose();
-//
-//               
-//                }
-                // } catch (SQLException ex) {
-                //  Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-
-                try {
-                    Statement st = conn.createStatement();
-                    if (st != null) {
-                        st.close();
-                    }
-                    if (conn != null) {
-                        conn.close();
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(ConnexionVerifie.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
-            System.out.println("connexion impossible");
-//            JOptionPane.showMessageDialog(Connexion.this,
-//                    "Identifiant ou mot de passe invalide",
-//                    "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
+
+        } finally {
+
+            try {
+                Statement st = conn.createStatement();
+                if (st != null) {
+                    st.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
+            }//test comit //test comit 
         }
-    }//GEN-LAST:event_connexionActionPerformed
+
+
+    }//GEN-LAST:event_jButtonConnexionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -236,38 +263,52 @@ public class ConnexionVerifie extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ConnexionVerifie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Connexion.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ConnexionVerifie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Connexion.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ConnexionVerifie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Connexion.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ConnexionVerifie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Connexion.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ConnexionVerifie().setVisible(true);
+                new Connexion().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPasswordField JTextMOTDEPASSE;
-    private javax.swing.JButton connexion;
+    private javax.swing.JButton jButtonConnexion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelIdd;
     private javax.swing.JLabel jLabelMdp;
+    private javax.swing.JTextField jTextId;
     private javax.swing.JTextField jTextIdd;
-    private javax.swing.JTextField jTextIdd1;
+    private javax.swing.JPasswordField jTextMdp;
     // End of variables declaration//GEN-END:variables
 }

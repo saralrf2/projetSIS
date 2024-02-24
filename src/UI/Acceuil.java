@@ -9,16 +9,19 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+
 /**
  *
  * @author alexiaidrac
  */
 public class Acceuil extends javax.swing.JFrame {
-
+Connection conn;
     /**
      * Creates new form Acceuil
      */
@@ -29,7 +32,18 @@ public class Acceuil extends javax.swing.JFrame {
         model = new DefaultTableModel(new Object[]{"ID", "Name", "Prenom", "Date Naissance", "Adresse"}, 0);
         jTableDMR.setModel(model); // Appliquer le modèle au jTableDMR
         jTableDMR.setDefaultEditor(Object.class, null); // Rendre toutes les cellules non éditables
-        recuperation_donnees();
+        try {
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
+        } catch (SQLException ex) {
+            Logger.getLogger(AjoutPatient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (conn != null) {
+            System.out.println("Connexion établie");
+            recuperation_donnees();
+        } else {
+            System.out.println("connexion impossible");
+
+        }
     }
 
     /**
@@ -280,7 +294,7 @@ public class Acceuil extends javax.swing.JFrame {
 
         // Gérer la réponse de l'utilisateur
         if (choix == JOptionPane.YES_OPTION) {
-            ConnexionVerifie nouveauJFrame = new ConnexionVerifie();
+            Connexion nouveauJFrame = new Connexion();
             nouveauJFrame.setVisible(true);     
             dispose();   
         }  else if (choix == JOptionPane.CANCEL_OPTION || choix == JOptionPane.CLOSED_OPTION) {
@@ -327,8 +341,18 @@ public class Acceuil extends javax.swing.JFrame {
             sorter.setRowFilter(null);
             System.out.println("ça ne correspond à aucun patient");
         } else {
+        // Vérifie si le texte est composé uniquement de chiffres
+        boolean numero = rech.matches("\\d+");
+        if (numero) {
+            // Convertit la chaîne de chiffres en entier
+            int num = Integer.parseInt(rech);
+            // Crée un filtre pour trouver une correspondance avec le numéro exactement de l'identifiant
+            sorter.setRowFilter(RowFilter.numberFilter(RowFilter.ComparisonType.EQUAL, num));
+        } else {
+            // Applique un filtre regex pour la recherche de texte
             sorter.setRowFilter(RowFilter.regexFilter(rech));
-            System.out.println("patient trouvé");
+        }
+        System.out.println("Patient trouvé.");
         }
            
     }//GEN-LAST:event_jButtonRechercheActionPerformed
@@ -336,16 +360,14 @@ public class Acceuil extends javax.swing.JFrame {
     private void recuperation_donnees() {
         
         //ajouter les colonnes à notre nouveau tableau
-        model.addColumn("ID");
-        model.addColumn("Name");
-        model.addColumn("Prenom");
-        model.addColumn("Date Naissance");
-        model.addColumn("Adresse");
+//        model.addColumn("ID");
+//        model.addColumn("Name");
+//        model.addColumn("Prenom");
+//        model.addColumn("Date Naissance");
+//        model.addColumn("Adresse");
 
         try {
-            //connexion à la base de donnée
-            Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
-            
+          
             Statement stmt = conn.createStatement();
             //exécutation de la requête
             ResultSet rs = stmt.executeQuery("SELECT * FROM PATIENT");
@@ -363,6 +385,12 @@ public class Acceuil extends javax.swing.JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    private String capitalizeFirstLetter(String input) {
+        if (input == null || input.isEmpty()) {
+            return input; // Si l'entrée est vide ou nulle, retourne la même chaîne
+        }
+        return input.substring(0, 1).toUpperCase() + input.substring(1); // Met la première lettre en majuscule et concatène le reste de la chaîne
     }
 
     /**
