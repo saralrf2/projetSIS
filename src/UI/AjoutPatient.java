@@ -4,7 +4,7 @@
  */
 package UI;
 
-import CommunicationSQL.CreationPatient; 
+import CommunicationSQL.CreationPatient;
 import static java.lang.Integer.parseInt;
 import java.sql.Connection;
 import java.sql.Date;
@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import projetsis.DateNaissance;
 
 /**
@@ -284,46 +285,52 @@ public class AjoutPatient extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRetourActionPerformed
 
     private void jButtonAjoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjoutActionPerformed
-        
-            int id = parseInt(jTextFieldNumIdd.getText());
-            String nom = jTextFieldNom.getText();
-            String prenom = jTextFieldPrenom.getText();
-            String adresse = jTextFieldAdresse.getText();
-            
-            
-            String jourCombo = jComboBoxJour.getSelectedItem().toString().trim();
-            String moisCombo = jComboBoxMois.getSelectedItem().toString().trim();;
-            String anneeCombo = jComboBoxAnnee.getSelectedItem().toString().trim();
-            String dateCombo = anneeCombo+"-"+moisCombo+"-"+jourCombo;
-            
-            //conversion de la date de naissance en type DateNaissance
-            String[] composantesDate = dateCombo.split("-");
-            int annee = Integer.parseInt(composantesDate[0]);
-            int mois = Integer.parseInt(composantesDate[1]);
-            int jour = Integer.parseInt(composantesDate[2]);
-            
-            DateNaissance dateNaissance = new DateNaissance(jour, mois, annee);
-         
-            CreationPatient nouveauPatient = new CreationPatient(id, nom, prenom, dateNaissance, adresse);
-            
-            // Établir une connexion à la base de données et préparer une requête d'insertion
+
+        int id = parseInt(jTextFieldNumIdd.getText());
+        String nom = jTextFieldNom.getText();
+        String prenom = jTextFieldPrenom.getText();
+        String adresse = jTextFieldAdresse.getText();
+
+        String jourCombo = jComboBoxJour.getSelectedItem().toString().trim();
+        String moisCombo = jComboBoxMois.getSelectedItem().toString().trim();;
+        String anneeCombo = jComboBoxAnnee.getSelectedItem().toString().trim();
+        String dateCombo = anneeCombo + "-" + moisCombo + "-" + jourCombo;
+
+        //conversion de la date de naissance en type DateNaissance
+        String[] composantesDate = dateCombo.split("-");
+        int annee = Integer.parseInt(composantesDate[0]);
+        int mois = Integer.parseInt(composantesDate[1]);
+        int jour = Integer.parseInt(composantesDate[2]);
+
+        DateNaissance dateNaissance = new DateNaissance(jour, mois, annee);
+
+        CreationPatient nouveauPatient = new CreationPatient(id, nom, prenom, dateNaissance, adresse);
+
+        // Établir une connexion à la base de données et préparer une requête d'insertion
         try {
             Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
             String sql = "INSERT INTO PATIENT (IDPATIENT, NOM, PRENOM, DATENAISSANCE, ADRESSE) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            
+
             // Appeler la méthode CreerPatient() pour insérer les données dans la base de données
             nouveauPatient.CreerPatient(preparedStatement);
-            
+
             // Fermer la connexion
             conn.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+            ex.printStackTrace();}
+//        } catch (IllegalArgumentException e) {
+//            if (e.getMessage().equals("L'ID du patient dépasse la valeur maximale autorisée.")) {
+//                JOptionPane.showMessageDialog(this, e.getMessage(), "L'ID du patient dépasse la valeur maximale autorisée.", JOptionPane.ERROR_MESSAGE);
+//            } else {
+//                JOptionPane.showMessageDialog(this, e.getMessage(), "Date de naissance postérieure à la date du jour", JOptionPane.ERROR_MESSAGE);
+//            }
+//        }
+
         Acceuil nouveauJFrame = new Acceuil();
         nouveauJFrame.setVisible(true);
         dispose();
-        
+
     }//GEN-LAST:event_jButtonAjoutActionPerformed
 
     /**
