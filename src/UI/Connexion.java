@@ -174,19 +174,21 @@ public class Connexion extends javax.swing.JFrame {
 
 // Affichage des valeurs saisies pour débogage
         System.out.println(jTextId.getText());
-        System.out.println(IDSaisi);
+        System.out.println("IDSaisi :" + IDSaisi);
         System.out.println(jTextMdp.getText());
-        System.out.println(MDPSaisi);
+        System.out.println("MDPSaisi: " + MDPSaisi);
 
 // Initialisation des variables pour vérifier l'identifiant et le mot de passe
         String ID = "";
         String MDP = "";
         boolean idcorrect = false;
         boolean mdpcorrect = false;
+        boolean posteSecretaire = false;
 
         try {
             Statement stID;
             Statement stMDP;
+            Statement stPOSTE;
 
             try {
                 // Récupération des identifiants de la base de données
@@ -221,11 +223,41 @@ public class Connexion extends javax.swing.JFrame {
                     Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                // Si l'identifiant et le mot de passe sont corrects, ouvrir une nouvelle page d'accueil
-                if (idcorrect && mdpcorrect) {
-                    Acceuil nouveauJFrame = new Acceuil();
+                //récupere le poste de la personne qui se connecte
+                stPOSTE = conn.createStatement();
+                String query2 = "SELECT POSTE FROM PERSONNEL WHERE ID=?";
+                try ( PreparedStatement ps = conn.prepareStatement(query2)) {
+                    ps.setString(1, IDSaisi);
+                    ResultSet rs2 = ps.executeQuery();
+                    // Vérification de l'existence de l'identifiant saisi dans la base de données
+                    while (rs2.next()) {
+                        String poste = rs2.getString("POSTE").trim();
+                        System.out.println("Poste: " + poste); // Afficher le poste dans la console
+                        if ("Secretaire".equals(poste)) {
+                            posteSecretaire = true;
+                        }
+                    }
+
+                } catch (SQLException ex) {
+                    // Gestion des erreurs liées à la requête SQL
+                    Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                System.out.println("poste secretaire ?" + posteSecretaire); //vérification du boleean
+                
+                // Si l'identifiant et le mot de passe sont corrects et ouvrir acceuil pour le poste Secrétaire
+                if (idcorrect && mdpcorrect && posteSecretaire) {
+                    AcceuilSecretaire nouveauJFrame = new AcceuilSecretaire();
                     nouveauJFrame.setVisible(true);
                     dispose();
+                }
+                
+                //Ouvrir acceuil pour les poste PH et MR
+                   else if (idcorrect && mdpcorrect) {
+                        Acceuil nouveauJFrame = new Acceuil();
+                        nouveauJFrame.setVisible(true);
+                        dispose();
+                    
                 } else {
                     // Sinon, afficher un message d'erreur
                     System.out.println("Connexion impossible");
