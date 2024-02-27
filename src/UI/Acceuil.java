@@ -391,7 +391,7 @@ Connection conn;
             return input; // Si l'entrée est vide ou nulle, retourne la même chaîne
         }
         return input.substring(0, 1).toUpperCase() + input.substring(1); // Met la première lettre en majuscule et concatène le reste de la chaîne
-    }
+    }//test
 
     /**
      * @param args the command line arguments

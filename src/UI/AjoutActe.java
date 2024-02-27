@@ -25,21 +25,20 @@ import projetsis.DateNaissance;
  *
  * @author alexiaidrac
  */
-public class AjoutPatient extends javax.swing.JFrame {
+public class AjoutActe extends javax.swing.JFrame {
 
     Connection conn;
 
     /**
      * Creates new form AjoutPatient
      */
-    public AjoutPatient() {
+    public AjoutActe() {
         initComponents();
-
-        jComboBoxAnnee.addItem("2024");
+        
         try {
             conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
         } catch (SQLException ex) {
-            Logger.getLogger(AjoutPatient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AjoutActe.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (conn != null) {
             System.out.println("Connexion établie");
@@ -75,9 +74,9 @@ public class AjoutPatient extends javax.swing.JFrame {
         jTextFieldPrenom = new javax.swing.JTextField();
         jRadioButtonFeminin = new javax.swing.JRadioButton();
         jRadioButtonHomme = new javax.swing.JRadioButton();
-        jComboBoxJour = new javax.swing.JComboBox<>();
-        jComboBoxMois = new javax.swing.JComboBox<>();
-        jComboBoxAnnee = new javax.swing.JComboBox<>();
+        jComboBoxJour = new javax.swing.JComboBox<String>();
+        jComboBoxMois = new javax.swing.JComboBox<String>();
+        jComboBoxAnnee = new javax.swing.JComboBox<String>();
         jTextFieldAdresse = new javax.swing.JTextField();
         jButtonAjout = new javax.swing.JButton();
         jButtonRetour = new javax.swing.JButton();
@@ -146,11 +145,11 @@ public class AjoutPatient extends javax.swing.JFrame {
             }
         });
 
-        jComboBoxJour.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 ", "2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ", "10 ", "11 ", "12 ", "13 ", "14 ", "15 ", "16 ", "17 ", "18 ", "19 ", "20 ", "21 ", "22 ", "23 ", "24 ", "25 ", "26 ", "27 ", "28 ", "29 ", "30 ", "31" }));
+        jComboBoxJour.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1 ", "2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ", "10 ", "11 ", "12 ", "13 ", "14 ", "15 ", "16 ", "17 ", "18 ", "19 ", "20 ", "21 ", "22 ", "23 ", "24 ", "25 ", "26 ", "27 ", "28 ", "29 ", "30 ", "31" }));
 
-        jComboBoxMois.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", " " }));
+        jComboBoxMois.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", " " }));
 
-        jComboBoxAnnee.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2000", "2002", "2001", " " }));
+        jComboBoxAnnee.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2000", "2002", "2001", " " }));
 
         jTextFieldAdresse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -301,29 +300,10 @@ public class AjoutPatient extends javax.swing.JFrame {
 
     private void jButtonAjoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjoutActionPerformed
 
-        int id = parseInt(jTextFieldNumIdd.getText());
-        String nom = jTextFieldNom.getText();
-        String prenom = jTextFieldPrenom.getText();
-        String adresse = jTextFieldAdresse.getText();
-
-        String jourCombo = jComboBoxJour.getSelectedItem().toString().trim();
-        String moisCombo = jComboBoxMois.getSelectedItem().toString().trim();;
-        String anneeCombo = jComboBoxAnnee.getSelectedItem().toString().trim();
-        String dateCombo = anneeCombo + "-" + moisCombo + "-" + jourCombo;
-
-        //conversion de la date de naissance en type DateNaissance
-        String[] composantesDate = dateCombo.split("-");
-        int annee = Integer.parseInt(composantesDate[0]);
-        int mois = Integer.parseInt(composantesDate[1]);
-        int jour = Integer.parseInt(composantesDate[2]);
-
-        DateNaissance dateNaissance = new DateNaissance(jour, mois, annee);
-
-        CreationPatient nouveauPatient = new CreationPatient(id, nom, prenom, dateNaissance, adresse);
-
+        
         // Établir une connexion à la base de données et préparer une requête d'insertion
         try {
-            String sql = "INSERT INTO PATIENT (IDPATIENT, NOM, PRENOM, DATENAISSANCE, ADRESSE) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO ACTERADIO (IDACTERADIO, TARIFICATION, SIGNIFICATIONCODE, ACTERADIO) VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
             // Appeler la méthode CreerPatient() pour insérer les données dans la base de données
@@ -364,20 +344,21 @@ public class AjoutPatient extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AjoutPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AjoutActe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AjoutPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AjoutActe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AjoutPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AjoutActe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AjoutPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AjoutActe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AjoutPatient().setVisible(true);
+                new AjoutActe().setVisible(true);
             }
         });
     }

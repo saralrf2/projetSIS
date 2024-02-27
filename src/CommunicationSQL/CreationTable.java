@@ -20,9 +20,10 @@ public class CreationTable {
     public void creationTable(Statement statement, String table_name) throws SQLException {
        statement.executeUpdate(
                         "CREATE TABLE "+ table_name.toLowerCase()
-                                + "(ID integer NOT NULL, "
-                                + " NAME varchar(80) NOT NULL, "
-                                + " FIRSTNAME varchar(80) NOT NULL, "
-                                + " PRIMARY KEY (ID))");
+                                + " (IDACTERADIO integer NOT NULL, "
+                                + " TARIFICATION integer NOT NULL, "
+                                + " SIGNIFICATIONCODE varchar(80) NOT NULL, "
+                                + " PRACTICIEN varchar(80) NOT NULL, "
+                                + " PRIMARY KEY (IDACTERADIO))");
     }
 }

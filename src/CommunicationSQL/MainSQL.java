@@ -31,16 +31,18 @@ public class MainSQL {
      */
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
 //Connection
-//    Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
+        Connection conn;
+        conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
+            
 
 //Création de Table
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.println("Veuillez saisir le nom de la Table à créer :");
-//        String nomTable = scanner.nextLine();
-//  
-//        CreationTable creationTable = new CreationTable();
-//        Statement st1 = conn.createStatement();
-//        creationTable.creationTable(st1, nomTable.toUpperCase());
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Veuillez saisir le nom de la Table à créer :");
+        String nomTable = scanner.nextLine();
+  
+        CreationTable creationTable = new CreationTable();
+        Statement st1 = conn.createStatement();
+        creationTable.creationTable(st1, nomTable.toUpperCase());
 //Creation de Patient // inutile car on a la fonctionnalité directement avec l'interface
 //        Scanner scanner = new Scanner(System.in);
 //        System.out.println("Veuillez saisir l'ID du Patient à créer :");
