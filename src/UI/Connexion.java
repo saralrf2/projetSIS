@@ -168,84 +168,119 @@ public class Connexion extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextMdpActionPerformed
 
     private void jButtonConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnexionActionPerformed
-        String IDSaisi = "";
-        IDSaisi = jTextId.getText();
-        String MDPSaisi = "";
-        MDPSaisi = jTextMdp.getText();
-               
-        System.out.println(jTextId.getText());
-        System.out.println(IDSaisi);
-        System.out.println(jTextMdp.getText());
-        System.out.println(MDPSaisi);
+        // Récupération des identifiants et des mots de passe saisis par l'utilisateur
+        String IDSaisi = jTextId.getText();
+        String MDPSaisi = jTextMdp.getText();
 
+// Affichage des valeurs saisies pour débogage
+        System.out.println(jTextId.getText());
+        System.out.println("IDSaisi :" + IDSaisi);
+        System.out.println(jTextMdp.getText());
+        System.out.println("MDPSaisi: " + MDPSaisi);
+
+// Initialisation des variables pour vérifier l'identifiant et le mot de passe
         String ID = "";
         String MDP = "";
+        boolean idcorrect = false;
+        boolean mdpcorrect = false;
+        boolean posteSecretaire = false;
 
         try {
             Statement stID;
             Statement stMDP;
+            Statement stPOSTE;
 
             try {
-                //récupère les identifiants de la BD
+                // Récupération des identifiants de la base de données
                 stID = conn.createStatement();
                 String query = "SELECT ID FROM PERSONNEL";
                 ResultSet rs = stID.executeQuery(query);
 
+                // Vérification de l'existence de l'identifiant saisi dans la base de données
                 while (rs.next()) {
                     ID = rs.getString("ID");
-//                    System.out.println("testID = " + ID);// ça te ressort bien toutes les ID
                     if (IDSaisi.equals(ID)) {
-                        //Ouverture d'une nouvelle page d'accueil Medecin
                         idcorrect = true;
-//                        System.out.println("ID Existe");
-
                     }
                 }
-                //récupère le mot de passe de la BD correspondant à cet id
+
+                // Récupération du mot de passe correspondant à l'identifiant saisi
                 stMDP = conn.createStatement();
                 String query1 = "SELECT MDP FROM PERSONNEL WHERE ID=?";
                 try ( PreparedStatement ps = conn.prepareStatement(query1)) {
                     ps.setString(1, IDSaisi);
                     ResultSet rs1 = ps.executeQuery();
+
+                    // Vérification de l'existence du mot de passe saisi dans la base de données
                     while (rs1.next()) {
-                        MDP = rs1.getString("MDP");
-                        System.out.println("-" + MDP + "-");//ça te ressort bien tous les MDP
-                        if (MDP.equals(MDPSaisi + "                                              ")) {
+                        MDP = rs1.getString("MDP").trim(); // Suppression des espaces inutiles
+                        if (MDP.equals(MDPSaisi)) {
                             mdpcorrect = true;
-                            System.out.println("MDP Existe");
                         }
                     }
                 } catch (SQLException ex) {
+                    // Gestion des erreurs liées à la requête SQL
                     Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                if (idcorrect == true && mdpcorrect == true) {
+
+                //récupere le poste de la personne qui se connecte
+                stPOSTE = conn.createStatement();
+                String query2 = "SELECT POSTE FROM PERSONNEL WHERE ID=?";
+                try ( PreparedStatement ps = conn.prepareStatement(query2)) {
+                    ps.setString(1, IDSaisi);
+                    ResultSet rs2 = ps.executeQuery();
+                    // Vérification de l'existence de l'identifiant saisi dans la base de données
+                    while (rs2.next()) {
+                        String poste = rs2.getString("POSTE").trim();
+                        System.out.println("Poste: " + poste); // Afficher le poste dans la console
+                        if ("Secretaire".equals(poste)) {
+                            posteSecretaire = true;
+                        }
+                    }
+
+                } catch (SQLException ex) {
+                    // Gestion des erreurs liées à la requête SQL
+                    Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                System.out.println("poste secretaire? " + posteSecretaire); //vérification du boleean
+
+                // Si l'identifiant et le mot de passe sont corrects et ouvrir acceuil pour le poste Secrétaire
+                if (idcorrect && mdpcorrect && posteSecretaire) {
+                    AcceuilSecretaire nouveauJFrame = new AcceuilSecretaire();
+                    nouveauJFrame.setVisible(true);
+                    dispose();
+                } //Ouvrir acceuil pour les poste PH et MR
+                else if (idcorrect && mdpcorrect) {
                     Acceuil nouveauJFrame = new Acceuil();
                     nouveauJFrame.setVisible(true);
                     dispose();
+
                 } else {
-                    System.out.println("connexion impossible");
+                    // Sinon, afficher un message d'erreur
+                    System.out.println("Connexion impossible");
                     JOptionPane.showMessageDialog(Connexion.this,
                             "Identifiant ou mot de passe invalide",
                             "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
-
                 }
 
             } catch (SQLException ex) {
+                // Gestion des erreurs liées à la connexion à la base de données
                 Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         } finally {
-
+            // Fermeture de la connexion à la base de données dans le bloc finally
             try {
                 Statement st = conn.createStatement();
                 if (st != null) {
                     st.close();
                 }
             } catch (SQLException ex) {
+                // Gestion des erreurs liées à la fermeture de la connexion
                 Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
-            }//test comit //test comit 
+            }
         }
-
 
     }//GEN-LAST:event_jButtonConnexionActionPerformed
 
