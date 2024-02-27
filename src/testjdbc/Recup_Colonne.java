@@ -59,7 +59,7 @@ public class Recup_Colonne {
             System.out.println("Connexion établie.");
 
             try {
-                String nomTable = "ACTERADIO1"; // Remplacez par le nom de votre table
+                String nomTable = "ACTERADIOLOGIQUE"; // Remplacez par le nom de votre table
 
                 // Récupérer les métadonnées de la base de données
                 DatabaseMetaData metaData = conn.getMetaData();

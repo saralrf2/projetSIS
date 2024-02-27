@@ -23,6 +23,7 @@ import java.time.ZonedDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import static java.lang.Integer.parseInt;
+import static oracle.jrockit.jfr.events.Bits.intValue;
 
 public class MainSQL {
 
@@ -30,19 +31,24 @@ public class MainSQL {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-//Connection
-        Connection conn;
-        conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
-            
-
-//Création de Table
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Veuillez saisir le nom de la Table à créer :");
-        String nomTable = scanner.nextLine();
-  
-        CreationTable creationTable = new CreationTable();
-        Statement st1 = conn.createStatement();
-        creationTable.creationTable(st1, nomTable.toUpperCase());
+////Connection
+//        Connection conn;
+//        conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
+//            
+//
+//////Création de Table
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.println("Veuillez saisir le nom de la Table à créer :");
+//        String nomTable = scanner.nextLine();
+//  
+//        CreationTable creationTable = new CreationTable();
+//        Statement st1 = conn.createStatement();
+//        creationTable.creationTable(st1, nomTable.toUpperCase());
+        
+        
+        
+        
+        
 //Creation de Patient // inutile car on a la fonctionnalité directement avec l'interface
 //        Scanner scanner = new Scanner(System.in);
 //        System.out.println("Veuillez saisir l'ID du Patient à créer :");
@@ -82,5 +88,7 @@ public class MainSQL {
 //        PreparedStatement preparedStatementSuppressionPatient = conn.prepareStatement(query);
 //        preparedStatementSuppressionPatient.setString(1, nomPatient);
 //        
+        double tarification = 1.5;
+        System.out.println("test = " + intValue(tarification)); 
     }
 }

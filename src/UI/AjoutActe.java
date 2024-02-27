@@ -4,6 +4,7 @@
  */
 package UI;
 
+import CommunicationSQL.CreationActe1;
 import CommunicationSQL.CreationPatient;
 import static java.lang.Integer.parseInt;
 import java.sql.Connection;
@@ -46,6 +47,8 @@ public class AjoutActe extends javax.swing.JFrame {
             System.out.println("connexion impossible");
 
         }
+        
+               
     }
 
     /**
@@ -63,23 +66,18 @@ public class AjoutActe extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabelNumIdd = new javax.swing.JLabel();
-        jLabelNom = new javax.swing.JLabel();
-        jLabelPrenom = new javax.swing.JLabel();
-        jLabelDateNaissance = new javax.swing.JLabel();
-        jLabelGenre = new javax.swing.JLabel();
-        jLabelAdresse = new javax.swing.JLabel();
-        jTextFieldNumIdd = new javax.swing.JTextField();
-        jTextFieldNom = new javax.swing.JTextField();
-        jTextFieldPrenom = new javax.swing.JTextField();
-        jRadioButtonFeminin = new javax.swing.JRadioButton();
-        jRadioButtonHomme = new javax.swing.JRadioButton();
+        IDActe = new javax.swing.JLabel();
+        NomduPracticien = new javax.swing.JLabel();
+        Dateacte = new javax.swing.JLabel();
+        jTextFieldidacte = new javax.swing.JTextField();
+        jTextFieldNompracticien = new javax.swing.JTextField();
         jComboBoxJour = new javax.swing.JComboBox<String>();
         jComboBoxMois = new javax.swing.JComboBox<String>();
         jComboBoxAnnee = new javax.swing.JComboBox<String>();
-        jTextFieldAdresse = new javax.swing.JTextField();
         jButtonAjout = new javax.swing.JButton();
         jButtonRetour = new javax.swing.JButton();
+        CodeACte = new javax.swing.JLabel();
+        jTextFieldcodeacte = new javax.swing.JTextField();
 
         jLabel1.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
         jLabel1.setText("Numéro d'identification :");
@@ -101,47 +99,18 @@ public class AjoutActe extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(236, 234, 234));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ajout Patient", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Galvji", 1, 18)))); // NOI18N
 
-        jLabelNumIdd.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
-        jLabelNumIdd.setText("Numéro d'identification :");
+        IDActe.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
+        IDActe.setText("ID Acte");
 
-        jLabelNom.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
-        jLabelNom.setText("Nom :");
+        NomduPracticien.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
+        NomduPracticien.setText("Nom du Practicien :");
 
-        jLabelPrenom.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
-        jLabelPrenom.setText("Prénom :");
+        Dateacte.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
+        Dateacte.setText("Date de l'acte :");
 
-        jLabelDateNaissance.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
-        jLabelDateNaissance.setText("Date de naissance :");
-
-        jLabelGenre.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
-        jLabelGenre.setText("Genre : ");
-
-        jLabelAdresse.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
-        jLabelAdresse.setText("Adresse :");
-
-        jTextFieldNom.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldNompracticien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldNomActionPerformed(evt);
-            }
-        });
-
-        jTextFieldPrenom.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldPrenomActionPerformed(evt);
-            }
-        });
-
-        jRadioButtonFeminin.setText("F");
-        jRadioButtonFeminin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonFemininActionPerformed(evt);
-            }
-        });
-
-        jRadioButtonHomme.setText("H");
-        jRadioButtonHomme.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonHommeActionPerformed(evt);
+                jTextFieldNompracticienActionPerformed(evt);
             }
         });
 
@@ -150,12 +119,6 @@ public class AjoutActe extends javax.swing.JFrame {
         jComboBoxMois.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", " " }));
 
         jComboBoxAnnee.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2000", "2002", "2001", " " }));
-
-        jTextFieldAdresse.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldAdresseActionPerformed(evt);
-            }
-        });
 
         jButtonAjout.setFont(new java.awt.Font("Galvji", 0, 13)); // NOI18N
         jButtonAjout.setText("Ajouter");
@@ -175,6 +138,9 @@ public class AjoutActe extends javax.swing.JFrame {
             }
         });
 
+        CodeACte.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
+        CodeACte.setText("Code Acte");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -189,36 +155,26 @@ public class AjoutActe extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabelNumIdd)
+                                .addComponent(IDActe)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldNumIdd, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTextFieldidacte, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabelPrenom)
+                                .addComponent(CodeACte)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldPrenom, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTextFieldcodeacte, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabelDateNaissance)
+                                .addComponent(NomduPracticien)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldNompracticien, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(Dateacte)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jComboBoxJour, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jComboBoxMois, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBoxAnnee, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabelGenre)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButtonFeminin)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButtonHomme))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabelNom)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldNom, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabelAdresse)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldAdresse, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 71, Short.MAX_VALUE)))
+                                .addComponent(jComboBoxAnnee, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 198, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -226,36 +182,27 @@ public class AjoutActe extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelNumIdd)
-                    .addComponent(jTextFieldNumIdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(IDActe)
+                    .addComponent(jTextFieldidacte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelNom)
-                    .addComponent(jTextFieldNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CodeACte)
+                    .addComponent(jTextFieldcodeacte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelPrenom)
-                    .addComponent(jTextFieldPrenom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(NomduPracticien)
+                    .addComponent(jTextFieldNompracticien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelDateNaissance)
+                    .addComponent(Dateacte)
                     .addComponent(jComboBoxJour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxMois, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxAnnee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelGenre)
-                    .addComponent(jRadioButtonFeminin)
-                    .addComponent(jRadioButtonHomme))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelAdresse)
-                    .addComponent(jTextFieldAdresse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAjout)
                     .addComponent(jButtonRetour))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -266,31 +213,11 @@ public class AjoutActe extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextFieldNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNomActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldNomActionPerformed
-
-    private void jTextFieldPrenomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPrenomActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldPrenomActionPerformed
-
-    private void jRadioButtonFemininActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonFemininActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButtonFemininActionPerformed
-
-    private void jRadioButtonHommeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonHommeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButtonHommeActionPerformed
-
-    private void jTextFieldAdresseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldAdresseActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldAdresseActionPerformed
 
     private void jButtonRetourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRetourActionPerformed
         Acceuil nouveauJFrame = new Acceuil();
@@ -299,33 +226,54 @@ public class AjoutActe extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRetourActionPerformed
 
     private void jButtonAjoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjoutActionPerformed
+        int idacteradio = parseInt(jTextFieldidacte.getText());
+        String codeacte = jTextFieldcodeacte.getText();
+        String nom = jTextFieldNompracticien.getText();
+        String tarification = "1.0";
+        String significationcode = "RADIO DU GENOU";
+        String jourCombo = jComboBoxJour.getSelectedItem().toString().trim();
+        String moisCombo = jComboBoxMois.getSelectedItem().toString().trim();;
+        String anneeCombo = jComboBoxAnnee.getSelectedItem().toString().trim();
+        String dateCombo = anneeCombo + "-" + moisCombo + "-" + jourCombo;
 
-        
+        //conversion de la date de naissance en type DateNaissance
+        String[] composantesDate = dateCombo.split("-");
+        int annee = Integer.parseInt(composantesDate[0]);
+        int mois = Integer.parseInt(composantesDate[1]);
+        int jour = Integer.parseInt(composantesDate[2]);
+
+        Date date = new java.sql.Date(annee, mois, jour);
+
+
+        CreationActe1 nouvelActe = new CreationActe1(idacteradio, tarification, codeacte, significationcode, nom, date);
         // Établir une connexion à la base de données et préparer une requête d'insertion
         try {
-            String sql = "INSERT INTO ACTERADIO (IDACTERADIO, TARIFICATION, SIGNIFICATIONCODE, ACTERADIO) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO ACTERADIOLOGIQUE (IDACTERADIO, CODEACTE, TARIFICATION, SIGNIFICATIONCODE, PRACTICIEN, DATEACTIO) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
             // Appeler la méthode CreerPatient() pour insérer les données dans la base de données
-            nouveauPatient.CreerPatient(preparedStatement);
+            nouvelActe.CreerActe(preparedStatement);
 
             // Fermer la connexion
             conn.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            if (e.getMessage().equals("L'ID du patient dépasse la valeur maximale autorisée.")) {
-                JOptionPane.showMessageDialog(this, e.getMessage(), "L'ID du patient dépasse la valeur maximale autorisée.", JOptionPane.ERROR_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, e.getMessage(), "Date de naissance postérieure à la date du jour", JOptionPane.ERROR_MESSAGE);
-            }
+//        } catch (IllegalArgumentException e) {
+//            if (e.getMessage().equals("L'ID du patient dépasse la valeur maximale autorisée.")) {
+//                JOptionPane.showMessageDialog(this, e.getMessage(), "L'ID du patient dépasse la valeur maximale autorisée.", JOptionPane.ERROR_MESSAGE);
+//            } else {
+//                JOptionPane.showMessageDialog(this, e.getMessage(), "Date de naissance postérieure à la date du jour", JOptionPane.ERROR_MESSAGE);
+//            }
         }
 
         Acceuil nouveauJFrame = new Acceuil();
         nouveauJFrame.setVisible(true);
         dispose();
-
     }//GEN-LAST:event_jButtonAjoutActionPerformed
+
+    private void jTextFieldNompracticienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNompracticienActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldNompracticienActionPerformed
 
     /**
      * @param args the command line arguments
@@ -364,6 +312,10 @@ public class AjoutActe extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel CodeACte;
+    private javax.swing.JLabel Dateacte;
+    private javax.swing.JLabel IDActe;
+    private javax.swing.JLabel NomduPracticien;
     private javax.swing.JButton jButtonAjout;
     private javax.swing.JButton jButtonRetour;
     private javax.swing.JComboBox<String> jComboBoxAnnee;
@@ -374,18 +326,9 @@ public class AjoutActe extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabelAdresse;
-    private javax.swing.JLabel jLabelDateNaissance;
-    private javax.swing.JLabel jLabelGenre;
-    private javax.swing.JLabel jLabelNom;
-    private javax.swing.JLabel jLabelNumIdd;
-    private javax.swing.JLabel jLabelPrenom;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButtonFeminin;
-    private javax.swing.JRadioButton jRadioButtonHomme;
-    private javax.swing.JTextField jTextFieldAdresse;
-    private javax.swing.JTextField jTextFieldNom;
-    private javax.swing.JTextField jTextFieldNumIdd;
-    private javax.swing.JTextField jTextFieldPrenom;
+    private javax.swing.JTextField jTextFieldNompracticien;
+    private javax.swing.JTextField jTextFieldcodeacte;
+    private javax.swing.JTextField jTextFieldidacte;
     // End of variables declaration//GEN-END:variables
 }

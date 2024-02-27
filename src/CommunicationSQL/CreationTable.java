@@ -21,9 +21,11 @@ public class CreationTable {
        statement.executeUpdate(
                         "CREATE TABLE "+ table_name.toLowerCase()
                                 + " (IDACTERADIO integer NOT NULL, "
+                                + " CODEACTE varchar(80) NOT NULL, "
                                 + " TARIFICATION integer NOT NULL, "
                                 + " SIGNIFICATIONCODE varchar(80) NOT NULL, "
                                 + " PRACTICIEN varchar(80) NOT NULL, "
+                                + " DATEACTIO DATE NOT NULL, "
                                 + " PRIMARY KEY (IDACTERADIO))");
     }
 }
