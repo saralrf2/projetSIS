@@ -39,6 +39,9 @@ public class AcceuilSecretaire extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(AjoutPatient.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+      //  nomSession.setText("nom");
+        
         if (conn != null) {
             System.out.println("Connexion établie");
             recuperation_donnees();
@@ -68,7 +71,7 @@ public class AcceuilSecretaire extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        nomSession = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
 
@@ -171,8 +174,8 @@ public class AcceuilSecretaire extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Galvji", 1, 14)); // NOI18N
         jLabel3.setText("Session :");
 
-        jLabel4.setFont(new java.awt.Font("Galvji", 0, 14)); // NOI18N
-        jLabel4.setText("Harry Caux");
+        nomSession.setFont(new java.awt.Font("Galvji", 0, 14)); // NOI18N
+        nomSession.setText("Harry Caux");
 
         jPanel3.setPreferredSize(new java.awt.Dimension(92, 108));
 
@@ -210,7 +213,7 @@ public class AcceuilSecretaire extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
+                        .addComponent(nomSession)
                         .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
@@ -228,7 +231,7 @@ public class AcceuilSecretaire extends javax.swing.JFrame {
                         .addGap(14, 14, 14))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
+                            .addComponent(nomSession)
                             .addComponent(jLabel3))
                         .addContainerGap(32, Short.MAX_VALUE))))
         );
@@ -398,7 +401,6 @@ public class AcceuilSecretaire extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -406,5 +408,6 @@ public class AcceuilSecretaire extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableDMR;
     private javax.swing.JTextField jTextFieldRecherche;
+    private javax.swing.JLabel nomSession;
     // End of variables declaration//GEN-END:variables
 }

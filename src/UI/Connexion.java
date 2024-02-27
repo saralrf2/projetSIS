@@ -242,22 +242,20 @@ public class Connexion extends javax.swing.JFrame {
                     // Gestion des erreurs liées à la requête SQL
                     Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-                System.out.println("poste secretaire ?" + posteSecretaire); //vérification du boleean
-                
+
+                System.out.println("poste secretaire? " + posteSecretaire); //vérification du boleean
+
                 // Si l'identifiant et le mot de passe sont corrects et ouvrir acceuil pour le poste Secrétaire
                 if (idcorrect && mdpcorrect && posteSecretaire) {
                     AcceuilSecretaire nouveauJFrame = new AcceuilSecretaire();
                     nouveauJFrame.setVisible(true);
                     dispose();
-                }
-                
-                //Ouvrir acceuil pour les poste PH et MR
-                   else if (idcorrect && mdpcorrect) {
-                        Acceuil nouveauJFrame = new Acceuil();
-                        nouveauJFrame.setVisible(true);
-                        dispose();
-                    
+                } //Ouvrir acceuil pour les poste PH et MR
+                else if (idcorrect && mdpcorrect) {
+                    Acceuil nouveauJFrame = new Acceuil();
+                    nouveauJFrame.setVisible(true);
+                    dispose();
+
                 } else {
                     // Sinon, afficher un message d'erreur
                     System.out.println("Connexion impossible");
@@ -331,7 +329,11 @@ public class Connexion extends javax.swing.JFrame {
                 new Connexion().setVisible(true);
             }
         });
+
     }
+
+    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonConnexion;
