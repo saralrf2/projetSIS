@@ -32,6 +32,8 @@ public class AjoutPatient extends javax.swing.JFrame {
      */
     public AjoutPatient() {
         initComponents();
+        
+        jComboBoxAnnee.addItem("2024");
     }
 
     /**
@@ -318,14 +320,14 @@ public class AjoutPatient extends javax.swing.JFrame {
             // Fermer la connexion
             conn.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();}
-//        } catch (IllegalArgumentException e) {
-//            if (e.getMessage().equals("L'ID du patient dépasse la valeur maximale autorisée.")) {
-//                JOptionPane.showMessageDialog(this, e.getMessage(), "L'ID du patient dépasse la valeur maximale autorisée.", JOptionPane.ERROR_MESSAGE);
-//            } else {
-//                JOptionPane.showMessageDialog(this, e.getMessage(), "Date de naissance postérieure à la date du jour", JOptionPane.ERROR_MESSAGE);
-//            }
-//        }
+            ex.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            if (e.getMessage().equals("L'ID du patient dépasse la valeur maximale autorisée.")) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "L'ID du patient dépasse la valeur maximale autorisée.", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Date de naissance postérieure à la date du jour", JOptionPane.ERROR_MESSAGE);
+            }
+        }
 
         Acceuil nouveauJFrame = new Acceuil();
         nouveauJFrame.setVisible(true);
