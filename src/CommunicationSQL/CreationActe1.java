@@ -17,17 +17,16 @@ import projetsis.DateNaissance;
 
 public class CreationActe1 {
 
-    private int IDActe;
+    private int IDActeradio;
     private double tarification;
     private String significationCode;
     private String practicien;
 
-    public CreationActe1(int id, String nom, String prenom, DateNaissance dateNaissance, String adresse) {
-        this.ID = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.dateNaissance = dateNaissance;
-        this.adresse = adresse;
+    public CreationActe1(int IDacteradio, double tarification, String significationcode, String practicien) {
+        this.IDActeradio = IDacteradio;
+        this.tarification = tarification;
+        this.significationCode = significationcode;
+        this.practicien = praticien;
     }
 
     public void CreerPatient(PreparedStatement preparedStatement) throws SQLException {
