@@ -3,11 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/L:/Bureau/ProjetSIS_7/src/UI/AjoutPatient.java</file>
-            <file>file:/L:/Bureau/ProjetSIS_7/src/projetsis/DateSIS.java</file>
-            <file>file:/L:/Bureau/ProjetSIS_7/src/CommunicationSQL/CreationPatient.java</file>
-            <file>file:/L:/Bureau/ProjetSIS_7/src/CommunicationSQL/MainSQL.java</file>
-            <file>file:/L:/Bureau/ProjetSIS_7/src/testjdbc/Recup_Colonne.java</file>
+            <file>file:/L:/Bureau/ProjetSIS_7/src/UI/DMR.java</file>
+            <file>file:/L:/Bureau/ProjetSIS_7/src/UI/Acceuil.java</file>
         </group>
     </open-files>
 </project-private>

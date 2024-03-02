@@ -13,7 +13,7 @@ public class Acte extends javax.swing.JFrame {
     /**
      * Creates new form DMR
      */
-    public Acte(int idacte, String codeActe, String nomPracticien, Date dateActe, double tarification) {
+    public Acte(int idacte, String codeActe, String nomPracticien, Date dateActe) {
         initComponents();
         
         String idActe = String.valueOf(idacte);
@@ -22,7 +22,7 @@ public class Acte extends javax.swing.JFrame {
         infoCode.setText(codeActe);
         infoPrenom.setText(nomPracticien);
         infoDate.setText(datedeActe);
-        infoAdresse.setText(String.valueOf(tarification));
+//        infoAdresse.setText(String.valueOf(tarification));
     }
 
     /**

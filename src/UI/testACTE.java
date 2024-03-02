@@ -282,8 +282,8 @@ Connection conn;
     }//GEN-LAST:event_jButtonRetourActionPerformed
 
     private void jTableDMRMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDMRMouseClicked
-        int ligne = jTableDMR.getSelectedRow(); //récuperation information ligne
-        int colonne = jTableDMR.getSelectedColumn(); // récuperation information colonne
+//        int ligne = jTableDMR.getSelectedRow(); //récuperation information ligne
+//        int colonne = jTableDMR.getSelectedColumn(); // récuperation information colonne
         if (evt.getClickCount() == 2) { // Double clic sur une ligne
 
             int ligneSelectionnee = jTableDMR.getSelectedRow();// récuperation information de la ligne sélectionnée
@@ -293,13 +293,13 @@ Connection conn;
             String codeActe = jTableDMR.getValueAt(ligneSelectionnee, 1).toString();
             String nomPracticien = jTableDMR.getValueAt(ligneSelectionnee, 2).toString();
             Date dateActe = Date.valueOf(jTableDMR.getValueAt(ligneSelectionnee, 3).toString());
-            double tarification = new Double(jTableDMR.getValueAt(ligneSelectionnee, 4).toString());
+//            double tarification = new Double(jTableDMR.getValueAt(ligneSelectionnee, 4).toString());
 
-            Object data = jTableDMR.getValueAt(ligne, colonne);
+//            Object data = jTableDMR.getValueAt(ligne, colonne);
 
             //                //ouvrir la fiche patient avec les informations sélectionnées
 
-            Acte nouveauJFrame = new Acte(idActe, codeActe, nomPracticien, dateActe, tarification);
+            Acte nouveauJFrame = new Acte(idActe, codeActe, nomPracticien, dateActe);
             nouveauJFrame.setVisible(true);
             nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
