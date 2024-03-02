@@ -15,8 +15,7 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.util.Random;
 import java.util.Scanner;
-import projetsis.DateNaissance;
-import projetsis.Datee;
+import projetsis.DateSIS;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
@@ -32,9 +31,9 @@ public class MainSQL {
      */
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
 ////Connection
-//        Connection conn;
-//        conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
-//            
+        Connection conn;
+        conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
+
 //
 //////Création de Table
 //        Scanner scanner = new Scanner(System.in);
@@ -44,11 +43,6 @@ public class MainSQL {
 //        CreationTable creationTable = new CreationTable();
 //        Statement st1 = conn.createStatement();
 //        creationTable.creationTable(st1, nomTable.toUpperCase());
-        
-        
-        
-        
-        
 //Creation de Patient // inutile car on a la fonctionnalité directement avec l'interface
 //        Scanner scanner = new Scanner(System.in);
 //        System.out.println("Veuillez saisir l'ID du Patient à créer :");
@@ -58,13 +52,11 @@ public class MainSQL {
 //        System.out.println("Veuillez saisir le prennom du Patient à  créer :");
 //        String prenomPatient = scanner.nextLine(); 
 //        String sqlCreationTable = "INSERT INTO PATIENT (IDPatient, nom, prenom, dateNaissance, adresse) VALUES (?, ?, ?, ?, ?)"; 
-//        CreationPatient nouveaupatient = new CreationPatient(IDPatient, nomPatient.toUpperCase(), prenomPatient, new DateNaissance(28, 01, 2001), "5 rue");
+//        CreationPatient nouveaupatient = new CreationPatient(IDPatient, nomPatient.toUpperCase(), prenomPatient, new DateSIS(28, 01, 2001), "5 rue");
 //        PreparedStatement preparedStatementCreationPatient = conn.prepareStatement(sqlCreationTable);
 //        nouveaupatient.CreerPatient(preparedStatementCreationPatient);
 //        preparedStatementCreationPatient.close();
 //        conn.close();
-        
-        
 //Creation Personnel    
 //        Scanner scanner = new Scanner(System.in);
 //        System.out.println("Veuillez saisir l'ID du Personnel à créer :");
@@ -79,7 +71,6 @@ public class MainSQL {
 //      personnel.CreerPersonnel(preparedStatementCreationPersonnel);
 //      st.close();
 //      conn.close();
-        
 //Suppression d'un Patient
 //        Scanner scanner = new Scanner(System.in);
 //        System.out.println("Veuillez saisir nomPatient à supprimer :");
@@ -90,5 +81,17 @@ public class MainSQL {
 //        
         double tarification = 1.5;
         System.out.println("test = " + intValue(tarification)); 
+        
+        
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.println("Veuillez saisir nom de la table à mettre à jour :");
+//        String nomTable = scanner.nextLine();
+//        Scanner scanner2 = new Scanner(System.in);
+//        System.out.println("Veuillez saisir la valeur 1 à mettre à jour :");
+//        String valeur1 = scanner.nextLine();
+//        String query = "UPDATE PATIENT SET " + valeur1;
+//        PreparedStatement ps = conn.prepareStatement(query);
+//        ps.setString(1, query);
+
     }
 }

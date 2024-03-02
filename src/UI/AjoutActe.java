@@ -20,7 +20,7 @@ import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import projetsis.DateNaissance;
+import projetsis.DateSIS;
 
 /**
  *
@@ -35,7 +35,7 @@ public class AjoutActe extends javax.swing.JFrame {
      */
     public AjoutActe() {
         initComponents();
-        
+
         try {
             conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
         } catch (SQLException ex) {
@@ -47,8 +47,7 @@ public class AjoutActe extends javax.swing.JFrame {
             System.out.println("connexion impossible");
 
         }
-        
-               
+
     }
 
     /**
@@ -229,23 +228,24 @@ public class AjoutActe extends javax.swing.JFrame {
         int idacteradio = parseInt(jTextFieldidacte.getText());
         String codeacte = jTextFieldcodeacte.getText();
         String nom = jTextFieldNompracticien.getText();
-        String tarification = "1.0";
+        double tarification = 1.0;
         String significationcode = "RADIO DU GENOU";
+
         String jourCombo = jComboBoxJour.getSelectedItem().toString().trim();
         String moisCombo = jComboBoxMois.getSelectedItem().toString().trim();;
         String anneeCombo = jComboBoxAnnee.getSelectedItem().toString().trim();
         String dateCombo = anneeCombo + "-" + moisCombo + "-" + jourCombo;
 
-        //conversion de la date de naissance en type DateNaissance
+        //conversion de la date de naissance en type DateSIS
         String[] composantesDate = dateCombo.split("-");
         int annee = Integer.parseInt(composantesDate[0]);
         int mois = Integer.parseInt(composantesDate[1]);
         int jour = Integer.parseInt(composantesDate[2]);
 
-        Date date = new java.sql.Date(annee, mois, jour);
+        DateSIS date = new DateSIS(jour, mois, annee);
 
+        CreationActe1 nouvelActe = new CreationActe1(idacteradio, codeacte, tarification, significationcode, nom, date);
 
-        CreationActe1 nouvelActe = new CreationActe1(idacteradio, tarification, codeacte, significationcode, nom, date);
         // Établir une connexion à la base de données et préparer une requête d'insertion
         try {
             String sql = "INSERT INTO ACTERADIOLOGIQUE (IDACTERADIO, CODEACTE, TARIFICATION, SIGNIFICATIONCODE, PRACTICIEN, DATEACTIO) VALUES (?, ?, ?, ?, ?, ?)";
@@ -265,7 +265,7 @@ public class AjoutActe extends javax.swing.JFrame {
 //                JOptionPane.showMessageDialog(this, e.getMessage(), "Date de naissance postérieure à la date du jour", JOptionPane.ERROR_MESSAGE);
 //            }
         }
-
+        System.out.println(date);
         Acceuil nouveauJFrame = new Acceuil();
         nouveauJFrame.setVisible(true);
         dispose();

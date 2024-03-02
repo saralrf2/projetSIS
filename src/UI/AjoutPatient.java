@@ -19,7 +19,7 @@ import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import projetsis.DateNaissance;
+import projetsis.DateSIS;
 
 /**
  *
@@ -311,13 +311,13 @@ public class AjoutPatient extends javax.swing.JFrame {
         String anneeCombo = jComboBoxAnnee.getSelectedItem().toString().trim();
         String dateCombo = anneeCombo + "-" + moisCombo + "-" + jourCombo;
 
-        //conversion de la date de naissance en type DateNaissance
+        //conversion de la date de naissance en type DateSIS
         String[] composantesDate = dateCombo.split("-");
         int annee = Integer.parseInt(composantesDate[0]);
         int mois = Integer.parseInt(composantesDate[1]);
         int jour = Integer.parseInt(composantesDate[2]);
 
-        DateNaissance dateNaissance = new DateNaissance(jour, mois, annee);
+        DateSIS dateNaissance = new DateSIS(jour, mois, annee);
 
         CreationPatient nouveauPatient = new CreationPatient(id, nom, prenom, dateNaissance, adresse);
 

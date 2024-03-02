@@ -59,14 +59,14 @@ public class recup_donnees {
 
             try {
                 Statement st = conn.createStatement();
-                String query = "SELECT IDACTE FROM ACTERADIO1";
+                String query = "SELECT DATEACTIO FROM ACTERADIOLOGIQUE";
                 ResultSet rs = st.executeQuery(query);
                 while (rs.next()) {
 //                    String nom = rs.getString(1);
 //                    String prenom = rs.getString("prenom");
 //                    String age = rs.getInt(3);
                     
-                    String id = rs.getString("IDACTE");
+                    String id = rs.getString("DATEACTIO");
                     System.out.printf(id);
                 }
             } finally {

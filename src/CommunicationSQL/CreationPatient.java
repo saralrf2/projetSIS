@@ -13,17 +13,17 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.time.ZoneId;
 import javax.swing.JOptionPane;
-import projetsis.DateNaissance;
+import projetsis.DateSIS;
 
 public class CreationPatient {
 
     private int ID;
     private String nom;
     private String prenom;
-    private DateNaissance dateNaissance;
+    private DateSIS dateNaissance;
     private String adresse;
 
-    public CreationPatient(int id, String nom, String prenom, DateNaissance dateNaissance, String adresse) {
+    public CreationPatient(int id, String nom, String prenom, DateSIS dateNaissance, String adresse) {
         this.ID = id;
         this.nom = nom;
         this.prenom = prenom;
