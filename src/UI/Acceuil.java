@@ -305,8 +305,8 @@ Connection conn;
     }//GEN-LAST:event_jButtonDeconnexionActionPerformed
 
     private void jTableDMRMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDMRMouseClicked
-        int ligne = jTableDMR.getSelectedRow(); //récuperation information ligne
-        int colonne = jTableDMR.getSelectedColumn(); // récuperation information colonne
+//        int ligne = jTableDMR.getSelectedRow(); //récuperation information ligne
+//        int colonne = jTableDMR.getSelectedColumn(); // récuperation information colonne
         if (evt.getClickCount() == 2) { // Double clic sur une ligne
             
             int ligneSelectionnee = jTableDMR.getSelectedRow();// récuperation information de la ligne sélectionnée
@@ -319,11 +319,11 @@ Connection conn;
                 String adresse = jTableDMR.getValueAt(ligneSelectionnee, 4).toString();
                 
                 
-                Object data = jTableDMR.getValueAt(ligne, colonne);
+//                Object data = jTableDMR.getValueAt(ligne, colonne);
                 
 //                //ouvrir la fiche patient avec les informations sélectionnées
 
-                DMR nouveauJFrame = new DMR(idpatient, nom, prenom, datenaissance, adresse);
+                testACTE nouveauJFrame = new testACTE(idpatient, nom, prenom, datenaissance, adresse);
                 nouveauJFrame.setVisible(true);
                 nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
                
