@@ -64,19 +64,20 @@ public class AjoutActe extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jButtonConnexion = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         IDActe = new javax.swing.JLabel();
         NomduPracticien = new javax.swing.JLabel();
         Dateacte = new javax.swing.JLabel();
         jTextFieldidacte = new javax.swing.JTextField();
         jTextFieldNompracticien = new javax.swing.JTextField();
-        jComboBoxJour = new javax.swing.JComboBox<String>();
-        jComboBoxMois = new javax.swing.JComboBox<String>();
-        jComboBoxAnnee = new javax.swing.JComboBox<String>();
-        jButtonAjout = new javax.swing.JButton();
-        jButtonRetour = new javax.swing.JButton();
+        jComboBoxJour = new javax.swing.JComboBox<>();
+        jComboBoxMois = new javax.swing.JComboBox<>();
+        jComboBoxAnnee = new javax.swing.JComboBox<>();
         CodeACte = new javax.swing.JLabel();
         jTextFieldcodeacte = new javax.swing.JTextField();
+        jButtonRetour = new javax.swing.JButton();
+        jButtonAjouter = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
         jLabel1.setText("Numéro d'identification :");
@@ -93,10 +94,18 @@ public class AjoutActe extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
         jLabel5.setText("Adresse : ");
 
+        jButtonConnexion.setFont(new java.awt.Font("Galvji", 0, 14)); // NOI18N
+        jButtonConnexion.setText("Connexion");
+        jButtonConnexion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConnexionActionPerformed(evt);
+            }
+        });
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(236, 234, 234));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ajout Patient", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Galvji", 1, 18)))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ajout Acte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Galvji", 1, 18)))); // NOI18N
 
         IDActe.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
         IDActe.setText("ID Acte");
@@ -113,58 +122,44 @@ public class AjoutActe extends javax.swing.JFrame {
             }
         });
 
-        jComboBoxJour.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1 ", "2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ", "10 ", "11 ", "12 ", "13 ", "14 ", "15 ", "16 ", "17 ", "18 ", "19 ", "20 ", "21 ", "22 ", "23 ", "24 ", "25 ", "26 ", "27 ", "28 ", "29 ", "30 ", "31" }));
+        jComboBoxJour.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 ", "2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ", "10 ", "11 ", "12 ", "13 ", "14 ", "15 ", "16 ", "17 ", "18 ", "19 ", "20 ", "21 ", "22 ", "23 ", "24 ", "25 ", "26 ", "27 ", "28 ", "29 ", "30 ", "31" }));
 
-        jComboBoxMois.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", " " }));
+        jComboBoxMois.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", " " }));
 
-        jComboBoxAnnee.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2000", "2002", "2001", " " }));
+        jComboBoxAnnee.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2000", "2002", "2001", " " }));
 
-        jButtonAjout.setFont(new java.awt.Font("Galvji", 0, 13)); // NOI18N
-        jButtonAjout.setText("Ajouter");
-        jButtonAjout.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButtonAjout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAjoutActionPerformed(evt);
-            }
-        });
+        CodeACte.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
+        CodeACte.setText("Code Acte");
 
-        jButtonRetour.setFont(new java.awt.Font("Galvji", 0, 13)); // NOI18N
+        jButtonRetour.setFont(new java.awt.Font("Galvji", 0, 14)); // NOI18N
         jButtonRetour.setText("Retour");
-        jButtonRetour.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButtonRetour.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRetourActionPerformed(evt);
             }
         });
 
-        CodeACte.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
-        CodeACte.setText("Code Acte");
+        jButtonAjouter.setFont(new java.awt.Font("Galvji", 0, 14)); // NOI18N
+        jButtonAjouter.setText("Ajouter");
+        jButtonAjouter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAjouterActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jButtonRetour)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonAjouter))
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButtonRetour, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonAjout, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(IDActe)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldidacte, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(CodeACte)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldcodeacte, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(NomduPracticien)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldNompracticien, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(Dateacte)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -172,14 +167,28 @@ public class AjoutActe extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jComboBoxMois, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBoxAnnee, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 198, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addComponent(jComboBoxAnnee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(NomduPracticien)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldNompracticien, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(37, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(CodeACte)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldcodeacte, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(IDActe)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldidacte)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(IDActe)
                     .addComponent(jTextFieldidacte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -191,17 +200,16 @@ public class AjoutActe extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(NomduPracticien)
                     .addComponent(jTextFieldNompracticien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Dateacte)
                     .addComponent(jComboBoxJour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxMois, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxAnnee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonAjout)
-                    .addComponent(jButtonRetour))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButtonRetour)
+                    .addComponent(jButtonAjouter)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -218,13 +226,20 @@ public class AjoutActe extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTextFieldNompracticienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNompracticienActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldNompracticienActionPerformed
+
+    private void jButtonConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnexionActionPerformed
+        
+    }//GEN-LAST:event_jButtonConnexionActionPerformed
+
     private void jButtonRetourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRetourActionPerformed
-        Acceuil nouveauJFrame = new Acceuil();
-        nouveauJFrame.setVisible(true);
+       
         dispose();
     }//GEN-LAST:event_jButtonRetourActionPerformed
 
-    private void jButtonAjoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjoutActionPerformed
+    private void jButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterActionPerformed
         int idacteradio = parseInt(jTextFieldidacte.getText());
         String codeacte = jTextFieldcodeacte.getText();
         String nom = jTextFieldNompracticien.getText();
@@ -269,11 +284,7 @@ public class AjoutActe extends javax.swing.JFrame {
         Acceuil nouveauJFrame = new Acceuil();
         nouveauJFrame.setVisible(true);
         dispose();
-    }//GEN-LAST:event_jButtonAjoutActionPerformed
-
-    private void jTextFieldNompracticienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNompracticienActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldNompracticienActionPerformed
+    }//GEN-LAST:event_jButtonAjouterActionPerformed
 
     /**
      * @param args the command line arguments
@@ -316,7 +327,8 @@ public class AjoutActe extends javax.swing.JFrame {
     private javax.swing.JLabel Dateacte;
     private javax.swing.JLabel IDActe;
     private javax.swing.JLabel NomduPracticien;
-    private javax.swing.JButton jButtonAjout;
+    private javax.swing.JButton jButtonAjouter;
+    private javax.swing.JButton jButtonConnexion;
     private javax.swing.JButton jButtonRetour;
     private javax.swing.JComboBox<String> jComboBoxAnnee;
     private javax.swing.JComboBox<String> jComboBoxJour;

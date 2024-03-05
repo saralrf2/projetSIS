@@ -79,31 +79,19 @@ public class MainSQL {
 //        PreparedStatement preparedStatementSuppressionPatient = conn.prepareStatement(query);
 //        preparedStatementSuppressionPatient.setString(1, nomPatient);
 //        
-//        double tarification = 1.5;
-//        System.out.println("test = " + intValue(tarification)); 
+        double tarification = 1.5;
+        System.out.println("test = " + intValue(tarification)); 
+        
+        
 //        Scanner scanner = new Scanner(System.in);
 //        System.out.println("Veuillez saisir nom de la table à mettre à jour :");
 //        String nomTable = scanner.nextLine();
 //        Scanner scanner2 = new Scanner(System.in);
 //        System.out.println("Veuillez saisir la valeur 1 à mettre à jour :");
 //        String valeur1 = scanner.nextLine();
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Veuillez saisir le nom de la Table à modifier :");
-        String nomTable = scanner.nextLine();
+//        String query = "UPDATE PATIENT SET " + valeur1;
+//        PreparedStatement ps = conn.prepareStatement(query);
+//        ps.setString(1, query);
 
-        Scanner scanner1 = new Scanner(System.in);
-        System.out.println("Veuillez saisir le nom de la colonne à modifier :");
-        String nomcolonne = scanner.nextLine();
-
-        Scanner scanner3 = new Scanner(System.in);
-        System.out.println("Veuillez saisir l'ancienne valeur :");
-        String ancienneValeur = "'"+scanner.nextLine().trim()+"'";
-        Scanner scanner2 = new Scanner(System.in);
-        System.out.println("Veuillez saisir la valeur à modifier :");
-        String nouvelleValeur = "'"+scanner.nextLine().trim()+"'";
-//
-        UpdateSQL majPatient = new UpdateSQL(nomTable, nomcolonne, nouvelleValeur, ancienneValeur);
-        PreparedStatement ps = conn.prepareStatement(majPatient.MettreAJour());
-        ps.executeUpdate();//cezuog
     }
 }

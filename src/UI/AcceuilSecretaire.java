@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -301,7 +302,7 @@ public class AcceuilSecretaire extends javax.swing.JFrame {
 //                //ouvrir la fiche patient avec les informations sélectionnées
             SecretaireDMR nouveauJFrame = new SecretaireDMR(idpatient, nom, prenom, datenaissance, adresse);
             nouveauJFrame.setVisible(true);
-            nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+            nouveauJFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         }
     }//GEN-LAST:event_jTableDMRMouseClicked
@@ -309,11 +310,12 @@ public class AcceuilSecretaire extends javax.swing.JFrame {
     private void jButtonAjoutPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjoutPatientActionPerformed
         AjoutPatient nouveauJFrame = new AjoutPatient();
         nouveauJFrame.setVisible(true);
-        dispose();
+        
     }//GEN-LAST:event_jButtonAjoutPatientActionPerformed
 
     private void jButtonRechercheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRechercheActionPerformed
-        String rech = jTextFieldRecherche.getText();
+        String textRech = jTextFieldRecherche.getText();
+        String rech = capitalizeFirstLetter(textRech);
         System.out.println(rech);
 
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
