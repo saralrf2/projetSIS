@@ -79,8 +79,8 @@ public class MainSQL {
 //        PreparedStatement preparedStatementSuppressionPatient = conn.prepareStatement(query);
 //        preparedStatementSuppressionPatient.setString(1, nomPatient);
 //        
-        double tarification = 1.5;
-        System.out.println("test = " + intValue(tarification)); 
+//        double tarification = 1.5;
+//        System.out.println("test = " + intValue(tarification)); 
         
         
 //        Scanner scanner = new Scanner(System.in);
@@ -89,9 +89,17 @@ public class MainSQL {
 //        Scanner scanner2 = new Scanner(System.in);
 //        System.out.println("Veuillez saisir la valeur 1 à mettre à jour :");
 //        String valeur1 = scanner.nextLine();
-//        String query = "UPDATE PATIENT SET " + valeur1;
+        
+        
+        String query = "UPDATE PATIENT SET " + valeur1;
 //        PreparedStatement ps = conn.prepareStatement(query);
 //        ps.setString(1, query);
+        
+        
+        
+        
+        
+        
 
     }
 }
