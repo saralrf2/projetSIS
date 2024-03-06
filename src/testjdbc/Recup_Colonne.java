@@ -57,9 +57,11 @@ public class Recup_Colonne {
         // Note : cette requête ne nécessite pas de BD (elle utilise la table "dual")
         if (conn != null) {
             System.out.println("Connexion établie.");
-
+            
+            Scanner scanner = new Scanner (System.in);
+            System.out.println("Saisir la table à afficher");
             try {
-                String nomTable = "ACTERADIOLOGIQUE"; // Remplacez par le nom de votre table
+                String nomTable = scanner.nextLine(); // Remplacez par le nom de votre table
 
                 // Récupérer les métadonnées de la base de données
                 DatabaseMetaData metaData = conn.getMetaData();

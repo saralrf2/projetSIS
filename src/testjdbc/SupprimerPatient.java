@@ -14,7 +14,7 @@ public class SupprimerPatient {
 //             Requête SQL pour supprimer le patient avec le nom "VIOLETTE"
             String sql = "DELETE FROM PATIENT WHERE IDPATIENT = ?";
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, "202031325523");
+            stmt.setString(1, "1");
 
 //             Exécution de la requête de suppression
             int rowsAffected = stmt.executeUpdate();

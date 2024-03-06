@@ -46,7 +46,7 @@ public class Recup_Colonne_et_Donnees {
             try {
                
                 Scanner scanner = new Scanner(System.in);
-                System.out.println("Veuillez saisir le nom de la Table à créer :");
+                System.out.println("Veuillez saisir le nom de la Table à afficher :");
                 String nomTable = scanner.nextLine();
 
 //                // Récupérer les métadonnées de la base de données

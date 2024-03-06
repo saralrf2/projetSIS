@@ -14,7 +14,7 @@ import java.time.ZoneId;
 import javax.swing.JOptionPane;
 import projetsis.DateSIS;
 import java.sql.Date;
-import UI.testACTE;
+import UI.DossierMedicalRadiologie;
 
 public class CreationActe1 {
 
@@ -25,9 +25,9 @@ public class CreationActe1 {
     private String practicien;
     private DateSIS dateacte;
     private int idpatient;
-    private testACTE acte;
+    private DossierMedicalRadiologie acte;
 
-    public CreationActe1(testACTE acte, int IDacteradio, String codeActe, String significationcode, String practicien, DateSIS dateacte, int idpatientdouble, double tarification) {
+    public CreationActe1(DossierMedicalRadiologie acte, int IDacteradio, String codeActe, String significationcode, String practicien, DateSIS dateacte, int idpatientdouble, double tarification) {
         this.IDActeradio = IDacteradio;
         this.tarification = tarification;
         this.significationCode = significationcode;

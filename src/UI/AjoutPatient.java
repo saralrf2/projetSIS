@@ -333,7 +333,7 @@ public class AjoutPatient extends javax.swing.JFrame {
 
         // Établir une connexion à la base de données et préparer une requête d'insertion
         try {
-            String sql = "INSERT INTO PATIENT (IDPATIENT, NOM, PRENOM, DATENAISSANCE, ADRESSE) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO PATIENTRADIO (IDPATIENT, NOM, PRENOM, DATENAISSANCE, ADRESSE) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
             // Appeler la méthode CreerPatient() pour insérer les données dans la base de données

@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;//cgvubh
  *
  * @author alexiaidrac
  */
-public class testACTE extends javax.swing.JFrame {
+public class DossierMedicalRadiologie extends javax.swing.JFrame {
 
     Connection conn;
     private int idPatient;
@@ -27,7 +27,7 @@ public class testACTE extends javax.swing.JFrame {
      */
     private DefaultTableModel model;
 
-    public testACTE(int idpatient, String nom, String prenom, Date datenaissance, String adresse) {
+    public DossierMedicalRadiologie(int idpatient, String nom, String prenom, Date datenaissance, String adresse) {
         initComponents();
         this.idPatient = idpatient;
         model = new DefaultTableModel(new Object[]{"IDACTE", "CODE ACTE", "TARIFICATION", "Date Acte", "PRATICIEN", "Signification du Code"}, 0);
@@ -344,7 +344,7 @@ public class testACTE extends javax.swing.JFrame {
 
             Statement stmt = conn.createStatement();
             //exécutation de la requête
-            ResultSet rs = stmt.executeQuery("SELECT * FROM ACTERADIOLOGIQUE");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM ACTERADIOLOGIQUE WHERE IDPATIENT = "+idPatient);
             //on ajoute à la ligne les informations de la tableau
             while (rs.next()) {
                 Object[] row = new Object[]{rs.getInt("IDACTE"), rs.getString("CODEACTE"), rs.getDouble("TARIFICATION"), rs.getDate("DATEACTE"), rs.getString("PRATICIEN"), rs.getString("SIGNIFICATIONCODE")};
@@ -375,14 +375,16 @@ public class testACTE extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(testACTE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(testACTE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(testACTE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(testACTE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 

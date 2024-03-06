@@ -25,7 +25,7 @@ Connection conn;
     /**
      * Creates new form Acceuil
      */
-    private DefaultTableModel model;
+    private DefaultTableModel model;//lm
     
     public Acceuil() {
         initComponents();
@@ -328,7 +328,7 @@ Connection conn;
                 
 //                //ouvrir la fiche patient avec les informations sélectionnées
 
-                testACTE nouveauJFrame = new testACTE(idpatient, nom, prenom, datenaissance, adresse);
+                DossierMedicalRadiologie nouveauJFrame = new DossierMedicalRadiologie(idpatient, nom, prenom, datenaissance, adresse);
                 nouveauJFrame.setVisible(true);
                 nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
                

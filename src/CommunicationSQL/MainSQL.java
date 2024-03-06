@@ -83,32 +83,33 @@ public class MainSQL {
 //        PreparedStatement preparedStatementSuppressionPatient = conn.prepareStatement(query);
 //        preparedStatementSuppressionPatient.executeUpdate();
 //Mettre a jour données      
-//        boolean continuer = true;
-//        Scanner scanner = new Scanner(System.in);
-//        while (continuer) {
-//            System.out.println("Veuillez saisir nom de la table à mettre à jour :");
-//            String nomTable = scanner.nextLine();
-//
-//            System.out.println("Veuillez saisir le nom de la colonne à modifier :");
-//            String nomColonne = scanner.nextLine();
-//
-//            System.out.println("Veuillez saisir l'ancienne valeur :");
-//            String ancienneValeur = "'" + scanner.nextLine().trim() + "'";
-//
-//            try {
-//                System.out.println("Veuillez saisir la valeur à modifier :");
-//                String nouvelleValeur = "'" + scanner.nextLine().trim() + "'";
-//                UpdateSQL majPatient = new UpdateSQL(nomTable, nomColonne, nouvelleValeur, ancienneValeur);
-//                PreparedStatement ps = conn.prepareStatement(majPatient.MettreAJour());
-//                ps.executeUpdate();
-//                System.out.println("Mise à jour effectuée avec succès.");
-//            } catch (Exception e) {
-//                System.out.println("Une erreur s'est produite : " + e.getMessage());
-//            }
-//            System.out.println("Voulez-vous effectuer une autre mise à jour ? (Oui/Non)");
-//            String choix = scanner.nextLine();
-//            continuer = choix.equalsIgnoreCase("oui");
-//        }
+        boolean continuer = true;
+        Scanner scanner = new Scanner(System.in);
+        while (continuer) {
+            System.out.println("Veuillez saisir nom de la table à mettre à jour :");
+            String nomTable = scanner.nextLine();
+
+            System.out.println("Veuillez saisir le nom de la colonne à modifier :");
+            String nomColonne = scanner.nextLine();
+
+            System.out.println("Veuillez saisir l'ancienne valeur :");
+            String ancienneValeur = "'" + scanner.nextLine().trim() + "'";
+
+            try {
+                System.out.println("Veuillez saisir la valeur à modifier :");
+                String nouvelleValeur = "'" + scanner.nextLine().trim() + "'";
+                UpdateSQL majPatient = new UpdateSQL(nomTable, nomColonne, nouvelleValeur, ancienneValeur);
+                PreparedStatement ps = conn.prepareStatement(majPatient.MettreAJour());
+                ps.executeUpdate();
+                System.out.println("Mise à jour effectuée avec succès.");
+            } catch (Exception e) {
+                System.out.println("Une erreur s'est produite : " + e.getMessage());
+            }
+            System.out.println("Voulez-vous effectuer une autre mise à jour ? (Oui/Non)");
+            String choix = scanner.nextLine();
+            continuer = choix.equalsIgnoreCase("oui");
+            
+        }
 //       
 
     }
