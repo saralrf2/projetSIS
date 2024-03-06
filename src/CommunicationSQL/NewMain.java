@@ -27,9 +27,16 @@ public class NewMain {
         // TODO code application logic here
         Connection conn;
         conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
-        String creerTable = "CREATE TABLE ACTERADIOLOGIQUE (IDACTERADIO INT PRIMARY KEY NOT NULL, TARIFICATION double NOT NULL, SIGNIFICATIONCODE varchar(100) NOT NULL, NOMPRACTICIEN varchar(100) NOT NULL, DATEACTE DATE NOT NULL)";
-        PreparedStatement ct = conn.prepareStatement(creerTable);
-        ct.executeUpdate();
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Que voulez vous faire ? creerTable, insererDonnees");
+        String continuer = scanner.nextLine();
+        if (continuer.equals("creerTable")) {
+            String creerTable = "CREATE TABLE ACTERADIOLOGIQUE (IDACTE INT PRIMARY KEY NOT NULL, TARIFICATION double NOT NULL, SIGNIFICATIONCODE varchar(100) NOT NULL, PRACTICIEN varchar(100) NOT NULL, DATEACTE DATE NOT NULL, IDPATIENT int NOT NULL)";
+            PreparedStatement ct = conn.prepareStatement(creerTable);
+            ct.executeUpdate();
+        }else()
+
         String query = "INSERT INTO MaTable (id, ma_date) VALUES (789, ?)";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setDate(1, Date.valueOf("1997-07-13"));

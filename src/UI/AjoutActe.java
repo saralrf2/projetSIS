@@ -77,6 +77,8 @@ public class AjoutActe extends javax.swing.JFrame {
         jButtonRetour = new javax.swing.JButton();
         CodeACte = new javax.swing.JLabel();
         jTextFieldcodeacte = new javax.swing.JTextField();
+        IDActe1 = new javax.swing.JLabel();
+        jTextFieldidacte1 = new javax.swing.JTextField();
 
         jLabel1.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
         jLabel1.setText("Numéro d'identification :");
@@ -140,6 +142,9 @@ public class AjoutActe extends javax.swing.JFrame {
         CodeACte.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
         CodeACte.setText("Code Acte");
 
+        IDActe1.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
+        IDActe1.setText("ID Patient");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -172,14 +177,21 @@ public class AjoutActe extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jComboBoxMois, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBoxAnnee, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jComboBoxAnnee, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(IDActe1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldidacte1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 198, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(IDActe1)
+                    .addComponent(jTextFieldidacte1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(IDActe)
                     .addComponent(jTextFieldidacte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -230,6 +242,7 @@ public class AjoutActe extends javax.swing.JFrame {
         String nom = jTextFieldNompracticien.getText();
         double tarification = 1.0;
         String significationcode = "RADIO DU GENOU";
+        int idpatient = 1;
 
         String jourCombo = jComboBoxJour.getSelectedItem().toString().trim();
         String moisCombo = jComboBoxMois.getSelectedItem().toString().trim();;
@@ -244,11 +257,11 @@ public class AjoutActe extends javax.swing.JFrame {
 
         DateSIS date = new DateSIS(jour, mois, annee);
 
-        CreationActe1 nouvelActe = new CreationActe1(idacteradio, codeacte, tarification, significationcode, nom, date);
+        CreationActe1 nouvelActe = new CreationActe1(idacteradio, codeacte, significationcode, nom, date, idpatient, tarification);
 
         // Établir une connexion à la base de données et préparer une requête d'insertion
         try {
-            String sql = "INSERT INTO ACTERADIOLOGIQUE (IDACTERADIO, CODEACTE, TARIFICATION, SIGNIFICATIONCODE, PRACTICIEN, DATEACTIO) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO ACTERADIOLOGIQUE (IDACTE, CODEACTE, SIGNIFICATIONCODE, PRATICIEN, DATEACTE, IDPATIENT, TARIFICATION) VALUES (?, ?, ?, ?, ?, 1, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
             // Appeler la méthode CreerPatient() pour insérer les données dans la base de données
@@ -315,6 +328,7 @@ public class AjoutActe extends javax.swing.JFrame {
     private javax.swing.JLabel CodeACte;
     private javax.swing.JLabel Dateacte;
     private javax.swing.JLabel IDActe;
+    private javax.swing.JLabel IDActe1;
     private javax.swing.JLabel NomduPracticien;
     private javax.swing.JButton jButtonAjout;
     private javax.swing.JButton jButtonRetour;
@@ -330,5 +344,6 @@ public class AjoutActe extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldNompracticien;
     private javax.swing.JTextField jTextFieldcodeacte;
     private javax.swing.JTextField jTextFieldidacte;
+    private javax.swing.JTextField jTextFieldidacte1;
     // End of variables declaration//GEN-END:variables
 }

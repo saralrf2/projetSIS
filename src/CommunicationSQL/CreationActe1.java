@@ -23,14 +23,16 @@ public class CreationActe1 {
     private String significationCode;
     private String practicien;
     private DateSIS dateacte;
+    private int idpatient;
 
-    public CreationActe1(int IDacteradio, String codeActe, double tarification, String significationcode, String practicien, DateSIS dateacte) {
+    public CreationActe1(int IDacteradio, String codeActe, String significationcode, String practicien, DateSIS dateacte, int idpatientdouble, double tarification) {
         this.IDActeradio = IDacteradio;
         this.tarification = tarification;
         this.significationCode = significationcode;
         this.practicien = practicien;
         this.dateacte = dateacte;
         this.codeActe = codeActe;
+        this.idpatient = idpatient;
     }
 
     public void CreerActe(PreparedStatement preparedStatement) throws SQLException {
@@ -47,10 +49,11 @@ public class CreationActe1 {
         } else {
             preparedStatement.setString(1, String.valueOf(IDActeradio));
             preparedStatement.setString(2, codeActe);
-            preparedStatement.setDouble(3, tarification);
-            preparedStatement.setString(4, significationCode.substring(0, 1).toUpperCase() + significationCode.substring(1));
-            preparedStatement.setString(5, practicien.substring(0, 1).toUpperCase() + practicien.substring(1));
-            preparedStatement.setDate(6, java.sql.Date.valueOf(dateacteLocalDate));
+            preparedStatement.setDouble(6, tarification);
+            preparedStatement.setString(3, significationCode.substring(0, 1).toUpperCase() + significationCode.substring(1));
+            preparedStatement.setString(4, practicien.substring(0, 1).toUpperCase() + practicien.substring(1));
+            preparedStatement.setDate(5, java.sql.Date.valueOf(dateacteLocalDate));
+//            preparedStatement.setInt(6, idpatient);
 
             preparedStatement.executeUpdate();
 //        }
