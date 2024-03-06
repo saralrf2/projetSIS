@@ -1,9 +1,12 @@
+package testjdbc;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,7 +32,9 @@ public class SuppressionTable {
 
             try {
                 Statement statement = conn.createStatement();
-                String nomTable = "ACTERADIOLOGIQUE";
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("saisir nom table a suppr");
+                String nomTable = scanner.nextLine();
 
                 // Utilisation de PreparedStatement pour éviter les problèmes d'injection SQL
                 PreparedStatement preparedStatement = conn.prepareStatement(

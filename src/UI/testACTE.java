@@ -25,7 +25,7 @@ Connection conn;
     
     public testACTE(int idpatient, String nom, String prenom, Date datenaissance, String adresse) {
         initComponents();
-        model = new DefaultTableModel(new Object[]{"ID", "Name", "Prenom", "Date Naissance", "Adresse"}, 0);
+        model = new DefaultTableModel(new Object[]{"IDACTE", "CODE ACTE", "TARIFICATION", "Date Acte", "PRATICIEN", "Signification du Code"}, 0);
         jTableDMR.setModel(model); // Appliquer le modèle au jTableDMR
         jTableDMR.setDefaultEditor(Object.class, null); // Rendre toutes les cellules non éditables
         try {
@@ -325,7 +325,7 @@ Connection conn;
             ResultSet rs = stmt.executeQuery("SELECT * FROM ACTERADIOLOGIQUE");
             //on ajoute à la ligne les informations de la tableau
             while (rs.next()) {
-                Object[] row = new Object[]{rs.getInt("IDACTERADIO"), rs.getString("CODEACTE"), rs.getDouble("TARIFICATION"),rs.getDate("DATEACTIO"), rs.getString("PRACTICIEN"), rs.getString("SIGNIFICATIONCODE")};
+                Object[] row = new Object[]{rs.getInt("IDACTE"), rs.getString("CODEACTE"), rs.getDouble("TARIFICATION"),rs.getDate("DATEACTE"), rs.getString("PRATICIEN"), rs.getString("SIGNIFICATIONCODE")};
                 model.addRow(row);
             }
             // on applique le model du defaulttable au jTable de l'interface

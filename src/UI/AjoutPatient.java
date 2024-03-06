@@ -36,6 +36,16 @@ public class AjoutPatient extends javax.swing.JFrame {
         initComponents();
 
         jComboBoxAnnee.addItem("2024");
+        jComboBoxAnnee.addItem("1990");
+        jComboBoxAnnee.addItem("1991");
+        jComboBoxAnnee.addItem("1992");
+        jComboBoxAnnee.addItem("1993");
+        jComboBoxAnnee.addItem("1994");
+        jComboBoxAnnee.addItem("1995");
+        jComboBoxAnnee.addItem("1996");
+        jComboBoxAnnee.addItem("1997");
+        jComboBoxAnnee.addItem("1998");
+        jComboBoxAnnee.addItem("1999");
         try {
             conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
         } catch (SQLException ex) {
