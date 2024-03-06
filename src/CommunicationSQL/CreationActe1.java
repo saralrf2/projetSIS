@@ -7,6 +7,7 @@ package CommunicationSQL;
 
 import UI.AjoutPatient;
 import UI.Connexion;
+import static java.lang.Integer.parseInt;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import java.time.ZoneId;
 import javax.swing.JOptionPane;
 import projetsis.DateSIS;
 import java.sql.Date;
+import UI.testACTE;
 
 public class CreationActe1 {
 
@@ -24,17 +26,19 @@ public class CreationActe1 {
     private String practicien;
     private DateSIS dateacte;
     private int idpatient;
+    private testACTE testacte;
 
-    public CreationActe1(int IDacteradio, String codeActe, String significationcode, String practicien, DateSIS dateacte, int idpatientdouble, double tarification) {
+    public CreationActe1(testACTE acte, int IDacteradio, String codeActe, String significationcode, String practicien, DateSIS dateacte, int idpatientdouble, double tarification) {
         this.IDActeradio = IDacteradio;
         this.tarification = tarification;
         this.significationCode = significationcode;
         this.practicien = practicien;
         this.dateacte = dateacte;
         this.codeActe = codeActe;
-        this.idpatient = idpatient;
+        this.testacte = acte;
+        this.idpatient = parseInt(acte.getIdPatient());
     }
-
+   
     public void CreerActe(PreparedStatement preparedStatement) throws SQLException {
         LocalDate dateJour = LocalDate.now();
         LocalDate dateacteLocalDate = LocalDate.of(dateacte.getAnnee(), dateacte.getMois(), dateacte.getJour());

@@ -29,13 +29,28 @@ import projetsis.DateSIS;
 public class AjoutActe extends javax.swing.JFrame {
 
     Connection conn;
+    private testACTE acte;
 
-    /**
-     * Creates new form AjoutPatient
-     */
+   
+    public AjoutActe(testACTE testacte) {
+        initComponents();
+        this.acte = testacte;
+        IDActe1.setText(acte.getIdPatient());
+        try {
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
+        } catch (SQLException ex) {
+            Logger.getLogger(AjoutActe.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (conn != null) {
+            System.out.println("Connexion établie");
+        } else {
+            System.out.println("connexion impossible");
+
+        }
+
+    }
     public AjoutActe() {
         initComponents();
-
         try {
             conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
         } catch (SQLException ex) {
@@ -78,7 +93,6 @@ public class AjoutActe extends javax.swing.JFrame {
         CodeACte = new javax.swing.JLabel();
         jTextFieldcodeacte = new javax.swing.JTextField();
         IDActe1 = new javax.swing.JLabel();
-        jTextFieldidacte1 = new javax.swing.JTextField();
 
         jLabel1.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
         jLabel1.setText("Numéro d'identification :");
@@ -178,19 +192,14 @@ public class AjoutActe extends javax.swing.JFrame {
                                 .addComponent(jComboBoxMois, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jComboBoxAnnee, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(IDActe1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldidacte1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(IDActe1))
                         .addGap(0, 198, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(IDActe1)
-                    .addComponent(jTextFieldidacte1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(IDActe1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(IDActe)
@@ -242,7 +251,7 @@ public class AjoutActe extends javax.swing.JFrame {
         String nom = jTextFieldNompracticien.getText();
         double tarification = 1.0;
         String significationcode = "RADIO DU GENOU";
-        int idpatient = 1;
+        int idpatient = parseInt(acte.getIdPatient());
 
         String jourCombo = jComboBoxJour.getSelectedItem().toString().trim();
         String moisCombo = jComboBoxMois.getSelectedItem().toString().trim();;
@@ -257,7 +266,7 @@ public class AjoutActe extends javax.swing.JFrame {
 
         DateSIS date = new DateSIS(jour, mois, annee);
 
-        CreationActe1 nouvelActe = new CreationActe1(idacteradio, codeacte, significationcode, nom, date, idpatient, tarification);
+        CreationActe1 nouvelActe = new CreationActe1(acte, idacteradio, codeacte, significationcode, nom, date, idpatient, tarification);
 
         // Établir une connexion à la base de données et préparer une requête d'insertion
         try {
@@ -344,6 +353,5 @@ public class AjoutActe extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldNompracticien;
     private javax.swing.JTextField jTextFieldcodeacte;
     private javax.swing.JTextField jTextFieldidacte;
-    private javax.swing.JTextField jTextFieldidacte1;
     // End of variables declaration//GEN-END:variables
 }
