@@ -3,30 +3,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package UI;
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
+import java.sql.ResultSet;//cill
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-
 /**
  *
  * @author alexiaidrac
  */
 public class testACTE extends javax.swing.JFrame {
-
-    private Connection conn;
-    private String idPatient;
+Connection conn;
     /**
      * Creates new form Acceuil
      */
     private DefaultTableModel model;
-
+    
     public testACTE(int idpatient, String nom, String prenom, Date datenaissance, String adresse) {
         initComponents();
         model = new DefaultTableModel(new Object[]{"IDACTE", "CODE ACTE", "TARIFICATION", "Date Acte", "PRATICIEN", "Signification du Code"}, 0);
@@ -44,7 +40,7 @@ public class testACTE extends javax.swing.JFrame {
             System.out.println("connexion impossible");
 
         }
-        idPatient = String.valueOf(idpatient);
+        String idPatient = String.valueOf(idpatient);
         String dateNaissance = datenaissance.toString();
         infoID.setText(idPatient);
         infoNom.setText(nom);
@@ -81,7 +77,6 @@ public class testACTE extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTableDMR = new javax.swing.JTable();
-        ButtonAjoutActe = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -233,37 +228,27 @@ public class testACTE extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(jTableDMR);
 
-        ButtonAjoutActe.setText("Ajouter");
-        ButtonAjoutActe.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonAjoutActeActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jButtonRetour)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel6))
+                    .addComponent(jButtonRetour))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(ButtonAjoutActe))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(ButtonAjoutActe))
+                .addGap(30, 30, 30)
+                .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -311,7 +296,9 @@ public class testACTE extends javax.swing.JFrame {
 //            double tarification = new Double(jTableDMR.getValueAt(ligneSelectionnee, 4).toString());
 
 //            Object data = jTableDMR.getValueAt(ligne, colonne);
+
             //                //ouvrir la fiche patient avec les informations sélectionnées
+
             Acte nouveauJFrame = new Acte(idActe, codeActe, nomPracticien, dateActe);
             nouveauJFrame.setVisible(true);
             nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -319,32 +306,26 @@ public class testACTE extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTableDMRMouseClicked
 
-    private void ButtonAjoutActeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAjoutActeActionPerformed
-        AjoutActe nouveauJFrame = new AjoutActe(this);
-        nouveauJFrame.setVisible(true);
-        nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-    }//GEN-LAST:event_ButtonAjoutActeActionPerformed
-
     /**
      * @param args the command line arguments
      */
     private void recuperation_donnees() {
-
+        
         //ajouter les colonnes à notre nouveau tableau
 //        model.addColumn("ID");
 //        model.addColumn("Name");
 //        model.addColumn("Prenom");
 //        model.addColumn("Date Naissance");
 //        model.addColumn("Adresse");
-        try {
 
+        try {
+          
             Statement stmt = conn.createStatement();
             //exécutation de la requête
             ResultSet rs = stmt.executeQuery("SELECT * FROM ACTERADIOLOGIQUE");
             //on ajoute à la ligne les informations de la tableau
             while (rs.next()) {
-                Object[] row = new Object[]{rs.getInt("IDACTE"), rs.getString("CODEACTE"), rs.getDouble("TARIFICATION"), rs.getDate("DATEACTE"), rs.getString("PRATICIEN"), rs.getString("SIGNIFICATIONCODE")};
+                Object[] row = new Object[]{rs.getInt("IDACTE"), rs.getString("CODEACTE"), rs.getDouble("TARIFICATION"),rs.getDate("DATEACTE"), rs.getString("PRATICIEN"), rs.getString("SIGNIFICATIONCODE")};
                 model.addRow(row);
             }
             // on applique le model du defaulttable au jTable de l'interface
@@ -357,7 +338,6 @@ public class testACTE extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -392,7 +372,6 @@ public class testACTE extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ButtonAjoutActe;
     private javax.swing.JLabel infoAdresse;
     private javax.swing.JLabel infoDate;
     private javax.swing.JLabel infoID;
@@ -413,18 +392,4 @@ public class testACTE extends javax.swing.JFrame {
     private javax.swing.JTable jTableDMR;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
-
-    /**
-     * @return the idPatient
-     */
-    public String getIdPatient() {
-        return idPatient;
-    }
-
-    /**
-     * @return the infoID
-     */
-    public javax.swing.JLabel getInfoID() {
-        return infoID;
-    }
 }

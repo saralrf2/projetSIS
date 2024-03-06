@@ -130,7 +130,11 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jComboBoxAnnee" min="-2" pref="69" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="IDActe1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="IDActe1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jTextFieldidacte1" min="-2" pref="218" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace min="0" pref="198" max="32767" attributes="0"/>
                       </Group>
@@ -142,7 +146,10 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="IDActe1" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="IDActe1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextFieldidacte1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="IDActe" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -337,6 +344,8 @@
             </Property>
             <Property name="text" type="java.lang.String" value="ID Patient"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextFieldidacte1">
         </Component>
       </SubComponents>
     </Container>

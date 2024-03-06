@@ -4,20 +4,18 @@
  */
 package UI;
 import java.sql.Date;
-import javax.swing.JFrame;
 /**
  *
  * @author alexiaidrac
  */
 public class DMR extends javax.swing.JFrame {
-    private Acceuil acceuil;
+
     /**
      * Creates new form DMR
      */
     public DMR(int idpatient, String nom, String prenom, Date datenaissance, String adresse) {
         initComponents();
         
-        this.acceuil = acceuil;
         String idPatient = String.valueOf(idpatient);
         String dateNaissance = datenaissance.toString();
         infoID.setText(idPatient);
@@ -252,9 +250,9 @@ public class DMR extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonRetourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRetourActionPerformed
-
+        Acceuil nouveauJFrame = new Acceuil();
+        nouveauJFrame.setVisible(true);
         dispose();
-        
     }//GEN-LAST:event_jButtonRetourActionPerformed
 
     /**
@@ -287,7 +285,6 @@ public class DMR extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Acceuil AccFrame = new Acceuil();
                 //new DMR().setVisible(true);
             }
         });
