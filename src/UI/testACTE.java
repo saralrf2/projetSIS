@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package UI;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -12,18 +13,20 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;//cgvubh
+
 /**
  *
  * @author alexiaidrac
  */
 public class testACTE extends javax.swing.JFrame {
-Connection conn;
-private int idPatient;
+
+    Connection conn;
+    private int idPatient;
     /**
      * Creates new form Acceuil
      */
     private DefaultTableModel model;
-    
+
     public testACTE(int idpatient, String nom, String prenom, Date datenaissance, String adresse) {
         initComponents();
         this.idPatient = idpatient;
@@ -79,6 +82,7 @@ private int idPatient;
         jLabel6 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTableDMR = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -230,6 +234,13 @@ private int idPatient;
         });
         jScrollPane4.setViewportView(jTableDMR);
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -238,9 +249,13 @@ private int idPatient;
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(14, 14, 14)
-                        .addComponent(jLabel6))
-                    .addComponent(jButtonRetour))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonRetour)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
         );
@@ -249,8 +264,10 @@ private int idPatient;
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jLabel6)
+                .addGap(25, 25, 25)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -298,9 +315,7 @@ private int idPatient;
 //            double tarification = new Double(jTableDMR.getValueAt(ligneSelectionnee, 4).toString());
 
 //            Object data = jTableDMR.getValueAt(ligne, colonne);
-
             //                //ouvrir la fiche patient avec les informations sélectionnées
-
             Acte nouveauJFrame = new Acte(idActe, codeActe, nomPracticien, dateActe);
             nouveauJFrame.setVisible(true);
             nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -308,26 +323,31 @@ private int idPatient;
         }
     }//GEN-LAST:event_jTableDMRMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        AjoutActe nouveauJFrame = new AjoutActe(this);
+        nouveauJFrame.setVisible(true);
+        nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
     private void recuperation_donnees() {
-        
+
         //ajouter les colonnes à notre nouveau tableau
 //        model.addColumn("ID");
 //        model.addColumn("Name");
 //        model.addColumn("Prenom");
 //        model.addColumn("Date Naissance");
 //        model.addColumn("Adresse");
-
         try {
-          
+
             Statement stmt = conn.createStatement();
             //exécutation de la requête
             ResultSet rs = stmt.executeQuery("SELECT * FROM ACTERADIOLOGIQUE");
             //on ajoute à la ligne les informations de la tableau
             while (rs.next()) {
-                Object[] row = new Object[]{rs.getInt("IDACTE"), rs.getString("CODEACTE"), rs.getDouble("TARIFICATION"),rs.getDate("DATEACTE"), rs.getString("PRATICIEN"), rs.getString("SIGNIFICATIONCODE")};
+                Object[] row = new Object[]{rs.getInt("IDACTE"), rs.getString("CODEACTE"), rs.getDouble("TARIFICATION"), rs.getDate("DATEACTE"), rs.getString("PRATICIEN"), rs.getString("SIGNIFICATIONCODE")};
                 model.addRow(row);
             }
             // on applique le model du defaulttable au jTable de l'interface
@@ -340,6 +360,7 @@ private int idPatient;
             e.printStackTrace();
         }
     }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -379,6 +400,7 @@ private int idPatient;
     private javax.swing.JLabel infoID;
     private javax.swing.JLabel infoNom;
     private javax.swing.JLabel infoPrenom;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonRetour;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
