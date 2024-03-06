@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;//cgvubh
  */
 public class testACTE extends javax.swing.JFrame {
 Connection conn;
+private int idPatient;
     /**
      * Creates new form Acceuil
      */
@@ -25,6 +26,7 @@ Connection conn;
     
     public testACTE(int idpatient, String nom, String prenom, Date datenaissance, String adresse) {
         initComponents();
+        this.idPatient = idpatient;
         model = new DefaultTableModel(new Object[]{"IDACTE", "CODE ACTE", "TARIFICATION", "Date Acte", "PRATICIEN", "Signification du Code"}, 0);
         jTableDMR.setModel(model); // Appliquer le modèle au jTableDMR
         jTableDMR.setDefaultEditor(Object.class, null); // Rendre toutes les cellules non éditables
@@ -392,4 +394,11 @@ Connection conn;
     private javax.swing.JTable jTableDMR;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the idPatient
+     */
+    public int getIdPatient() {
+        return idPatient;
+    }
 }

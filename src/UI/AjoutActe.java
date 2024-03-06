@@ -29,13 +29,29 @@ import projetsis.DateSIS;
 public class AjoutActe extends javax.swing.JFrame {
 
     Connection conn;
+    private testACTE acte;
 
     /**
      * Creates new form AjoutPatient
      */
+    public AjoutActe(testACTE acte) {
+        initComponents();
+        this.acte = acte;
+        try {
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
+        } catch (SQLException ex) {
+            Logger.getLogger(AjoutActe.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (conn != null) {
+            System.out.println("Connexion établie");
+        } else {
+            System.out.println("connexion impossible");
+
+        }
+
+    }
     public AjoutActe() {
         initComponents();
-
         try {
             conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
         } catch (SQLException ex) {
@@ -242,7 +258,7 @@ public class AjoutActe extends javax.swing.JFrame {
         String nom = jTextFieldNompracticien.getText();
         double tarification = 1.0;
         String significationcode = "RADIO DU GENOU";
-        int idpatient = 1;
+        int idpatient = acte.getIdPatient();
 
         String jourCombo = jComboBoxJour.getSelectedItem().toString().trim();
         String moisCombo = jComboBoxMois.getSelectedItem().toString().trim();;
@@ -257,11 +273,11 @@ public class AjoutActe extends javax.swing.JFrame {
 
         DateSIS date = new DateSIS(jour, mois, annee);
 
-        CreationActe1 nouvelActe = new CreationActe1(idacteradio, codeacte, significationcode, nom, date, idpatient, tarification);
+        CreationActe1 nouvelActe = new CreationActe1(acte, idacteradio, codeacte, significationcode, nom, date, idpatient, tarification);
 
         // Établir une connexion à la base de données et préparer une requête d'insertion
         try {
-            String sql = "INSERT INTO ACTERADIOLOGIQUE (IDACTE, CODEACTE, SIGNIFICATIONCODE, PRATICIEN, DATEACTE, IDPATIENT, TARIFICATION) VALUES (?, ?, ?, ?, ?, 1, ?)";
+            String sql = "INSERT INTO ACTERADIOLOGIQUE (IDACTE, CODEACTE, SIGNIFICATIONCODE, PRATICIEN, DATEACTE, IDPATIENT, TARIFICATION) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
             // Appeler la méthode CreerPatient() pour insérer les données dans la base de données

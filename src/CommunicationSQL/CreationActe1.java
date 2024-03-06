@@ -14,6 +14,7 @@ import java.time.ZoneId;
 import javax.swing.JOptionPane;
 import projetsis.DateSIS;
 import java.sql.Date;
+import UI.testACTE;
 
 public class CreationActe1 {
 
@@ -24,15 +25,17 @@ public class CreationActe1 {
     private String practicien;
     private DateSIS dateacte;
     private int idpatient;
+    private testACTE acte;
 
-    public CreationActe1(int IDacteradio, String codeActe, String significationcode, String practicien, DateSIS dateacte, int idpatientdouble, double tarification) {
+    public CreationActe1(testACTE acte, int IDacteradio, String codeActe, String significationcode, String practicien, DateSIS dateacte, int idpatientdouble, double tarification) {
         this.IDActeradio = IDacteradio;
         this.tarification = tarification;
         this.significationCode = significationcode;
         this.practicien = practicien;
         this.dateacte = dateacte;
         this.codeActe = codeActe;
-        this.idpatient = idpatient;
+        this.acte = acte;
+        this.idpatient = acte.getIdPatient();
     }
 
     public void CreerActe(PreparedStatement preparedStatement) throws SQLException {
@@ -49,11 +52,11 @@ public class CreationActe1 {
         } else {
             preparedStatement.setString(1, String.valueOf(IDActeradio));
             preparedStatement.setString(2, codeActe);
-            preparedStatement.setDouble(6, tarification);
+            preparedStatement.setDouble(7, tarification);
             preparedStatement.setString(3, significationCode.substring(0, 1).toUpperCase() + significationCode.substring(1));
             preparedStatement.setString(4, practicien.substring(0, 1).toUpperCase() + practicien.substring(1));
             preparedStatement.setDate(5, java.sql.Date.valueOf(dateacteLocalDate));
-//            preparedStatement.setInt(6, idpatient);
+            preparedStatement.setInt(6, idpatient);
 
             preparedStatement.executeUpdate();
 //        }
