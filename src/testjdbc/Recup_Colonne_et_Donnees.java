@@ -49,8 +49,8 @@ public class Recup_Colonne_et_Donnees {
                 System.out.println("Veuillez saisir le nom de la Table à créer :");
                 String nomTable = scanner.nextLine();
 
-                // Récupérer les métadonnées de la base de données
-                DatabaseMetaData metaData = conn.getMetaData();
+//                // Récupérer les métadonnées de la base de données
+//                DatabaseMetaData metaData = conn.getMetaData();
 
                 // Récupérer les données de la table
                 Statement statement = conn.createStatement();

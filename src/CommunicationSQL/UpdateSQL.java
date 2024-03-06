@@ -19,6 +19,15 @@ public class UpdateSQL {
     private String nouvelleValeur;
     private String ancienneValeur;
     private String condition;
+    private boolean continuer = true;
+
+    public UpdateSQL(String nomTable, String nomColonne, String ancienneValeur) {
+        this.nomTable = nomTable;
+        this.nomColonne = nomColonne;
+        this.nouvelleValeur = "";
+        this.ancienneValeur = ancienneValeur;
+        this.condition = nomColonne + " = " + ancienneValeur;
+    }
 
     public UpdateSQL(String nomTable, String nomColonne, String nouvelleValeur, String ancienneValeur) {
         this.nomTable = nomTable;
@@ -29,8 +38,13 @@ public class UpdateSQL {
     }
 
     public String MettreAJour() {
-       String s = "UPDATE " + nomTable + " SET " +nomColonne+ " = "+ nouvelleValeur + " WHERE " + condition ;
+        if (nouvelleValeur.equals("")) {
+            String s = "UPDATE " + nomTable + " SET " + nomColonne + " = " + nouvelleValeur + " WHERE " + condition;
+            return s;
+        }
+        String s = "UPDATE " + nomTable + " SET " + nomColonne + " = " + nouvelleValeur + " WHERE " + condition;
         return s;
 
     }
+
 }

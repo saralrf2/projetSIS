@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CommunicationSQL;
 
 import java.sql.SQLException;
@@ -20,12 +15,9 @@ public class CreationTable {
     public void creationTable(Statement statement, String table_name) throws SQLException {
        statement.executeUpdate(
                         "CREATE TABLE "+ table_name.toLowerCase()
-                                + " (IDACTERADIO integer NOT NULL, "
-                                + " CODEACTE varchar(80) NOT NULL, "
-                                + " TARIFICATION integer NOT NULL, "
-                                + " SIGNIFICATIONCODE varchar(80) NOT NULL, "
-                                + " PRACTICIEN varchar(80) NOT NULL, "
-                                + " DATEACTIO DATE NOT NULL, "
-                                + " PRIMARY KEY (IDACTERADIO))");
+                                + "(ID integer NOT NULL, "
+                                + " NAME varchar(80) NOT NULL, "
+                                + " FIRSTNAME varchar(80) NOT NULL, "
+                                + " PRIMARY KEY (ID))");
     }
 }

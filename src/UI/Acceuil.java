@@ -131,7 +131,7 @@ Connection conn;
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelBienvenue)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -147,6 +147,11 @@ Connection conn;
         jTextFieldRecherche.setFont(new java.awt.Font("Galvji", 0, 14)); // NOI18N
         jTextFieldRecherche.setText("Rechercher un patient...");
         jTextFieldRecherche.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jTextFieldRecherche.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldRechercheFocusGained(evt);
+            }
+        });
         jTextFieldRecherche.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldRechercheActionPerformed(evt);
@@ -356,6 +361,10 @@ Connection conn;
         }
            
     }//GEN-LAST:event_jButtonRechercheActionPerformed
+
+    private void jTextFieldRechercheFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldRechercheFocusGained
+        
+    }//GEN-LAST:event_jTextFieldRechercheFocusGained
 
     private void recuperation_donnees() {
         

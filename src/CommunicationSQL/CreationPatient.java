@@ -52,4 +52,9 @@ public class CreationPatient {
             preparedStatement.executeUpdate();
         }
     }
+
+    public void setDateNaissance(DateSIS nouvelleDateNaissance) {
+        this.dateNaissance = nouvelleDateNaissance;
+    }
+
 }
