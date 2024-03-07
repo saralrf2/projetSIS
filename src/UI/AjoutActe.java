@@ -251,7 +251,6 @@ public class AjoutActe extends javax.swing.JFrame {
         int idacteradio = parseInt(jTextFieldidacte.getText());
         String codeacte = jTextFieldcodeacte.getText();
         String nom = jTextFieldNompracticien.getText();
-        double tarification = 1.0;
         String significationcode = "RADIO DU GENOU";
         int idpatient = acte.getIdPatient();
 
@@ -268,7 +267,7 @@ public class AjoutActe extends javax.swing.JFrame {
 
         DateSIS date = new DateSIS(jour, mois, annee);
 
-        CreationActe1 nouvelActe = new CreationActe1(acte, idacteradio, codeacte, significationcode, nom, date, idpatient, tarification);
+        CreationActe1 nouvelActe = new CreationActe1(acte, idacteradio, codeacte, significationcode, nom, date, idpatient, 0.0);
 
         // Établir une connexion à la base de données et préparer une requête d'insertion
         try {
@@ -282,14 +281,13 @@ public class AjoutActe extends javax.swing.JFrame {
             conn.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
-//        } catch (IllegalArgumentException e) {
-//            if (e.getMessage().equals("L'ID du patient dépasse la valeur maximale autorisée.")) {
-//                JOptionPane.showMessageDialog(this, e.getMessage(), "L'ID du patient dépasse la valeur maximale autorisée.", JOptionPane.ERROR_MESSAGE);
-//            } else {
-//                JOptionPane.showMessageDialog(this, e.getMessage(), "Date de naissance postérieure à la date du jour", JOptionPane.ERROR_MESSAGE);
-//            }
+        } catch (IllegalArgumentException e) {
+            if (e.getMessage().equals("L'ID de l'acte dépasse la valeur maximale autorisée.")) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "L'ID de l'acte dépasse la valeur maximale autorisée.", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Date de l'acte postérieure à la date du jour", JOptionPane.ERROR_MESSAGE);
+            }
         }
-        System.out.println(date);
         Acceuil nouveauJFrame = new Acceuil();
         nouveauJFrame.setVisible(true);
         dispose();

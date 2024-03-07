@@ -70,7 +70,7 @@ public class Recup_Tables {
                 // Afficher les noms des tables
                 while (resultats.next()) {
                     String nomTable = resultats.getString("TABLE_NAME");
-                    System.out.println("Nom de la table : " + nomTable);
+                    System.out.println("Nom de la table : " + nomTable+"-");
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

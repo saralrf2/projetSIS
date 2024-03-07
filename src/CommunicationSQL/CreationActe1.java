@@ -44,9 +44,13 @@ public class CreationActe1 {
 
         int comparison = dateacteLocalDate.compareTo(dateJour);
 
-//        if (ID > 2147483600) {
-//            throw new IllegalArgumentException("L'ID du patient dépasse la valeur maximale autorisée.");
-//        }
+        Code code = Code.valueOf(codeActe);
+        tarification = code.getCout();
+        significationCode = code.getLibelle();
+
+        if (IDActeradio > 2147483600) {
+            throw new IllegalArgumentException("L'ID de l'acte dépasse la valeur maximale autorisée.");
+        }
         if (comparison > 0) {
             throw new IllegalArgumentException("La date de l'acte est postérieure à la date du jour");
         } else {

@@ -1,8 +1,12 @@
 package CommunicationSQL;
+
 import java.sql.*;
 //
+
 public class NewMain2 {
+
     // Méthode pour récupérer les contraintes de la table spécifiée
+
     public static void getConstraints(Connection connection, String tableName) throws SQLException {
         DatabaseMetaData metaData = connection.getMetaData();
         ResultSet resultSet = metaData.getColumns(null, null, tableName, null);
@@ -18,14 +22,14 @@ public class NewMain2 {
         try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99")) {
             // Remplacez "ma_table" par le nom de votre table
             String tableName = "CONNEXION";
-            
+
             getConstraints(connection, tableName);
         } catch (SQLException e) {
             System.err.println("Erreur lors de la connexion à la base de données : " + e.getMessage());
         }
     }
+}
 //}
-
 
 //public class NewMain2 {
 //

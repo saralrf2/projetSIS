@@ -25,7 +25,8 @@ import java.sql.Timestamp;
 import java.time.Month;
 import static oracle.jrockit.jfr.events.Bits.intValue;
 
-public class MainSQL { 
+public class MainSQL {
+
     /**
      * @param args the command line arguments
      */
@@ -38,13 +39,13 @@ public class MainSQL {
 //        String action = scanner00.nextLine();
 
 //Création de Table
-        Scanner scanner01 = new Scanner(System.in);
-        System.out.println("Veuillez saisir le nom de la Table à créer :");
-        String nomTable0 = scanner01.nextLine();
-
-        CreationTable creationTable = new CreationTable();
-        Statement st1 = conn.createStatement();
-        creationTable.creationTable(st1, nomTable0);
+//        Scanner scanner01 = new Scanner(System.in);
+//        System.out.println("Veuillez saisir le nom de la Table à créer :");
+//        String nomTable0 = scanner01.nextLine();
+//
+//        CreationTable creationTable = new CreationTable();
+//        Statement st1 = conn.createStatement();
+//        creationTable.creationTable(st1, nomTable0);
 ////Creation de Patient // inutile car on a la fonctionnalité directement avec l'interface
 //        Scanner scanner = new Scanner(System.in);
 //        System.out.println("Veuillez saisir l'ID du Patient à créer :");
@@ -83,35 +84,44 @@ public class MainSQL {
 //        PreparedStatement preparedStatementSuppressionPatient = conn.prepareStatement(query);
 //        preparedStatementSuppressionPatient.executeUpdate();
 //Mettre a jour données      
-        boolean continuer = true;
-        Scanner scanner = new Scanner(System.in);
-        while (continuer) {
-            System.out.println("Veuillez saisir nom de la table à mettre à jour :");
-            String nomTable = scanner.nextLine();
+//        boolean continuer = true;
+//        Scanner scanner = new Scanner(System.in);
+//        while (continuer) {
+//            System.out.println("Veuillez saisir nom de la table à mettre à jour :");
+//            String nomTable = scanner.nextLine();
+//
+//            System.out.println("Veuillez saisir le nom de la colonne à modifier :");
+//            String nomColonne = scanner.nextLine();
+//
+//            System.out.println("Veuillez saisir l'ancienne valeur :");
+//            String ancienneValeur = "'" + scanner.nextLine().trim() + "'";
+//
+//            try {
+//                System.out.println("Veuillez saisir la valeur à modifier :");
+//                String nouvelleValeur = "'" + scanner.nextLine().trim() + "'";
+//                UpdateSQL majPatient = new UpdateSQL(nomTable, nomColonne, nouvelleValeur, ancienneValeur);
+//                PreparedStatement ps = conn.prepareStatement(majPatient.MettreAJour());
+//                ps.executeUpdate();
+//                System.out.println("Mise à jour effectuée avec succès.");
+//            } catch (Exception e) {
+//                System.out.println("Une erreur s'est produite : " + e.getMessage());
+//            }
+//            System.out.println("Voulez-vous effectuer une autre mise à jour ? (Oui/Non)");
+//            String choix = scanner.nextLine();
+//            continuer = choix.equalsIgnoreCase("oui");
+//   String query = "UPDATE PATIENT SET PRENOM = 'Lucie' WHERE  ADRESSE = 'adresse3'";
+//        PreparedStatement ps = conn.prepareStatement(query);
+//        ps.executeUpdate();
+        
+//        String query = "INSERT INTO PATIENT1 (IDPATIENT, NOM, PRENOM, DATENAISSANCE, ADRESSE) VALUES (1, 'COIN', 'MATHIS', ?, '1 rue')";
+//        PreparedStatement ps = conn.prepareStatement(query);
+//        ps.setDate(1, java.sql.Date.valueOf("1999-07-13"));
+//        ps.executeUpdate();
 
-            System.out.println("Veuillez saisir le nom de la colonne à modifier :");
-            String nomColonne = scanner.nextLine();
-
-            System.out.println("Veuillez saisir l'ancienne valeur :");
-            String ancienneValeur = "'" + scanner.nextLine().trim() + "'";
-
-            try {
-                System.out.println("Veuillez saisir la valeur à modifier :");
-                String nouvelleValeur = "'" + scanner.nextLine().trim() + "'";
-                UpdateSQL majPatient = new UpdateSQL(nomTable, nomColonne, nouvelleValeur, ancienneValeur);
-                PreparedStatement ps = conn.prepareStatement(majPatient.MettreAJour());
-                ps.executeUpdate();
-                System.out.println("Mise à jour effectuée avec succès.");
-            } catch (Exception e) {
-                System.out.println("Une erreur s'est produite : " + e.getMessage());
-            }
-            System.out.println("Voulez-vous effectuer une autre mise à jour ? (Oui/Non)");
-            String choix = scanner.nextLine();
-            continuer = choix.equalsIgnoreCase("oui");
-            
-        }
-//       
-
+        Code code = Code.CS;
+        Code test = Code.valueOf("CS");
+        Facturation facture = new Facturation(test);
+        System.out.println(facture.getTarification());
+        System.out.println(code.getCout());
     }
-
 }
