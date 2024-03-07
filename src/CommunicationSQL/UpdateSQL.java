@@ -38,13 +38,12 @@ public class UpdateSQL {
     }
 
     public String MettreAJour() {
-        if (nouvelleValeur.equals("")) {
-            String s = "UPDATE " + nomTable + " SET " + nomColonne + " = " + nouvelleValeur + " WHERE " + condition;
-            return s;
-        }
         String s = "UPDATE " + nomTable + " SET " + nomColonne + " = " + nouvelleValeur + " WHERE " + condition;
         return s;
 
+    }
+    public void ProblematiqueDate(){
+        
     }
 
 }

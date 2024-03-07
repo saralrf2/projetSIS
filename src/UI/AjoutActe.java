@@ -51,6 +51,7 @@ public class AjoutActe extends javax.swing.JFrame {
         }
 
     }
+
     public AjoutActe() {
         initComponents();
         try {

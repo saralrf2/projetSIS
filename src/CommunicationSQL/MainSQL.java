@@ -84,44 +84,53 @@ public class MainSQL {
 //        PreparedStatement preparedStatementSuppressionPatient = conn.prepareStatement(query);
 //        preparedStatementSuppressionPatient.executeUpdate();
 //Mettre a jour données      
-//        boolean continuer = true;
-//        Scanner scanner = new Scanner(System.in);
-//        while (continuer) {
-//            System.out.println("Veuillez saisir nom de la table à mettre à jour :");
-//            String nomTable = scanner.nextLine();
-//
-//            System.out.println("Veuillez saisir le nom de la colonne à modifier :");
-//            String nomColonne = scanner.nextLine();
-//
-//            System.out.println("Veuillez saisir l'ancienne valeur :");
-//            String ancienneValeur = "'" + scanner.nextLine().trim() + "'";
-//
-//            try {
-//                System.out.println("Veuillez saisir la valeur à modifier :");
-//                String nouvelleValeur = "'" + scanner.nextLine().trim() + "'";
-//                UpdateSQL majPatient = new UpdateSQL(nomTable, nomColonne, nouvelleValeur, ancienneValeur);
-//                PreparedStatement ps = conn.prepareStatement(majPatient.MettreAJour());
-//                ps.executeUpdate();
-//                System.out.println("Mise à jour effectuée avec succès.");
-//            } catch (Exception e) {
-//                System.out.println("Une erreur s'est produite : " + e.getMessage());
-//            }
-//            System.out.println("Voulez-vous effectuer une autre mise à jour ? (Oui/Non)");
-//            String choix = scanner.nextLine();
-//            continuer = choix.equalsIgnoreCase("oui");
+        boolean continuer = true;
+        Scanner scanner = new Scanner(System.in);
+        while (continuer) {
+            System.out.println("Veuillez saisir nom de la table à mettre à jour :");
+            String nomTable = scanner.nextLine();
+
+            System.out.println("Veuillez saisir le nom de la colonne à modifier :");
+            String nomColonne = scanner.nextLine();
+
+            System.out.println("Veuillez saisir l'ancienne valeur :");
+            String ancienneValeur = scanner.nextLine().trim();
+
+            System.out.println("Veuillez saisir la valeur à modifier :");
+            String nouvelleValeur = scanner.nextLine().trim();
+            
+            if (!nomColonne.equalsIgnoreCase("DATENAISSANCE")) {
+                try {
+                    UpdateSQL majPatient = new UpdateSQL(nomTable, nomColonne, nouvelleValeur, ancienneValeur);
+                    PreparedStatement ps = conn.prepareStatement(majPatient.MettreAJour());
+                    ps.executeUpdate();
+                    System.out.println("Mise à jour effectuée avec succès.");
+                } catch (Exception e) {
+                    System.out.println("Une erreur s'est produite : " + e.getMessage());
+                }
+            } else {
+                String query = "UPDATE PATIENT SET DATENAISSANCE = ? WHERE DATENAISSANCE = ?";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ps.setDate(1, java.sql.Date.valueOf(nouvelleValeur));
+                ps.setDate(2, java.sql.Date.valueOf(ancienneValeur));
+                ps.executeUpdate();
+            }
+            System.out.println("Voulez-vous effectuer une autre mise à jour ? (Oui/Non)");
+            String choix = scanner.nextLine();
+            continuer = choix.equalsIgnoreCase("oui");
 //   String query = "UPDATE PATIENT SET PRENOM = 'Lucie' WHERE  ADRESSE = 'adresse3'";
 //        PreparedStatement ps = conn.prepareStatement(query);
 //        ps.executeUpdate();
-        
+
 //        String query = "INSERT INTO PATIENT1 (IDPATIENT, NOM, PRENOM, DATENAISSANCE, ADRESSE) VALUES (1, 'COIN', 'MATHIS', ?, '1 rue')";
 //        PreparedStatement ps = conn.prepareStatement(query);
 //        ps.setDate(1, java.sql.Date.valueOf("1999-07-13"));
 //        ps.executeUpdate();
-
-        Code code = Code.CS;
-        Code test = Code.valueOf("CS");
-        Facturation facture = new Facturation(test);
-        System.out.println(facture.getTarification());
-        System.out.println(code.getCout());
+//            Code code = Code.CS;
+//            Code test = Code.valueOf("CS");
+//            Facturation facture = new Facturation(test);
+//            System.out.println(facture.getTarification());
+//            System.out.println(code.getCout());
+        }
     }
 }

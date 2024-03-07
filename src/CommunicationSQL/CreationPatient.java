@@ -47,6 +47,7 @@ public class CreationPatient {
             preparedStatement.setString(2, nom.toUpperCase());
             preparedStatement.setString(3, prenom.substring(0, 1).toUpperCase() + prenom.substring(1));
             preparedStatement.setDate(4, java.sql.Date.valueOf(dateNaissanceLocalDate));
+
             preparedStatement.setString(5, adresse);
 
             preparedStatement.executeUpdate();
