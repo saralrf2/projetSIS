@@ -49,6 +49,11 @@ public class AjoutActe extends javax.swing.JFrame {
             System.out.println("connexion impossible");
 
         }
+         jComboBoxAnnee.addItem("2024");
+        jComboBoxAnnee.addItem("2023");
+        jComboBoxAnnee.addItem("2022");
+        jComboBoxAnnee.addItem("2021");
+        jComboBoxAnnee.addItem("2020");
 
     }
 
@@ -243,7 +248,7 @@ public class AjoutActe extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonRetourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRetourActionPerformed
-        Acceuil nouveauJFrame = new Acceuil();
+        DossierMedicalRadiologie nouveauJFrame = acte;
         nouveauJFrame.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButtonRetourActionPerformed
@@ -272,7 +277,7 @@ public class AjoutActe extends javax.swing.JFrame {
 
         // Établir une connexion à la base de données et préparer une requête d'insertion
         try {
-            String sql = "INSERT INTO ACTERADIOLOGIQUE (IDACTE, CODEACTE, SIGNIFICATIONCODE, PRATICIEN, DATEACTE, IDPATIENT, TARIFICATION) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO ACTERADIO (IDACTE, CODEACTE, SIGNIFICATIONCODE, PRATICIEN, DATEACTE, IDPATIENT, TARIFICATION) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
             // Appeler la méthode CreerPatient() pour insérer les données dans la base de données

@@ -68,7 +68,7 @@
                       </Group>
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" pref="256" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" pref="240" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
@@ -82,7 +82,7 @@
                   <Component id="jScrollPane1" min="-2" pref="197" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButtonEnregistrerCR" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="11" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -122,7 +122,7 @@
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
             <TitledBorder>
               <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="Dossier m&#xe9;dical de radiologie">
+                <TitledBorder title="Examen Radiologique">
                   <Font PropertyName="font" name="Galvji" size="18" style="1"/>
                 </TitledBorder>
               </Border>
@@ -164,7 +164,7 @@
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder>
                   <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                    <TitledBorder title="Informations patient">
+                    <TitledBorder title="Informations acte">
                       <Font PropertyName="font" name="Galvji" size="13" style="1"/>
                     </TitledBorder>
                   </Border>
@@ -204,8 +204,13 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="infoAdresse" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="acte" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace pref="274" max="32767" attributes="0"/>
+                      <EmptySpace pref="258" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -221,6 +226,11 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="infoCode" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="acte" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -248,7 +258,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Galvji" size="14" style="2"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Num&#xe9;ro d&apos;identification :"/>
+                <Property name="text" type="java.lang.String" value="Num&#xe9;ro d&apos;identification Acte :"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
@@ -306,6 +316,19 @@
             <Component class="javax.swing.JLabel" name="infoAdresse">
               <Properties>
                 <Property name="text" type="java.lang.String" value="infoTarification"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel6">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Galvji" size="14" style="2"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Acte :"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="acte">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="acte"/>
               </Properties>
             </Component>
           </SubComponents>

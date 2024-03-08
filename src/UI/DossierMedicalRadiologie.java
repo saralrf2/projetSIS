@@ -37,14 +37,14 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
             conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
         } catch (SQLException ex) {
             Logger.getLogger(AjoutPatient.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if (conn != null) {
-            System.out.println("Connexion établie");
-            recuperation_donnees();
-        } else {
-            System.out.println("connexion impossible");
-
-        }
+        }recuperation_donnees();
+//        if (conn != null) {
+//            System.out.println("Connexion établie");
+//            
+//        } else {
+//            System.out.println("connexion impossible");
+//
+//        }
         String idPatient = String.valueOf(idpatient);
         String dateNaissance = datenaissance.toString();
         infoID.setText(idPatient);
@@ -117,7 +117,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Informations patient", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Galvji", 1, 13)))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
-        jLabel1.setText("Numéro d'identification :");
+        jLabel1.setText("Numéro d'identification Patient :");
 
         jLabel2.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
         jLabel2.setText("Nom : ");
@@ -205,7 +205,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         });
 
         jLabel6.setFont(new java.awt.Font("Galvji", 1, 14)); // NOI18N
-        jLabel6.setText("Actes ");
+        jLabel6.setText("Liste des Examens ");
 
         jTableDMR.setFont(new java.awt.Font("Galvji", 0, 14)); // NOI18N
         jTableDMR.setModel(new javax.swing.table.DefaultTableModel(
@@ -310,13 +310,13 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
             //information de la ligne sélectionnée
             int idActe = Integer.parseInt(jTableDMR.getValueAt(ligneSelectionnee, 0).toString());
             String codeActe = jTableDMR.getValueAt(ligneSelectionnee, 1).toString();
-            String nomPracticien = jTableDMR.getValueAt(ligneSelectionnee, 2).toString();
+            String nomPracticien = jTableDMR.getValueAt(ligneSelectionnee, 4).toString();
             Date dateActe = Date.valueOf(jTableDMR.getValueAt(ligneSelectionnee, 3).toString());
-//            double tarification = new Double(jTableDMR.getValueAt(ligneSelectionnee, 4).toString());
-
+            double tarification = (double) jTableDMR.getValueAt(ligneSelectionnee, 2);
+            String acte = jTableDMR.getValueAt(ligneSelectionnee, 5).toString();
 //            Object data = jTableDMR.getValueAt(ligne, colonne);
             //                //ouvrir la fiche patient avec les informations sélectionnées
-            Acte nouveauJFrame = new Acte(idActe, codeActe, nomPracticien, dateActe);
+            Acte nouveauJFrame = new Acte(this, idActe, codeActe, nomPracticien, dateActe, tarification, acte);
             nouveauJFrame.setVisible(true);
             nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -344,7 +344,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
 
             Statement stmt = conn.createStatement();
             //exécutation de la requête
-            ResultSet rs = stmt.executeQuery("SELECT * FROM ACTERADIOLOGIQUE WHERE IDPATIENT = "+idPatient);
+            ResultSet rs = stmt.executeQuery("SELECT * FROM ACTERADIO WHERE IDPATIENT = "+idPatient);
             //on ajoute à la ligne les informations de la tableau
             while (rs.next()) {
                 Object[] row = new Object[]{rs.getInt("IDACTE"), rs.getString("CODEACTE"), rs.getDouble("TARIFICATION"), rs.getDate("DATEACTE"), rs.getString("PRATICIEN"), rs.getString("SIGNIFICATIONCODE")};

@@ -3,27 +3,33 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package UI;
+
 import java.sql.Date;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author alexiaidrac
  */
 public class Acte extends javax.swing.JFrame {
 
+    private DossierMedicalRadiologie dmr;
+
     /**
      * Creates new form DMR
      */
-    public Acte(int idacte, String codeActe, String nomPracticien, Date dateActe) {
+    public Acte(DossierMedicalRadiologie dmr, int idacte, String codeActe, String nomPracticien, Date dateActe, double tarification, String acte) {
         initComponents();
-        
+
         String idActe = String.valueOf(idacte);
         String datedeActe = dateActe.toString();
         infoID.setText(idActe);
         infoCode.setText(codeActe);
         infoPrenom.setText(nomPracticien);
         infoDate.setText(datedeActe);
-//        infoAdresse.setText(String.valueOf(tarification));
+        infoAdresse.setText(String.valueOf(tarification));
+        this.acte.setText(acte);
+        this.dmr = dmr;
     }
 
     /**
@@ -51,6 +57,8 @@ public class Acte extends javax.swing.JFrame {
         infoPrenom = new javax.swing.JLabel();
         infoDate = new javax.swing.JLabel();
         infoAdresse = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        acte = new javax.swing.JLabel();
         jButtonRetour = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -80,7 +88,7 @@ public class Acte extends javax.swing.JFrame {
                         .addComponent(jButtonEnregistrerCR))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)))
                 .addGap(21, 21, 21))
         );
         jPanel2Layout.setVerticalGroup(
@@ -90,17 +98,17 @@ public class Acte extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonEnregistrerCR)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dossier médical de radiologie", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Galvji", 1, 18)))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Examen Radiologique", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Galvji", 1, 18)))); // NOI18N
 
         jPanel3.setBackground(new java.awt.Color(236, 234, 234));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Informations patient", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Galvji", 1, 13)))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Informations acte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Galvji", 1, 13)))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
-        jLabel1.setText("Numéro d'identification :");
+        jLabel1.setText("Numéro d'identification Acte :");
 
         jLabel2.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
         jLabel2.setText("Code Acte :");
@@ -123,6 +131,11 @@ public class Acte extends javax.swing.JFrame {
         infoDate.setText("infoDate");
 
         infoAdresse.setText("infoTarification");
+
+        jLabel6.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
+        jLabel6.setText("Acte :");
+
+        acte.setText("acte");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -150,8 +163,12 @@ public class Acte extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(infoAdresse)))
-                .addContainerGap(274, Short.MAX_VALUE))
+                        .addComponent(infoAdresse))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(acte)))
+                .addContainerGap(258, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,6 +181,10 @@ public class Acte extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(infoCode))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(acte))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -227,12 +248,14 @@ public class Acte extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonRetourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRetourActionPerformed
-        
+        DossierMedicalRadiologie nouveauJFrame = dmr;
+        nouveauJFrame.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButtonRetourActionPerformed
 
     private void jButtonEnregistrerCRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnregistrerCRActionPerformed
-    
-         // Créer des boutons personnalisés
+
+        // Créer des boutons personnalisés
         Object[] options = {"Valider", "Annuler"};
 
         // Afficher la boîte de dialogue avec les boutons personnalisés
@@ -249,13 +272,13 @@ public class Acte extends javax.swing.JFrame {
         // Gérer la réponse de l'utilisateur
         if (choix == JOptionPane.YES_OPTION) {
             Connexion nouveauJFrame = new Connexion();
-            nouveauJFrame.setVisible(true);     
-            dispose();   
-        }  else if (choix == JOptionPane.CANCEL_OPTION || choix == JOptionPane.CLOSED_OPTION) {
+            nouveauJFrame.setVisible(true);
+            dispose();
+        } else if (choix == JOptionPane.CANCEL_OPTION || choix == JOptionPane.CLOSED_OPTION) {
             // Action si l'utilisateur clique sur "Annuler" ou ferme la boîte de dialogue
             JOptionPane.getRootFrame().dispose();
         }
-          
+
     }//GEN-LAST:event_jButtonEnregistrerCRActionPerformed
 
     /**
@@ -295,6 +318,7 @@ public class Acte extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel acte;
     private javax.swing.JLabel infoAdresse;
     private javax.swing.JLabel infoCode;
     private javax.swing.JLabel infoDate;
@@ -307,6 +331,7 @@ public class Acte extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

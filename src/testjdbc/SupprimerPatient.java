@@ -12,7 +12,7 @@ public class SupprimerPatient {
         PreparedStatement stmt = null;
         try {
 //             Requête SQL pour supprimer le patient avec le nom "VIOLETTE"
-            String sql = "DELETE FROM ACTERADIOLOGIQUE WHERE IDACTE = 56";
+            String sql = "DELETE FROM PATIENT WHERE IDPATIENT = 1";
             stmt = conn.prepareStatement(sql);
 //            stmt.setString(1, "1");
 

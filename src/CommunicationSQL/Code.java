@@ -61,9 +61,6 @@ enum Code {
     BSA("Forfait journalier de prise en charge par l infirmier d un patient dependant ayant une charge en soins dite legere", 13.0),
     BSB(" Forfait journalier de prise en charge par l infirmier d un patient dependant ayant une charge en soins dite intermediaire", 18.20),
     BSC("Forfait journalier de prise en charge par l infirmier d un patient dependant ayant une charge en soins dite lourde", 28.70),
-    IFI("Indemnite forfaitaire infirmier applicable dans le cadre de la prise en charge d un patient dependant relevant du dispositif\n"
-            + "defini a l article 23.3 des Dispositions generales de la NGAP ou de la prise en charge d un patient par un infirmier de pratique\n"
-            + "avancee dont les interventions sont inscrites au titre XVI, chapitre III, article 1er de la NGAP", 2.50),
     PAI("Soins infirmiers en pratique avancee", 10.0),
     AMX("acte pratique par l infirmier ou l infirmiere, applicable aux soins realises a domicile pour les patients dependants en sus desseances ou des forfaits", 3.15),
     RQD("Acte de demande d une tele-expertise", 10.0),
