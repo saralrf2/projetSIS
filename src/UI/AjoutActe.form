@@ -84,7 +84,7 @@
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
             <TitledBorder>
               <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="Ajout Patient">
+                <TitledBorder title="Ajout Examen Radiologique">
                   <Font PropertyName="font" name="Galvji" size="18" style="1"/>
                 </TitledBorder>
               </Border>
