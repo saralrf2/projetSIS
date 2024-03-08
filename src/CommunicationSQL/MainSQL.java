@@ -121,20 +121,20 @@ public class MainSQL {
 //   String query = "UPDATE PATIENT SET PRENOM = 'Lucie' WHERE  ADRESSE = 'adresse3'";
 //        PreparedStatement ps = conn.prepareStatement(query);
 //        ps.executeUpdate();
-//        String query = "INSERT INTO MANIP (IDMR, IDM, IDPATIENT, IDEXAMEN, NOMPATIENT, PRENOMPATIENT, DATEDENAISSANCEPATIENT, GENRE) VALUES (1, 2, 3, 4, 't', 'y',?,'f')";
-//        PreparedStatement ps = conn.prepareStatement(query);
-//        ps.setDate(1, java.sql.Date.valueOf("2002-02-13"));
-//        ps.executeUpdate();
-        String query = "CREATE TABLE ACTERADIO"
-                + "(IDACTE integer NOT NULL, "
-                + " CODEACTE varchar(30) NOT NULL, "
-                + " SIGNIFICATIONCODE  varchar(300) NOT NULL, "
-                + " PRATICIEN  varchar(100) NOT NULL, "
-                + " DATEACTE DATE NOT NULL, "
-                + " IDPATIENT integer NOT NULL, "
-                + " TARIFICATION integer NOT NULL, "
-                + " PRIMARY KEY (IDACTE))";
+        String query = "INSERT INTO MANIP (IDMR, IDM, IDPATIENT, IDEXAMEN, NOMPATIENT, PRENOMPATIENT, DATEDENAISSANCEPATIENT, GENRE) VALUES (1, 2, 3, 4, 't', 'y',?,'f')";
         PreparedStatement ps = conn.prepareStatement(query);
+        ps.setDate(1, java.sql.Date.valueOf("2002-02-13"));
         ps.executeUpdate();
+//        String query = "CREATE TABLE ACTERADIO"
+//                + "(IDACTE integer NOT NULL, "
+//                + " CODEACTE varchar(30) NOT NULL, "
+//                + " SIGNIFICATIONCODE  varchar(300) NOT NULL, "
+//                + " PRATICIEN  varchar(100) NOT NULL, "
+//                + " DATEACTE DATE NOT NULL, "
+//                + " IDPATIENT integer NOT NULL, "
+//                + " TARIFICATION integer NOT NULL, "
+//                + " PRIMARY KEY (IDACTE))";
+//        PreparedStatement ps = conn.prepareStatement(query);
+//        ps.executeUpdate();
     }
 }
