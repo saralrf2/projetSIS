@@ -302,6 +302,7 @@ public class AcceuilSecretaire extends javax.swing.JFrame {
             SecretaireDMR nouveauJFrame = new SecretaireDMR(idpatient, nom, prenom, datenaissance, adresse);
             nouveauJFrame.setVisible(true);
             nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+            dispose();
 
         }
     }//GEN-LAST:event_jTableDMRMouseClicked

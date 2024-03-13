@@ -331,13 +331,17 @@ Connection conn;
                 DossierMedicalRadiologie nouveauJFrame = new DossierMedicalRadiologie(idpatient, nom, prenom, datenaissance, adresse);
                 nouveauJFrame.setVisible(true);
                 nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+                dispose();
                
         }
 
     }//GEN-LAST:event_jTableDMRMouseClicked
 
     private void jButtonRechercheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRechercheActionPerformed
-        String rech = jTextFieldRecherche.getText();
+        
+        String recherche = jTextFieldRecherche.getText();
+        String rech = capitalizeFirstLetter(recherche);
+        
         System.out.println(rech);
         
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>( model);
