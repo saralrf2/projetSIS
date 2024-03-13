@@ -40,18 +40,18 @@ public class Connexion extends javax.swing.JFrame {
         idcorrect = false;
         mdpcorrect = false;
         currentPage = this;
-       try {
-        conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
-    } catch (SQLException ex) {
-        Logger.getLogger(AjoutPatient.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        try {
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
+        } catch (SQLException ex) {
+            Logger.getLogger(AjoutPatient.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if (conn != null) {
             System.out.println("Connexion établie");
 
             currentPage.setVisible(true);
         } else {
             System.out.println("connexion impossible");
-          
+
         }
 
     }
@@ -207,7 +207,7 @@ public class Connexion extends javax.swing.JFrame {
                 // Récupération du mot de passe correspondant à l'identifiant saisi
                 stMDP = conn.createStatement();
                 String query1 = "SELECT MDP FROM PERSONNEL WHERE ID=?";
-                try ( PreparedStatement ps = conn.prepareStatement(query1)) {
+                try (PreparedStatement ps = conn.prepareStatement(query1)) {
                     ps.setString(1, IDSaisi);
                     ResultSet rs1 = ps.executeQuery();
 
@@ -226,7 +226,7 @@ public class Connexion extends javax.swing.JFrame {
                 //récupere le poste de la personne qui se connecte
                 stPOSTE = conn.createStatement();
                 String query2 = "SELECT POSTE FROM PERSONNEL WHERE ID=?";
-                try ( PreparedStatement ps = conn.prepareStatement(query2)) {
+                try (PreparedStatement ps = conn.prepareStatement(query2)) {
                     ps.setString(1, IDSaisi);
                     ResultSet rs2 = ps.executeQuery();
                     // Vérification de l'existence de l'identifiant saisi dans la base de données

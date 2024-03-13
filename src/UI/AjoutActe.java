@@ -49,7 +49,7 @@ public class AjoutActe extends javax.swing.JFrame {
             System.out.println("connexion impossible");
 
         }
-         jComboBoxAnnee.addItem("2024");
+        jComboBoxAnnee.addItem("2024");
         jComboBoxAnnee.addItem("2023");
         jComboBoxAnnee.addItem("2022");
         jComboBoxAnnee.addItem("2021");
@@ -294,7 +294,7 @@ public class AjoutActe extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, e.getMessage(), "Date de l'acte postérieure à la date du jour", JOptionPane.ERROR_MESSAGE);
             }
         }
-        Acceuil nouveauJFrame = new Acceuil();
+        DossierMedicalRadiologie nouveauJFrame = new DossierMedicalRadiologie(acte.getIdPatient(), acte.getNom(), acte.getPrenom(), acte.getDatenaissance(), acte.getAdresse() );
         nouveauJFrame.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButtonAjoutActionPerformed

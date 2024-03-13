@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package CommunicationSQL;
+package CommunicationSQL;//mon
 
 // Cette enumeration fait intervenir des valeurs qui possedent des
 // attributs ('libelle' et 'cout') qui sont initialises par un appel du

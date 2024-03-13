@@ -4,6 +4,7 @@
  */
 package UI;
 
+import static java.lang.Integer.parseInt;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -22,6 +23,10 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
 
     Connection conn;
     private int idPatient;
+    private String nom;
+    private String prenom;
+    private Date datenaissance;
+    private String adresse;
     /**
      * Creates new form Acceuil
      */
@@ -29,7 +34,6 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
 
     public DossierMedicalRadiologie(int idpatient, String nom, String prenom, Date datenaissance, String adresse) {
         initComponents();
-        this.idPatient = idpatient;
         model = new DefaultTableModel(new Object[]{"IDACTE", "CODE ACTE", "TARIFICATION", "Date Acte", "PRATICIEN", "Signification du Code"}, 0);
         jTableDMR.setModel(model); // Appliquer le modèle au jTableDMR
         jTableDMR.setDefaultEditor(Object.class, null); // Rendre toutes les cellules non éditables
@@ -37,7 +41,9 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
             conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
         } catch (SQLException ex) {
             Logger.getLogger(AjoutPatient.class.getName()).log(Level.SEVERE, null, ex);
-        }recuperation_donnees();
+        }
+        
+        jPanel2.setVisible(false);
 //        if (conn != null) {
 //            System.out.println("Connexion établie");
 //            
@@ -45,13 +51,20 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
 //            System.out.println("connexion impossible");
 //
 //        }
-        String idPatient = String.valueOf(idpatient);
-        String dateNaissance = datenaissance.toString();
-        infoID.setText(idPatient);
-        infoNom.setText(nom);
-        infoPrenom.setText(prenom);
-        infoDate.setText(dateNaissance);
-        infoAdresse.setText(adresse);
+        this.idPatient = idpatient;
+        this.datenaissance = datenaissance;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.adresse = adresse;
+        infoID.setText(String.valueOf(this.idPatient));
+        infoNom.setText(this.nom);
+        infoPrenom.setText(this.prenom);
+        infoDate.setText(this.datenaissance.toString());
+        infoAdresse.setText(this.adresse);
+        
+        System.out.println("constr = " + idpatient);
+        
+        recuperation_donnees();
     }
 
     /**
@@ -317,6 +330,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
 //            Object data = jTableDMR.getValueAt(ligne, colonne);
             //                //ouvrir la fiche patient avec les informations sélectionnées
             Acte nouveauJFrame = new Acte(this, idActe, codeActe, nomPracticien, dateActe, tarification, acte);
+            this.setVisible(false);
             nouveauJFrame.setVisible(true);
             nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -325,6 +339,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         AjoutActe nouveauJFrame = new AjoutActe(this);
+        this.setVisible(false);
         nouveauJFrame.setVisible(true);
         nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -340,11 +355,12 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
 //        model.addColumn("Prenom");
 //        model.addColumn("Date Naissance");
 //        model.addColumn("Adresse");
+        System.out.println("get = " + getIdPatient());
         try {
 
             Statement stmt = conn.createStatement();
             //exécutation de la requête
-            ResultSet rs = stmt.executeQuery("SELECT * FROM ACTERADIO WHERE IDPATIENT = "+idPatient);
+            ResultSet rs = stmt.executeQuery("SELECT * FROM ACTERADIO WHERE IDPATIENT = " + getIdPatient());
             //on ajoute à la ligne les informations de la tableau
             while (rs.next()) {
                 Object[] row = new Object[]{rs.getInt("IDACTE"), rs.getString("CODEACTE"), rs.getDouble("TARIFICATION"), rs.getDate("DATEACTE"), rs.getString("PRATICIEN"), rs.getString("SIGNIFICATIONCODE")};
@@ -423,6 +439,34 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
      * @return the idPatient
      */
     public int getIdPatient() {
-        return idPatient;
+        return this.idPatient;
+    }
+
+    /**
+     * @return the nom
+     */
+    public String getNom() {
+        return nom;
+    }
+
+    /**
+     * @return the prenom
+     */
+    public String getPrenom() {
+        return prenom;
+    }
+
+    /**
+     * @return the datenaissance
+     */
+    public Date getDatenaissance() {
+        return datenaissance;
+    }
+
+    /**
+     * @return the adresse
+     */
+    public String getAdresse() {
+        return adresse;
     }
 }

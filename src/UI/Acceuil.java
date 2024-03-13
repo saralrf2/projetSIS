@@ -329,10 +329,15 @@ Connection conn;
 //                //ouvrir la fiche patient avec les informations sélectionnées
 
                 DossierMedicalRadiologie nouveauJFrame = new DossierMedicalRadiologie(idpatient, nom, prenom, datenaissance, adresse);
+                this.setVisible(false);
                 nouveauJFrame.setVisible(true);
                 nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
                 dispose();
                
+
+                System.out.println(idpatient);
+
         }
 
     }//GEN-LAST:event_jTableDMRMouseClicked
