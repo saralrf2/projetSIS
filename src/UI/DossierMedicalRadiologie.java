@@ -4,7 +4,15 @@
  */
 package UI;
 
-import static java.lang.Integer.parseInt;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -13,6 +21,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;//cgvubh
 
 /**
@@ -27,6 +38,11 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
     private String prenom;
     private Date datenaissance;
     private String adresse;
+
+    private BufferedImage originalImage;
+    private BufferedImage modifiedImage;
+    
+    private int rotationAngle = 0; // Variable pour suivre l'angle de rotation
     /**
      * Creates new form Acceuil
      */
@@ -42,8 +58,8 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(AjoutPatient.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        jPanel2.setVisible(false);
+
+        // jPanel2.setVisible(false);
 //        if (conn != null) {
 //            System.out.println("Connexion établie");
 //            
@@ -61,9 +77,9 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         infoPrenom.setText(this.prenom);
         infoDate.setText(this.datenaissance.toString());
         infoAdresse.setText(this.adresse);
-        
+
         System.out.println("constr = " + idpatient);
-        
+
         recuperation_donnees();
     }
 
@@ -76,9 +92,6 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -96,32 +109,12 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTableDMR = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jPanelTest = new javax.swing.JPanel();
+        ImageBrain = new javax.swing.JLabel();
+        jButtonRotate90 = new javax.swing.JButton();
+        jButtonContraste = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jPanel2.setBackground(new java.awt.Color(182, 210, 219));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Compte rendu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Galvji", 1, 14)))); // NOI18N
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
-                .addGap(21, 21, 21))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(203, Short.MAX_VALUE))
-        );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dossier médical de radiologie", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Galvji", 1, 18)))); // NOI18N
@@ -270,7 +263,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
+            .addComponent(jScrollPane4)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -283,25 +276,63 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
                     .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
                 .addComponent(jButtonRetour)
                 .addContainerGap())
+        );
+
+        ImageBrain.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/images/brain1_0000.jpg"))); // NOI18N
+
+        jButtonRotate90.setText("Rotate");
+        jButtonRotate90.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRotate90ActionPerformed(evt);
+            }
+        });
+
+        jButtonContraste.setText("Contraste");
+
+        javax.swing.GroupLayout jPanelTestLayout = new javax.swing.GroupLayout(jPanelTest);
+        jPanelTest.setLayout(jPanelTestLayout);
+        jPanelTestLayout.setHorizontalGroup(
+            jPanelTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTestLayout.createSequentialGroup()
+                .addGroup(jPanelTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelTestLayout.createSequentialGroup()
+                        .addGap(95, 95, 95)
+                        .addComponent(ImageBrain))
+                    .addGroup(jPanelTestLayout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jButtonRotate90)
+                        .addGap(51, 51, 51)
+                        .addComponent(jButtonContraste)))
+                .addContainerGap(94, Short.MAX_VALUE))
+        );
+        jPanelTestLayout.setVerticalGroup(
+            jPanelTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTestLayout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addComponent(ImageBrain)
+                .addGap(55, 55, 55)
+                .addGroup(jPanelTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonRotate90)
+                    .addComponent(jButtonContraste))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jPanelTest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelTest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -344,6 +375,22 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButtonRotate90ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRotate90ActionPerformed
+        originalImage = loadImage("images/brain1_0000.jpg");
+    if (originalImage != null) {
+        try {
+            // Rotation de l'image
+            modifiedImage = rotateImage(originalImage, 90 * (++rotationAngle));
+            // Mise à jour de l'icône avec l'image pivotée
+            ImageBrain.setIcon(new ImageIcon(modifiedImage));
+        } catch (IOException ex) {
+            Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_jButtonRotate90ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -377,6 +424,52 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         }
     }
 
+    private BufferedImage rotateImage(Image image, int angle) throws IOException {
+    if (ImageBrain.getIcon() == null) {
+        JOptionPane.showMessageDialog(this, "Aucune image chargée dans le JLabel.", "Erreur", JOptionPane.ERROR_MESSAGE);
+        return null;
+    }
+
+    // Créer une BufferedImage à partir de l'image
+    BufferedImage originalImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+    // Dessiner l'image sur la BufferedImage
+    Graphics2D g2d = originalImage.createGraphics();
+    g2d.drawImage(image, 0, 0, null);
+    g2d.dispose();
+
+    // Créer une nouvelle image pour contenir l'image pivotée
+    BufferedImage rotatedImage = new BufferedImage(originalImage.getHeight(), originalImage.getWidth(), BufferedImage.TYPE_INT_ARGB);
+
+    // Rotation de l'image
+    g2d = rotatedImage.createGraphics();
+    g2d.rotate(Math.toRadians(angle), rotatedImage.getWidth() / 2, rotatedImage.getHeight() / 2);
+    g2d.drawImage(originalImage, 0, 0, null);
+    g2d.dispose();
+
+    return rotatedImage;
+}
+
+
+    private BufferedImage loadImage(String path) {
+        try {
+            // Charger l'image depuis les ressources du package
+            InputStream inputStream = getClass().getResourceAsStream(path);
+            if (inputStream == null) {
+                JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
+            BufferedImage image = ImageIO.read(inputStream);
+            inputStream.close(); // Fermer le flux après utilisation
+            return image;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -408,18 +501,22 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 //new DMR().setVisible(true);
+
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ImageBrain;
     private javax.swing.JLabel infoAdresse;
     private javax.swing.JLabel infoDate;
     private javax.swing.JLabel infoID;
     private javax.swing.JLabel infoNom;
     private javax.swing.JLabel infoPrenom;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonContraste;
     private javax.swing.JButton jButtonRetour;
+    private javax.swing.JButton jButtonRotate90;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -427,12 +524,10 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanelTest;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTableDMR;
-    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 
     /**
