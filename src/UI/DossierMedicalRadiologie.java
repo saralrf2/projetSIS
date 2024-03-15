@@ -50,6 +50,11 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
 
     public DossierMedicalRadiologie(int idpatient, String nom, String prenom, Date datenaissance, String adresse) {
         initComponents();
+        jButtonContraste.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButtonContrasteActionPerformed(evt);
+        }
+    });
         model = new DefaultTableModel(new Object[]{"IDACTE", "CODE ACTE", "TARIFICATION", "Date Acte", "PRATICIEN", "Signification du Code"}, 0);
         jTableDMR.setModel(model); // Appliquer le modèle au jTableDMR
         jTableDMR.setDefaultEditor(Object.class, null); // Rendre toutes les cellules non éditables
@@ -291,6 +296,11 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         });
 
         jButtonContraste.setText("Contraste");
+        jButtonContraste.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonContrasteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelTestLayout = new javax.swing.GroupLayout(jPanelTest);
         jPanelTest.setLayout(jPanelTestLayout);
@@ -391,17 +401,23 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_jButtonRotate90ActionPerformed
 
+    private void jButtonContrasteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonContrasteActionPerformed
+        originalImage = loadImage("images/brain1_0000.jpg");
+    if (originalImage != null) {
+        // Ajustement du contraste de l'image
+        modifiedImage = adjustContrast(originalImage, 1.2); // 1.2 est un exemple, vous pouvez ajuster ce paramètre selon vos besoins
+        // Mise à jour de l'icône avec l'image avec contraste ajusté
+        ImageBrain.setIcon(new ImageIcon(modifiedImage));
+    } else {
+        JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_jButtonContrasteActionPerformed
+
     /**
      * @param args the command line arguments
      */
     private void recuperation_donnees() {
 
-        //ajouter les colonnes à notre nouveau tableau
-//        model.addColumn("ID");
-//        model.addColumn("Name");
-//        model.addColumn("Prenom");
-//        model.addColumn("Date Naissance");
-//        model.addColumn("Adresse");
         System.out.println("get = " + getIdPatient());
         try {
 
@@ -467,6 +483,32 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
             return null;
         }
     }
+    
+    private BufferedImage adjustContrast(BufferedImage image, double contrast) {
+    // Créer une copie de l'image originale pour appliquer l'ajustement de contraste
+    BufferedImage adjustedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+    // Appliquer l'ajustement de contraste pixel par pixel
+    for (int y = 0; y < image.getHeight(); y++) {
+        for (int x = 0; x < image.getWidth(); x++) {
+            // Obtenir la couleur du pixel
+            int rgba = image.getRGB(x, y);
+            // Appliquer l'ajustement de contraste à chaque canal de couleur (R, G, B)
+            int r = (int) (((rgba >> 16) & 0xFF) * contrast);
+            int g = (int) (((rgba >> 8) & 0xFF) * contrast);
+            int b = (int) ((rgba & 0xFF) * contrast);
+            // Vérifier les limites des valeurs de couleur (0-255)
+            r = Math.min(Math.max(r, 0), 255);
+            g = Math.min(Math.max(g, 0), 255);
+            b = Math.min(Math.max(b, 0), 255);
+            // Créer la nouvelle couleur ajustée
+            int adjustedRGBA = (rgba & 0xFF000000) | (r << 16) | (g << 8) | b;
+            // Définir la couleur du pixel dans l'image ajustée
+            adjustedImage.setRGB(x, y, adjustedRGBA);
+        }
+    }
+    return adjustedImage;
+}
 
     
 
