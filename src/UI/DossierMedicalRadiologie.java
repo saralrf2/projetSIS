@@ -41,10 +41,11 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
 
     private BufferedImage originalImage;
     private BufferedImage modifiedImage;
+    private BufferedImage invertedImage;
 
     private int rotationAngle = 0; // Variable pour suivre l'angle de rotation
     private double contraste = 0.25; //variable contraste de base
-    
+
     /**
      * Creates new form Acceuil
      */
@@ -124,6 +125,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         jButtonIncreaseContraste = new javax.swing.JButton();
         jButtonDecreaseContrast = new javax.swing.JButton();
         jButtonRestartContrast = new javax.swing.JButton();
+        jButtonInversionGris = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -322,6 +324,13 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
             }
         });
 
+        jButtonInversionGris.setText("inversion gris");
+        jButtonInversionGris.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonInversionGrisActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelTestLayout = new javax.swing.GroupLayout(jPanelTest);
         jPanelTest.setLayout(jPanelTestLayout);
         jPanelTestLayout.setHorizontalGroup(
@@ -333,16 +342,19 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
                         .addComponent(ImageBrain))
                     .addGroup(jPanelTestLayout.createSequentialGroup()
                         .addGap(28, 28, 28)
-                        .addComponent(jButtonRotate90)
-                        .addGap(51, 51, 51)
-                        .addComponent(jButtonIncreaseContraste)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonDecreaseContrast)))
+                        .addGroup(jPanelTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanelTestLayout.createSequentialGroup()
+                                .addComponent(jButtonInversionGris)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButtonRestartContrast)
+                                .addGap(20, 20, 20))
+                            .addGroup(jPanelTestLayout.createSequentialGroup()
+                                .addComponent(jButtonRotate90)
+                                .addGap(51, 51, 51)
+                                .addComponent(jButtonIncreaseContraste)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonDecreaseContrast)))))
                 .addContainerGap(51, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTestLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButtonRestartContrast)
-                .addGap(71, 71, 71))
         );
         jPanelTestLayout.setVerticalGroup(
             jPanelTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -354,8 +366,13 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
                     .addComponent(jButtonRotate90)
                     .addComponent(jButtonIncreaseContraste)
                     .addComponent(jButtonDecreaseContrast))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonRestartContrast)
+                .addGroup(jPanelTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelTestLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonRestartContrast))
+                    .addGroup(jPanelTestLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jButtonInversionGris)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -434,48 +451,63 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         originalImage = loadImage("images/brain1_0000.jpg");
 
         if (null != originalImage) {
-        // Incrémentation du contraste
-        contraste += 0.25; // Incrémente le contraste de 0.25 à chaque clic
+            // Incrémentation du contraste
+            contraste += 0.5; // Incrémente le contraste de 0.25 à chaque clic
 
-        // Ajustement du contraste de l'image
-        modifiedImage = adjustContrast(originalImage, contraste); 
+            // Ajustement du contraste de l'image
+            modifiedImage = adjustContrast(originalImage, contraste);
 
-        // Mise à jour de l'icône avec l'image avec contraste ajusté
-        ImageBrain.setIcon(new ImageIcon(modifiedImage));
-    } else {
-        JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
-    } 
-    
+            // Mise à jour de l'icône avec l'image avec contraste ajusté
+            ImageBrain.setIcon(new ImageIcon(modifiedImage));
+        } else {
+            JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_jButtonIncreaseContrasteActionPerformed
 
     private void jButtonDecreaseContrastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDecreaseContrastActionPerformed
-       originalImage = loadImage("images/brain1_0000.jpg");
+        originalImage = loadImage("images/brain1_0000.jpg");
 
         if (null != originalImage) {
-        // Incrémentation du contraste
-        contraste -= 0.25; // Incrémente le contraste de 0.25 à chaque clic
+            // Incrémentation du contraste
+            contraste -= 0.5; // Incrémente le contraste de 0.25 à chaque clic
 
-        // Ajustement du contraste de l'image
-        modifiedImage = adjustContrast(originalImage, contraste); 
+            // Ajustement du contraste de l'image
+            modifiedImage = adjustContrast(originalImage, contraste);
 
-        // Mise à jour de l'icône avec l'image avec contraste ajusté
-        ImageBrain.setIcon(new ImageIcon(modifiedImage));
-    } else {
-        JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
-    } 
+            // Mise à jour de l'icône avec l'image avec contraste ajusté
+            ImageBrain.setIcon(new ImageIcon(modifiedImage));
+        } else {
+            JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButtonDecreaseContrastActionPerformed
 
     private void jButtonRestartContrastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRestartContrastActionPerformed
-       
-            ImageBrain.setIcon(new ImageIcon(originalImage)); // Restaurer l'image originale
-            
-        
+
+        ImageBrain.setIcon(new ImageIcon(originalImage)); // Restaurer l'image originale
+
+
     }//GEN-LAST:event_jButtonRestartContrastActionPerformed
 
-/**
- * @param args the command line arguments
- */
-private void recuperation_donnees() {
+    private void jButtonInversionGrisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInversionGrisActionPerformed
+        originalImage = loadImage("images/brain1_0000.jpg");
+
+        if (null != originalImage) {
+            // Appliquer l'inversion des niveaux de gris et récupérer l'image inversée
+            BufferedImage invertedImage = inversionNiveauGris(originalImage);
+
+            // Afficher l'image inversée
+            ImageBrain.setIcon(new ImageIcon(invertedImage));
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonInversionGrisActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    private void recuperation_donnees() {
 
         System.out.println("get = " + getIdPatient());
         try {
@@ -500,31 +532,30 @@ private void recuperation_donnees() {
     }
 
     private BufferedImage rotateImage(Image image, int angle) throws IOException {
-    if (ImageBrain.getIcon() == null) {
-        JOptionPane.showMessageDialog(this, "Aucune image chargée dans le JLabel.", "Erreur", JOptionPane.ERROR_MESSAGE);
-        return null;
+        if (ImageBrain.getIcon() == null) {
+            JOptionPane.showMessageDialog(this, "Aucune image chargée dans le JLabel.", "Erreur", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+
+        // Créer une BufferedImage à partir de l'image
+        BufferedImage originalImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+        // Dessiner l'image sur la BufferedImage
+        Graphics2D g2d = originalImage.createGraphics();
+        g2d.drawImage(image, 0, 0, null);
+        g2d.dispose();
+
+        // Créer une nouvelle image pour contenir l'image pivotée
+        BufferedImage rotatedImage = new BufferedImage(originalImage.getHeight(), originalImage.getWidth(), BufferedImage.TYPE_INT_ARGB);
+
+        // Rotation de l'image
+        g2d = rotatedImage.createGraphics();
+        g2d.rotate(Math.toRadians(angle), rotatedImage.getWidth() / 2, rotatedImage.getHeight() / 2);
+        g2d.drawImage(originalImage, 0, 0, null);
+        g2d.dispose();
+
+        return rotatedImage;
     }
-
-    // Créer une BufferedImage à partir de l'image
-    BufferedImage originalImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-    // Dessiner l'image sur la BufferedImage
-    Graphics2D g2d = originalImage.createGraphics();
-    g2d.drawImage(image, 0, 0, null);
-    g2d.dispose();
-
-    // Créer une nouvelle image pour contenir l'image pivotée
-    BufferedImage rotatedImage = new BufferedImage(originalImage.getHeight(), originalImage.getWidth(), BufferedImage.TYPE_INT_ARGB);
-
-    // Rotation de l'image
-    g2d = rotatedImage.createGraphics();
-    g2d.rotate(Math.toRadians(angle), rotatedImage.getWidth() / 2, rotatedImage.getHeight() / 2);
-    g2d.drawImage(originalImage, 0, 0, null);
-    g2d.dispose();
-
-    return rotatedImage;
-}
-
 
     private BufferedImage loadImage(String path) {
         try {
@@ -542,36 +573,53 @@ private void recuperation_donnees() {
             return null;
         }
     }
-    
+
     private BufferedImage adjustContrast(BufferedImage image, double contrast) {
-    // Créer une copie de l'image originale pour appliquer l'ajustement de contraste
-    BufferedImage adjustedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        // Créer une copie de l'image originale pour appliquer l'ajustement de contraste
+        BufferedImage adjustedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
 
-    // Appliquer l'ajustement de contraste pixel par pixel
-    for (int y = 0; y < image.getHeight(); y++) {
-        for (int x = 0; x < image.getWidth(); x++) {
-            // Obtenir la couleur du pixel
-            int rgba = image.getRGB(x, y);
-            // Appliquer l'ajustement de contraste à chaque canal de couleur (R, G, B)
-            int r = (int) (((rgba >> 16) & 0xFF) * contrast);
-            int g = (int) (((rgba >> 8) & 0xFF) * contrast);
-            int b = (int) ((rgba & 0xFF) * contrast);
-            // Vérifier les limites des valeurs de couleur (0-255)
-            r = Math.min(Math.max(r, 0), 255);
-            g = Math.min(Math.max(g, 0), 255);
-            b = Math.min(Math.max(b, 0), 255);
-            // Créer la nouvelle couleur ajustée
-            int adjustedRGBA = (rgba & 0xFF000000) | (r << 16) | (g << 8) | b;
-            // Définir la couleur du pixel dans l'image ajustée
-            adjustedImage.setRGB(x, y, adjustedRGBA);
+        // Appliquer l'ajustement de contraste pixel par pixel
+        for (int y = 0; y < image.getHeight(); y++) {
+            for (int x = 0; x < image.getWidth(); x++) {
+                // Obtenir la valeur du niveau de gris du pixel
+                int grayValue = image.getRaster().getSample(x, y, 0);
+
+                // Appliquer l'ajustement de contraste à la valeur du niveau de gris
+                int adjustedGrayValue = (int) (grayValue * contrast);
+
+                // Vérifier les limites des valeurs de gris (0-255)
+                adjustedGrayValue = Math.min(Math.max(adjustedGrayValue, 0), 255);
+
+                // Définir la nouvelle valeur du niveau de gris dans l'image ajustée
+                adjustedImage.getRaster().setSample(x, y, 0, adjustedGrayValue);
+            }
         }
+        return adjustedImage;
     }
-    return adjustedImage;
-}
 
-  private void chargerImageOriginale() {
-    originalImage = loadImage("images/brain1_0000.jpg");
-}  
+    private void chargerImageOriginale() {
+        originalImage = loadImage("images/brain1_0000.jpg");
+    }
+
+    private BufferedImage inversionNiveauGris(BufferedImage image) {
+        // Créer une copie de l'image originale pour inverser le niveau de gris
+        BufferedImage invertedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
+
+        // Inverser le niveau de gris pixel par pixel (soustraction de la valeur de gris des pixels à la valeur maximal de profondeur des pixels)
+        for (int y = 0; y < image.getHeight(); y++) {
+            for (int x = 0; x < image.getWidth(); x++) {
+                // Obtenir la valeur du niveau de gris du pixel
+                int grayValue = image.getRaster().getSample(x, y, 0);
+
+                // Inverser le niveau de gris en soustrayant de la valeur maximale possible
+                int invertedGrayValue = 255 - grayValue;
+
+                // Définir la nouvelle valeur du niveau de gris dans l'image inversée
+                invertedImage.getRaster().setSample(x, y, 0, invertedGrayValue);
+            }
+        }
+        return invertedImage;
+    }
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -585,27 +633,23 @@ private void recuperation_donnees() {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
 
-}
+                }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DossierMedicalRadiologie.class  
+            java.util.logging.Logger.getLogger(DossierMedicalRadiologie.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(DossierMedicalRadiologie.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-} catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DossierMedicalRadiologie.class  
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(DossierMedicalRadiologie.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-} catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DossierMedicalRadiologie.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DossierMedicalRadiologie.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(DossierMedicalRadiologie.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -631,6 +675,7 @@ private void recuperation_donnees() {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonDecreaseContrast;
     private javax.swing.JButton jButtonIncreaseContraste;
+    private javax.swing.JButton jButtonInversionGris;
     private javax.swing.JButton jButtonRestartContrast;
     private javax.swing.JButton jButtonRetour;
     private javax.swing.JButton jButtonRotate90;
