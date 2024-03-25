@@ -41,8 +41,10 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
 
     private BufferedImage originalImage;
     private BufferedImage modifiedImage;
-    
+
     private int rotationAngle = 0; // Variable pour suivre l'angle de rotation
+    private double contraste = 0.25; //variable contraste de base
+    
     /**
      * Creates new form Acceuil
      */
@@ -50,11 +52,13 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
 
     public DossierMedicalRadiologie(int idpatient, String nom, String prenom, Date datenaissance, String adresse) {
         initComponents();
-        jButtonContraste.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jButtonContrasteActionPerformed(evt);
-        }
-    });
+        jButtonIncreaseContraste.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonIncreaseContrasteActionPerformed(evt);
+                jButtonDecreaseContrastActionPerformed(evt);
+                jButtonRestartContrastActionPerformed(evt);
+            }
+        });
         model = new DefaultTableModel(new Object[]{"IDACTE", "CODE ACTE", "TARIFICATION", "Date Acte", "PRATICIEN", "Signification du Code"}, 0);
         jTableDMR.setModel(model); // Appliquer le modèle au jTableDMR
         jTableDMR.setDefaultEditor(Object.class, null); // Rendre toutes les cellules non éditables
@@ -117,7 +121,9 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         jPanelTest = new javax.swing.JPanel();
         ImageBrain = new javax.swing.JLabel();
         jButtonRotate90 = new javax.swing.JButton();
-        jButtonContraste = new javax.swing.JButton();
+        jButtonIncreaseContraste = new javax.swing.JButton();
+        jButtonDecreaseContrast = new javax.swing.JButton();
+        jButtonRestartContrast = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -295,10 +301,24 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
             }
         });
 
-        jButtonContraste.setText("Contraste");
-        jButtonContraste.addActionListener(new java.awt.event.ActionListener() {
+        jButtonIncreaseContraste.setText("+");
+        jButtonIncreaseContraste.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonContrasteActionPerformed(evt);
+                jButtonIncreaseContrasteActionPerformed(evt);
+            }
+        });
+
+        jButtonDecreaseContrast.setText("-");
+        jButtonDecreaseContrast.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDecreaseContrastActionPerformed(evt);
+            }
+        });
+
+        jButtonRestartContrast.setText("réinitialiser");
+        jButtonRestartContrast.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRestartContrastActionPerformed(evt);
             }
         });
 
@@ -315,8 +335,14 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
                         .addGap(28, 28, 28)
                         .addComponent(jButtonRotate90)
                         .addGap(51, 51, 51)
-                        .addComponent(jButtonContraste)))
-                .addContainerGap(94, Short.MAX_VALUE))
+                        .addComponent(jButtonIncreaseContraste)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonDecreaseContrast)))
+                .addContainerGap(51, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTestLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButtonRestartContrast)
+                .addGap(71, 71, 71))
         );
         jPanelTestLayout.setVerticalGroup(
             jPanelTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,7 +352,10 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
                 .addGap(55, 55, 55)
                 .addGroup(jPanelTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonRotate90)
-                    .addComponent(jButtonContraste))
+                    .addComponent(jButtonIncreaseContraste)
+                    .addComponent(jButtonDecreaseContrast))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonRestartContrast)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -387,36 +416,66 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
 
     private void jButtonRotate90ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRotate90ActionPerformed
         originalImage = loadImage("images/brain1_0000.jpg");
-    if (originalImage != null) {
-        try {
-            // Rotation de l'image
-            modifiedImage = rotateImage(originalImage, 90 * (++rotationAngle));
-            // Mise à jour de l'icône avec l'image pivotée
-            ImageBrain.setIcon(new ImageIcon(modifiedImage));
-        } catch (IOException ex) {
-            Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(Level.SEVERE, null, ex);
+        if (originalImage != null) {
+            try {
+                // Rotation de l'image
+                modifiedImage = rotateImage(originalImage, 90 * (++rotationAngle));
+                // Mise à jour de l'icône avec l'image pivotée
+                ImageBrain.setIcon(new ImageIcon(modifiedImage));
+            } catch (IOException ex) {
+                Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
-    } else {
-        JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
-    }
     }//GEN-LAST:event_jButtonRotate90ActionPerformed
 
-    private void jButtonContrasteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonContrasteActionPerformed
+    private void jButtonIncreaseContrasteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIncreaseContrasteActionPerformed
         originalImage = loadImage("images/brain1_0000.jpg");
-    if (originalImage != null) {
+
+        if (null != originalImage) {
+        // Incrémentation du contraste
+        contraste += 0.25; // Incrémente le contraste de 0.25 à chaque clic
+
         // Ajustement du contraste de l'image
-        modifiedImage = adjustContrast(originalImage, 1.2); // 1.2 est un exemple, vous pouvez ajuster ce paramètre selon vos besoins
+        modifiedImage = adjustContrast(originalImage, contraste); 
+
         // Mise à jour de l'icône avec l'image avec contraste ajusté
         ImageBrain.setIcon(new ImageIcon(modifiedImage));
     } else {
         JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
-    }
-    }//GEN-LAST:event_jButtonContrasteActionPerformed
+    } 
+    
+    }//GEN-LAST:event_jButtonIncreaseContrasteActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    private void recuperation_donnees() {
+    private void jButtonDecreaseContrastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDecreaseContrastActionPerformed
+       originalImage = loadImage("images/brain1_0000.jpg");
+
+        if (null != originalImage) {
+        // Incrémentation du contraste
+        contraste -= 0.25; // Incrémente le contraste de 0.25 à chaque clic
+
+        // Ajustement du contraste de l'image
+        modifiedImage = adjustContrast(originalImage, contraste); 
+
+        // Mise à jour de l'icône avec l'image avec contraste ajusté
+        ImageBrain.setIcon(new ImageIcon(modifiedImage));
+    } else {
+        JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
+    } 
+    }//GEN-LAST:event_jButtonDecreaseContrastActionPerformed
+
+    private void jButtonRestartContrastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRestartContrastActionPerformed
+       
+            ImageBrain.setIcon(new ImageIcon(originalImage)); // Restaurer l'image originale
+            
+        
+    }//GEN-LAST:event_jButtonRestartContrastActionPerformed
+
+/**
+ * @param args the command line arguments
+ */
+private void recuperation_donnees() {
 
         System.out.println("get = " + getIdPatient());
         try {
@@ -510,7 +569,9 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
     return adjustedImage;
 }
 
-    
+  private void chargerImageOriginale() {
+    originalImage = loadImage("images/brain1_0000.jpg");
+}  
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -523,16 +584,28 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                }
+
+}
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DossierMedicalRadiologie.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+} catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(DossierMedicalRadiologie.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+} catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(DossierMedicalRadiologie.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(DossierMedicalRadiologie.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -556,7 +629,9 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
     private javax.swing.JLabel infoNom;
     private javax.swing.JLabel infoPrenom;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButtonContraste;
+    private javax.swing.JButton jButtonDecreaseContrast;
+    private javax.swing.JButton jButtonIncreaseContraste;
+    private javax.swing.JButton jButtonRestartContrast;
     private javax.swing.JButton jButtonRetour;
     private javax.swing.JButton jButtonRotate90;
     private javax.swing.JLabel jLabel1;
