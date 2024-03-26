@@ -53,13 +53,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
 
     public DossierMedicalRadiologie(int idpatient, String nom, String prenom, Date datenaissance, String adresse) {
         initComponents();
-        jButtonIncreaseContraste.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonIncreaseContrasteActionPerformed(evt);
-                jButtonDecreaseContrastActionPerformed(evt);
-                jButtonRestartContrastActionPerformed(evt);
-            }
-        });
+        
         model = new DefaultTableModel(new Object[]{"IDACTE", "CODE ACTE", "TARIFICATION", "Date Acte", "PRATICIEN", "Signification du Code"}, 0);
         jTableDMR.setModel(model); // Appliquer le modèle au jTableDMR
         jTableDMR.setDefaultEditor(Object.class, null); // Rendre toutes les cellules non éditables
@@ -119,13 +113,6 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTableDMR = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jPanelTest = new javax.swing.JPanel();
-        ImageBrain = new javax.swing.JLabel();
-        jButtonRotate90 = new javax.swing.JButton();
-        jButtonIncreaseContraste = new javax.swing.JButton();
-        jButtonDecreaseContrast = new javax.swing.JButton();
-        jButtonRestartContrast = new javax.swing.JButton();
-        jButtonInversionGris = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -276,7 +263,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane4)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,101 +281,15 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        ImageBrain.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/images/brain1_0000.jpg"))); // NOI18N
-
-        jButtonRotate90.setText("Rotate");
-        jButtonRotate90.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRotate90ActionPerformed(evt);
-            }
-        });
-
-        jButtonIncreaseContraste.setText("+");
-        jButtonIncreaseContraste.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonIncreaseContrasteActionPerformed(evt);
-            }
-        });
-
-        jButtonDecreaseContrast.setText("-");
-        jButtonDecreaseContrast.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonDecreaseContrastActionPerformed(evt);
-            }
-        });
-
-        jButtonRestartContrast.setText("réinitialiser");
-        jButtonRestartContrast.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRestartContrastActionPerformed(evt);
-            }
-        });
-
-        jButtonInversionGris.setText("inversion gris");
-        jButtonInversionGris.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonInversionGrisActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanelTestLayout = new javax.swing.GroupLayout(jPanelTest);
-        jPanelTest.setLayout(jPanelTestLayout);
-        jPanelTestLayout.setHorizontalGroup(
-            jPanelTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTestLayout.createSequentialGroup()
-                .addGroup(jPanelTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelTestLayout.createSequentialGroup()
-                        .addGap(95, 95, 95)
-                        .addComponent(ImageBrain))
-                    .addGroup(jPanelTestLayout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(jPanelTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanelTestLayout.createSequentialGroup()
-                                .addComponent(jButtonInversionGris)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButtonRestartContrast)
-                                .addGap(20, 20, 20))
-                            .addGroup(jPanelTestLayout.createSequentialGroup()
-                                .addComponent(jButtonRotate90)
-                                .addGap(51, 51, 51)
-                                .addComponent(jButtonIncreaseContraste)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonDecreaseContrast)))))
-                .addContainerGap(51, Short.MAX_VALUE))
-        );
-        jPanelTestLayout.setVerticalGroup(
-            jPanelTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTestLayout.createSequentialGroup()
-                .addGap(64, 64, 64)
-                .addComponent(ImageBrain)
-                .addGap(55, 55, 55)
-                .addGroup(jPanelTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonRotate90)
-                    .addComponent(jButtonIncreaseContraste)
-                    .addComponent(jButtonDecreaseContrast))
-                .addGroup(jPanelTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelTestLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonRestartContrast))
-                    .addGroup(jPanelTestLayout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jButtonInversionGris)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelTest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanelTest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -431,79 +332,6 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButtonRotate90ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRotate90ActionPerformed
-        originalImage = loadImage("images/brain1_0000.jpg");
-        if (originalImage != null) {
-            try {
-                // Rotation de l'image
-                modifiedImage = rotateImage(originalImage, 90 * (++rotationAngle));
-                // Mise à jour de l'icône avec l'image pivotée
-                ImageBrain.setIcon(new ImageIcon(modifiedImage));
-            } catch (IOException ex) {
-                Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_jButtonRotate90ActionPerformed
-
-    private void jButtonIncreaseContrasteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIncreaseContrasteActionPerformed
-        originalImage = loadImage("images/brain1_0000.jpg");
-
-        if (null != originalImage) {
-            // Incrémentation du contraste
-            contraste += 0.5; // Incrémente le contraste de 0.25 à chaque clic
-
-            // Ajustement du contraste de l'image
-            modifiedImage = adjustContrast(originalImage, contraste);
-
-            // Mise à jour de l'icône avec l'image avec contraste ajusté
-            ImageBrain.setIcon(new ImageIcon(modifiedImage));
-        } else {
-            JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
-
-    }//GEN-LAST:event_jButtonIncreaseContrasteActionPerformed
-
-    private void jButtonDecreaseContrastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDecreaseContrastActionPerformed
-        originalImage = loadImage("images/brain1_0000.jpg");
-
-        if (null != originalImage) {
-            // Incrémentation du contraste
-            contraste -= 0.5; // Incrémente le contraste de 0.25 à chaque clic
-
-            // Ajustement du contraste de l'image
-            modifiedImage = adjustContrast(originalImage, contraste);
-
-            // Mise à jour de l'icône avec l'image avec contraste ajusté
-            ImageBrain.setIcon(new ImageIcon(modifiedImage));
-        } else {
-            JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_jButtonDecreaseContrastActionPerformed
-
-    private void jButtonRestartContrastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRestartContrastActionPerformed
-
-        ImageBrain.setIcon(new ImageIcon(originalImage)); // Restaurer l'image originale
-
-
-    }//GEN-LAST:event_jButtonRestartContrastActionPerformed
-
-    private void jButtonInversionGrisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInversionGrisActionPerformed
-        originalImage = loadImage("images/brain1_0000.jpg");
-
-        if (null != originalImage) {
-            // Appliquer l'inversion des niveaux de gris et récupérer l'image inversée
-            BufferedImage invertedImage = inversionNiveauGris(originalImage);
-
-            // Afficher l'image inversée
-            ImageBrain.setIcon(new ImageIcon(invertedImage));
-
-        } else {
-            JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_jButtonInversionGrisActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -531,96 +359,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         }
     }
 
-    private BufferedImage rotateImage(Image image, int angle) throws IOException {
-        if (ImageBrain.getIcon() == null) {
-            JOptionPane.showMessageDialog(this, "Aucune image chargée dans le JLabel.", "Erreur", JOptionPane.ERROR_MESSAGE);
-            return null;
-        }
-
-        // Créer une BufferedImage à partir de l'image
-        BufferedImage originalImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-        // Dessiner l'image sur la BufferedImage
-        Graphics2D g2d = originalImage.createGraphics();
-        g2d.drawImage(image, 0, 0, null);
-        g2d.dispose();
-
-        // Créer une nouvelle image pour contenir l'image pivotée
-        BufferedImage rotatedImage = new BufferedImage(originalImage.getHeight(), originalImage.getWidth(), BufferedImage.TYPE_INT_ARGB);
-
-        // Rotation de l'image
-        g2d = rotatedImage.createGraphics();
-        g2d.rotate(Math.toRadians(angle), rotatedImage.getWidth() / 2, rotatedImage.getHeight() / 2);
-        g2d.drawImage(originalImage, 0, 0, null);
-        g2d.dispose();
-
-        return rotatedImage;
-    }
-
-    private BufferedImage loadImage(String path) {
-        try {
-            // Charger l'image depuis les ressources du package
-            InputStream inputStream = getClass().getResourceAsStream(path);
-            if (inputStream == null) {
-                JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
-                return null;
-            }
-            BufferedImage image = ImageIO.read(inputStream);
-            inputStream.close(); // Fermer le flux après utilisation
-            return image;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    private BufferedImage adjustContrast(BufferedImage image, double contrast) {
-        // Créer une copie de l'image originale pour appliquer l'ajustement de contraste
-        BufferedImage adjustedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
-
-        // Appliquer l'ajustement de contraste pixel par pixel
-        for (int y = 0; y < image.getHeight(); y++) {
-            for (int x = 0; x < image.getWidth(); x++) {
-                // Obtenir la valeur du niveau de gris du pixel
-                int grayValue = image.getRaster().getSample(x, y, 0);
-
-                // Appliquer l'ajustement de contraste à la valeur du niveau de gris
-                int adjustedGrayValue = (int) (grayValue * contrast);
-
-                // Vérifier les limites des valeurs de gris (0-255)
-                adjustedGrayValue = Math.min(Math.max(adjustedGrayValue, 0), 255);
-
-                // Définir la nouvelle valeur du niveau de gris dans l'image ajustée
-                adjustedImage.getRaster().setSample(x, y, 0, adjustedGrayValue);
-            }
-        }
-        return adjustedImage;
-    }
-
-    private void chargerImageOriginale() {
-        originalImage = loadImage("images/brain1_0000.jpg");
-    }
-
-    private BufferedImage inversionNiveauGris(BufferedImage image) {
-        // Créer une copie de l'image originale pour inverser le niveau de gris
-        BufferedImage invertedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
-
-        // Inverser le niveau de gris pixel par pixel (soustraction de la valeur de gris des pixels à la valeur maximal de profondeur des pixels)
-        for (int y = 0; y < image.getHeight(); y++) {
-            for (int x = 0; x < image.getWidth(); x++) {
-                // Obtenir la valeur du niveau de gris du pixel
-                int grayValue = image.getRaster().getSample(x, y, 0);
-
-                // Inverser le niveau de gris en soustrayant de la valeur maximale possible
-                int invertedGrayValue = 255 - grayValue;
-
-                // Définir la nouvelle valeur du niveau de gris dans l'image inversée
-                invertedImage.getRaster().setSample(x, y, 0, invertedGrayValue);
-            }
-        }
-        return invertedImage;
-    }
-
+   
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -666,19 +405,13 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel ImageBrain;
     private javax.swing.JLabel infoAdresse;
     private javax.swing.JLabel infoDate;
     private javax.swing.JLabel infoID;
     private javax.swing.JLabel infoNom;
     private javax.swing.JLabel infoPrenom;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButtonDecreaseContrast;
-    private javax.swing.JButton jButtonIncreaseContraste;
-    private javax.swing.JButton jButtonInversionGris;
-    private javax.swing.JButton jButtonRestartContrast;
     private javax.swing.JButton jButtonRetour;
-    private javax.swing.JButton jButtonRotate90;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -687,7 +420,6 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanelTest;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTableDMR;
     // End of variables declaration//GEN-END:variables
