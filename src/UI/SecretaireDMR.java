@@ -5,6 +5,9 @@
 package UI;
 
 import java.sql.Date;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -15,10 +18,17 @@ public class SecretaireDMR extends javax.swing.JFrame {
     /**
      * Creates new form SecretaireDMR
      */
+    
+     private DefaultTableModel model;
+    
     public SecretaireDMR(int idpatient, String nom, String prenom, Date datenaissance, String adresse) {
         initComponents();
         String idPatient = String.valueOf(idpatient);
         String dateNaissance = datenaissance.toString();
+        
+        model = new DefaultTableModel(new Object[]{"ID", "Name", "Prenom", "Date Naissance", "Adresse"}, 0);
+        jTableListeActes.setModel(model); // Appliquer le modèle au jTableDMR
+        
         infoID.setText(idPatient);
         infoNom.setText(nom);
         infoPrenom.setText(prenom);
@@ -48,9 +58,11 @@ public class SecretaireDMR extends javax.swing.JFrame {
         infoDate = new javax.swing.JLabel();
         infoAdresse = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableListeActes = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButtonRechercheActe = new javax.swing.JButton();
+        jTextFieldRecherche = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -139,7 +151,7 @@ public class SecretaireDMR extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableListeActes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -158,7 +170,7 @@ public class SecretaireDMR extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableListeActes);
 
         jButton1.setText("Retour");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -169,6 +181,15 @@ public class SecretaireDMR extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Galvji", 1, 14)); // NOI18N
         jLabel1.setText("Actes");
+
+        jButtonRechercheActe.setText("Chercher");
+        jButtonRechercheActe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRechercheActeActionPerformed(evt);
+            }
+        });
+
+        jTextFieldRecherche.setText("Rechercher un acte ...");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -183,7 +204,12 @@ public class SecretaireDMR extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jTextFieldRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonRechercheActe, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
@@ -192,11 +218,16 @@ public class SecretaireDMR extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonRechercheActe))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(jButton1))
         );
 
@@ -220,6 +251,42 @@ public class SecretaireDMR extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButtonRechercheActeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRechercheActeActionPerformed
+       
+        String recherche = jTextFieldRecherche.getText();
+        String rech = capitalizeFirstLetter(recherche);
+        
+        System.out.println(rech);
+        
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>( model);
+        jTableListeActes.setRowSorter(sorter);
+        if (rech.length() == 0) {
+            sorter.setRowFilter(null);
+            System.out.println("ça ne correspond à aucun acte");
+        } else {
+        // Vérifie si le texte est composé uniquement de chiffres
+        boolean numero = rech.matches("\\d+");
+        if (numero) {
+            // Convertit la chaîne de chiffres en entier
+            int num = Integer.parseInt(rech);
+            // Crée un filtre pour trouver une correspondance avec le numéro exactement de l'identifiant
+            sorter.setRowFilter(RowFilter.numberFilter(RowFilter.ComparisonType.EQUAL, num));
+        } else {
+            // Applique un filtre regex pour la recherche de texte
+            sorter.setRowFilter(RowFilter.regexFilter(rech));
+        }
+        System.out.println("acte trouvé.");
+        }   
+        
+    }//GEN-LAST:event_jButtonRechercheActeActionPerformed
+
+    
+     private String capitalizeFirstLetter(String input) {
+        if (input == null || input.isEmpty()) {
+            return input; // Si l'entrée est vide ou nulle, retourne la même chaîne
+        }
+        return input.substring(0, 1).toUpperCase() + input.substring(1); // Met la première lettre en majuscule et concatène le reste de la chaîne
+    }
     /**
      * @param args the command line arguments
      */
@@ -262,6 +329,7 @@ public class SecretaireDMR extends javax.swing.JFrame {
     private javax.swing.JLabel infoNom;
     private javax.swing.JLabel infoPrenom;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonRechercheActe;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -271,6 +339,7 @@ public class SecretaireDMR extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableListeActes;
+    private javax.swing.JTextField jTextFieldRecherche;
     // End of variables declaration//GEN-END:variables
 }
