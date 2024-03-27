@@ -39,12 +39,9 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
     private Date datenaissance;
     private String adresse;
 
-    private BufferedImage originalImage;
-    private BufferedImage modifiedImage;
-    private BufferedImage invertedImage;
+  
 
-    private int rotationAngle = 0; // Variable pour suivre l'angle de rotation
-    private double contraste = 0.25; //variable contraste de base
+    
 
     /**
      * Creates new form Acceuil

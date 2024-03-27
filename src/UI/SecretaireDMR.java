@@ -4,7 +4,28 @@
  */
 package UI;
 
+
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.ResultSet;//cill
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;//cgvubh
 
 /**
  *
@@ -15,6 +36,14 @@ public class SecretaireDMR extends javax.swing.JFrame {
     /**
      * Creates new form SecretaireDMR
      */
+    private DefaultTableModel model;
+    Connection conn;
+    private int idPatient;
+    private String nom;
+    private String prenom;
+    private Date datenaissance;
+    private String adresse;
+    
     public SecretaireDMR(int idpatient, String nom, String prenom, Date datenaissance, String adresse) {
         initComponents();
         String idPatient = String.valueOf(idpatient);
@@ -24,6 +53,16 @@ public class SecretaireDMR extends javax.swing.JFrame {
         infoPrenom.setText(prenom);
         infoDate.setText(dateNaissance);
         infoAdresse.setText(adresse);
+        
+        model = new DefaultTableModel(new Object[]{"IDACTE", "CODE ACTE", "TARIFICATION", "Date Acte", "PRATICIEN"}, 0);
+        jTableActeSecretaire.setModel(model); // Appliquer le modèle au jTableDMR
+        jTableActeSecretaire.setDefaultEditor(Object.class, null); // Rendre toutes les cellules non éditables
+        try {
+            conn = (Connection) DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
+        } catch (SQLException ex) {
+            Logger.getLogger(AjoutPatient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       recuperation_donnees(); 
     }
 
     /**
@@ -48,7 +87,7 @@ public class SecretaireDMR extends javax.swing.JFrame {
         infoDate = new javax.swing.JLabel();
         infoAdresse = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableActeSecretaire = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
@@ -139,7 +178,7 @@ public class SecretaireDMR extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableActeSecretaire.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -158,7 +197,7 @@ public class SecretaireDMR extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableActeSecretaire);
 
         jButton1.setText("Retour");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -220,6 +259,29 @@ public class SecretaireDMR extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void recuperation_donnees() {
+
+        
+        try {
+
+            Statement stmt = conn.createStatement();
+            //exécutation de la requête
+            ResultSet rs = stmt.executeQuery("SELECT IDACTE, CODEACTE, TARIFICATION, DATEACTE, PRATICIEN FROM ACTERADIO WHERE IDPATIENT = " + getIdPatient());
+            //on ajoute à la ligne les informations de la tableau
+            while (rs.next()) {
+                Object[] row = new Object[]{rs.getInt("IDACTE"), rs.getString("CODEACTE"), rs.getDouble("TARIFICATION"), rs.getDate("DATEACTE"), rs.getString("PRATICIEN")};
+                model.addRow(row);
+            }
+            // on applique le model du defaulttable au jTable de l'interface
+            jTableActeSecretaire.setModel(model);
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -271,6 +333,10 @@ public class SecretaireDMR extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableActeSecretaire;
     // End of variables declaration//GEN-END:variables
+public int getIdPatient() {
+        return this.idPatient;
+    }
+
 }
