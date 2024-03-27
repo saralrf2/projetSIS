@@ -296,14 +296,14 @@ public class AcceuilSecretaire extends javax.swing.JFrame {
             Date datenaissance = Date.valueOf(jTableDMR.getValueAt(ligneSelectionnee, 3).toString());
             String adresse = jTableDMR.getValueAt(ligneSelectionnee, 4).toString();
 
-            Object data = jTableDMR.getValueAt(ligne, colonne);
+//            Object data = jTableDMR.getValueAt(ligne, colonne);
 
 //                //ouvrir la fiche patient avec les informations sélectionnées
-            SecretaireDMR nouveauJFrame = new SecretaireDMR(idpatient, nom, prenom, datenaissance, adresse);
+            DossierMedicalRadiologie nouveauJFrame = new DossierMedicalRadiologie(idpatient, nom, prenom, datenaissance, adresse);
+            this.setVisible(false);
             nouveauJFrame.setVisible(true);
             nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
             dispose();
-
         }
     }//GEN-LAST:event_jTableDMRMouseClicked
 

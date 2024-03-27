@@ -25,6 +25,10 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;//cgvubh
+import javax.swing.table.TableRowSorter;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -61,8 +65,8 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
             }
         });
         model = new DefaultTableModel(new Object[]{"IDACTE", "CODE ACTE", "TARIFICATION", "Date Acte", "PRATICIEN", "Signification du Code"}, 0);
-        jTableDMR.setModel(model); // Appliquer le modèle au jTableDMR
-        jTableDMR.setDefaultEditor(Object.class, null); // Rendre toutes les cellules non éditables
+        jTableListeDMR.setModel(model); // Appliquer le modèle au jTableDMR
+        jTableListeDMR.setDefaultEditor(Object.class, null); // Rendre toutes les cellules non éditables
         try {
             conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
         } catch (SQLException ex) {
@@ -117,8 +121,10 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         jButtonRetour = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTableDMR = new javax.swing.JTable();
+        jTableListeDMR = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jButtonChercher = new javax.swing.JButton();
+        jTextFieldChercherActe = new javax.swing.JTextField();
         jPanelTest = new javax.swing.JPanel();
         ImageBrain = new javax.swing.JLabel();
         jButtonRotate90 = new javax.swing.JButton();
@@ -226,8 +232,8 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Galvji", 1, 14)); // NOI18N
         jLabel6.setText("Liste des Examens ");
 
-        jTableDMR.setFont(new java.awt.Font("Galvji", 0, 14)); // NOI18N
-        jTableDMR.setModel(new javax.swing.table.DefaultTableModel(
+        jTableListeDMR.setFont(new java.awt.Font("Galvji", 0, 14)); // NOI18N
+        jTableListeDMR.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"Alexia", "IDRAC", "642142881", "13 rue saint joseph"},
                 {null, null, null, null},
@@ -246,17 +252,31 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTableDMR.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTableListeDMR.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableDMRMouseClicked(evt);
+                jTableListeDMRMouseClicked(evt);
             }
         });
-        jScrollPane4.setViewportView(jTableDMR);
+        jScrollPane4.setViewportView(jTableListeDMR);
 
         jButton1.setText("Ajouter");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButtonChercher.setText("Chercher");
+        jButtonChercher.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonChercherActionPerformed(evt);
+            }
+        });
+
+        jTextFieldChercherActe.setText("Chercher un acte ...");
+        jTextFieldChercherActe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldChercherActeActionPerformed(evt);
             }
         });
 
@@ -267,26 +287,35 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButtonRetour)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jTextFieldChercherActe)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonChercher)
+                        .addGap(56, 56, 56)
+                        .addComponent(jButton1)))
                 .addContainerGap())
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jScrollPane4)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addGap(2, 2, 2)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(jButtonChercher)
+                    .addComponent(jTextFieldChercherActe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
@@ -400,20 +429,20 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButtonRetourActionPerformed
 
-    private void jTableDMRMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDMRMouseClicked
+    private void jTableListeDMRMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableListeDMRMouseClicked
 //        int ligne = jTableDMR.getSelectedRow(); //récuperation information ligne
 //        int colonne = jTableDMR.getSelectedColumn(); // récuperation information colonne
         if (evt.getClickCount() == 2) { // Double clic sur une ligne
 
-            int ligneSelectionnee = jTableDMR.getSelectedRow();// récuperation information de la ligne sélectionnée
+            int ligneSelectionnee = jTableListeDMR.getSelectedRow();// récuperation information de la ligne sélectionnée
 
             //information de la ligne sélectionnée
-            int idActe = Integer.parseInt(jTableDMR.getValueAt(ligneSelectionnee, 0).toString());
-            String codeActe = jTableDMR.getValueAt(ligneSelectionnee, 1).toString();
-            String nomPracticien = jTableDMR.getValueAt(ligneSelectionnee, 4).toString();
-            Date dateActe = Date.valueOf(jTableDMR.getValueAt(ligneSelectionnee, 3).toString());
-            double tarification = (double) jTableDMR.getValueAt(ligneSelectionnee, 2);
-            String acte = jTableDMR.getValueAt(ligneSelectionnee, 5).toString();
+            int idActe = Integer.parseInt(jTableListeDMR.getValueAt(ligneSelectionnee, 0).toString());
+            String codeActe = jTableListeDMR.getValueAt(ligneSelectionnee, 1).toString();
+            String nomPracticien = jTableListeDMR.getValueAt(ligneSelectionnee, 4).toString();
+            Date dateActe = Date.valueOf(jTableListeDMR.getValueAt(ligneSelectionnee, 3).toString());
+            double tarification = (double) jTableListeDMR.getValueAt(ligneSelectionnee, 2);
+            String acte = jTableListeDMR.getValueAt(ligneSelectionnee, 5).toString();
 //            Object data = jTableDMR.getValueAt(ligne, colonne);
             //                //ouvrir la fiche patient avec les informations sélectionnées
             Acte nouveauJFrame = new Acte(this, idActe, codeActe, nomPracticien, dateActe, tarification, acte);
@@ -422,7 +451,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
             nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         }
-    }//GEN-LAST:event_jTableDMRMouseClicked
+    }//GEN-LAST:event_jTableListeDMRMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         AjoutActe nouveauJFrame = new AjoutActe(this);
@@ -504,6 +533,47 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonInversionGrisActionPerformed
 
+    private void jTextFieldChercherActeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldChercherActeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldChercherActeActionPerformed
+
+    private void jButtonChercherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChercherActionPerformed
+
+        String recherche = jTextFieldChercherActe.getText();
+        String rech = capitalizeFirstLetter(recherche);
+
+        System.out.println(rech);
+
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        jTableListeDMR.setRowSorter(sorter);
+        if (rech.length() == 0) {
+            sorter.setRowFilter(null);
+            System.out.println("ça ne correspond à aucun acte");
+        } else {
+            // Vérifie si le texte est composé uniquement de chiffres
+            boolean numero = rech.matches("\\d+");
+            if (numero) {
+                // Convertit la chaîne de chiffres en entier
+                int num = Integer.parseInt(rech);
+                // Crée un filtre pour trouver une correspondance avec le numéro exactement de l'identifiant
+                sorter.setRowFilter(RowFilter.numberFilter(RowFilter.ComparisonType.EQUAL, num));
+            } else {
+                // Applique un filtre regex pour la recherche de texte
+                sorter.setRowFilter(RowFilter.regexFilter(rech));
+            }
+            System.out.println("acte trouvé.");
+        }
+
+
+    }//GEN-LAST:event_jButtonChercherActionPerformed
+
+    private String capitalizeFirstLetter(String input) {
+        if (input == null || input.isEmpty()) {
+            return input; // Si l'entrée est vide ou nulle, retourne la même chaîne
+        }
+        return input.substring(0, 1).toUpperCase() + input.substring(1); // Met la première lettre en majuscule et concatène le reste de la chaîne
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -521,7 +591,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
                 model.addRow(row);
             }
             // on applique le model du defaulttable au jTable de l'interface
-            jTableDMR.setModel(model);
+            jTableListeDMR.setModel(model);
 
             rs.close();
             stmt.close();
@@ -673,6 +743,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
     private javax.swing.JLabel infoNom;
     private javax.swing.JLabel infoPrenom;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonChercher;
     private javax.swing.JButton jButtonDecreaseContrast;
     private javax.swing.JButton jButtonIncreaseContraste;
     private javax.swing.JButton jButtonInversionGris;
@@ -689,7 +760,8 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelTest;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTableDMR;
+    private javax.swing.JTable jTableListeDMR;
+    private javax.swing.JTextField jTextFieldChercherActe;
     // End of variables declaration//GEN-END:variables
 
     /**
