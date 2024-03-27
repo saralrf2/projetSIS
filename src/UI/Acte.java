@@ -32,7 +32,6 @@ public class Acte extends javax.swing.JFrame {
     private int rotationAngle = 0; // Variable pour suivre l'angle de rotation
     private double contraste = 0.25; //variable contraste de base
 
-
     /**
      * Creates new form DMR
      */
@@ -400,8 +399,7 @@ public class Acte extends javax.swing.JFrame {
                 modifiedImage = rotateImage(originalImage, 90 * (++rotationAngle));
                 // Mise à jour de l'icône avec l'image pivotée
                 ImageBrain.setIcon(new ImageIcon(modifiedImage));
-            } 
-            catch (IOException ex) {
+            } catch (IOException ex) {
                 Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
@@ -463,7 +461,7 @@ public class Acte extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonInversionGrisActionPerformed
- private BufferedImage rotateImage(Image image, int angle) throws IOException {
+    private BufferedImage rotateImage(Image image, int angle) throws IOException {
         if (ImageBrain.getIcon() == null) {
             JOptionPane.showMessageDialog(this, "Aucune image chargée dans le JLabel.", "Erreur", JOptionPane.ERROR_MESSAGE);
             return null;
@@ -477,8 +475,11 @@ public class Acte extends javax.swing.JFrame {
         g2d.drawImage(image, 0, 0, null);
         g2d.dispose();
 
+        // Afficher les dimensions de l'image originale
+        System.out.println("Dimensions de l'image originale : " + originalImage.getWidth() + "x" + originalImage.getHeight());
+
         // Créer une nouvelle image pour contenir l'image pivotée
-        BufferedImage rotatedImage = new BufferedImage(originalImage.getHeight(), originalImage.getWidth(), BufferedImage.TYPE_INT_ARGB);
+        BufferedImage rotatedImage = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
         // Rotation de l'image
         g2d = rotatedImage.createGraphics();
@@ -486,7 +487,11 @@ public class Acte extends javax.swing.JFrame {
         g2d.drawImage(originalImage, 0, 0, null);
         g2d.dispose();
 
+        // Afficher les dimensions de l'image pivotée
+        System.out.println("Dimensions de l'image pivotée : " + rotatedImage.getWidth() + "x" + rotatedImage.getHeight());
+
         return rotatedImage;
+
     }
 
     private BufferedImage loadImage(String path) {
@@ -552,6 +557,7 @@ public class Acte extends javax.swing.JFrame {
         }
         return invertedImage;
     }
+
     /**
      * @param args the command line arguments
      */
