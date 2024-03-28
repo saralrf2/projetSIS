@@ -77,7 +77,7 @@ public class AcceuilSecretaire extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel1.setBackground(new java.awt.Color(113, 146, 163));
+        jPanel1.setBackground(new java.awt.Color(173, 200, 213));
         jPanel1.setPreferredSize(new java.awt.Dimension(468, 465));
 
         jTableDMR.setFont(new java.awt.Font("Galvji", 0, 13)); // NOI18N

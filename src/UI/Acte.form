@@ -42,16 +42,17 @@
     <Container class="javax.swing.JPanel" name="jPanel2">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="db" green="d2" red="b6" type="rgb"/>
+          <Color blue="d5" green="c8" red="ad" type="rgb"/>
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
             <TitledBorder>
               <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="Compte rendu">
+                <TitledBorder title="Radiographie">
                   <Font PropertyName="font" name="Galvji" size="14" style="1"/>
                 </TitledBorder>
               </Border>
+              <Font PropertyName="font" name="Galvji" size="13" style="1"/>
             </TitledBorder>
           </Border>
         </Property>
@@ -206,7 +207,7 @@
         <Container class="javax.swing.JPanel" name="jPanelInfoActe">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ea" green="ea" red="ec" type="rgb"/>
+              <Color blue="d5" green="c8" red="ad" type="rgb"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -395,6 +396,9 @@
         </Component>
         <Container class="javax.swing.JPanel" name="jPanelCR">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="d5" green="c8" red="ad" type="rgb"/>
+            </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder>

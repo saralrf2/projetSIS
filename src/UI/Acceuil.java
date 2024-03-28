@@ -141,7 +141,7 @@ Connection conn;
                 .addContainerGap())
         );
 
-        jPanel2.setBackground(new java.awt.Color(113, 146, 163));
+        jPanel2.setBackground(new java.awt.Color(173, 200, 213));
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jTextFieldRecherche.setFont(new java.awt.Font("Galvji", 0, 14)); // NOI18N
