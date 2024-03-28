@@ -46,9 +46,9 @@ public class SecretaireDMR extends javax.swing.JFrame {
     
     public SecretaireDMR(int idpatient, String nom, String prenom, Date datenaissance, String adresse) {
         initComponents();
-        String idPatient = String.valueOf(idpatient);
+        this.idPatient = idpatient;
         String dateNaissance = datenaissance.toString();
-        infoID.setText(idPatient);
+        infoID.setText(String.valueOf(this.idPatient));
         infoNom.setText(nom);
         infoPrenom.setText(prenom);
         infoDate.setText(dateNaissance);
