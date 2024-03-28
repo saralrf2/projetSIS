@@ -9,8 +9,6 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-//import java.lang.System.Logger;
-//import java.lang.System.Logger.Level;
 import java.sql.Date;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
