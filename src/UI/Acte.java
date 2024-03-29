@@ -15,11 +15,6 @@ import java.sql.Date;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import javax.swing.JLabel;
 
 /**
  *
@@ -34,6 +29,7 @@ public class Acte extends javax.swing.JFrame {
 
     private int rotationAngle = 0; // Variable pour suivre l'angle de rotation
     private double contraste = 0.25; //variable contraste de base
+
 
     /**
      * Creates new form DMR
@@ -91,7 +87,7 @@ public class Acte extends javax.swing.JFrame {
         jButtonRetour = new javax.swing.JButton();
         jPanelCR = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextAreaCR = new javax.swing.JTextArea();
+        jTextArea1 = new javax.swing.JTextArea();
         jButtonEnregistrerCR = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -289,9 +285,9 @@ public class Acte extends javax.swing.JFrame {
 
         jPanelCR.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Compte rendu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Galvji", 1, 14)))); // NOI18N
 
-        jTextAreaCR.setColumns(20);
-        jTextAreaCR.setRows(5);
-        jScrollPane1.setViewportView(jTextAreaCR);
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
 
         jButtonEnregistrerCR.setText("Enregistrer");
         jButtonEnregistrerCR.addActionListener(new java.awt.event.ActionListener() {
@@ -371,17 +367,8 @@ public class Acte extends javax.swing.JFrame {
 
     private void jButtonEnregistrerCRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnregistrerCRActionPerformed
 
-        // Récupérer le texte du jTextAreaCR
-        String CONTENU = jTextAreaCR.getText();
-        String idCR = infoID.getText(); // Récupérer l'ID stocké dans infoID
-        int ID = 1;
-        int IDACTE = 1;
-        
-        
         // Créer des boutons personnalisés
         Object[] options = {"Valider", "Annuler"};
-        System.out.println("texte CR: " + CONTENU + "-");
-        System.out.println("idCR: " + idCR + "-");
 
         // Afficher la boîte de dialogue avec les boutons personnalisés
         int choix = JOptionPane.showOptionDialog(
@@ -396,36 +383,8 @@ public class Acte extends javax.swing.JFrame {
 
         // Gérer la réponse de l'utilisateur
         if (choix == JOptionPane.YES_OPTION) {
-//            Connexion nouveauJFrame = new Connexion();
-//            nouveauJFrame.setVisible(true);
-            try {
-                // Établir la connexion à la base de données
-                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
-
-                
-                
-                // Préparer la requête SQL pour insérer le compte rendu avec IDCR
-                String sql = "INSERT INTO CR (IDCR, ID, CONTENU, IDACTE) VALUES (?, ?, ?, ?)";
-                PreparedStatement statement = connection.prepareStatement(sql);
-                statement.setString(1, idCR); // Remplace le premier paramètre (?) par la valeur de idCR
-                statement.setInt(2, ID); // Remplace le deuxième paramètre (?) par la valeur de l'ID
-                statement.setString(3, CONTENU); // Remplace le troisième paramètre (?) par la valeur du contenu
-                statement.setInt(4, IDACTE); // Remplace le quatrième paramètre (?) par la valeur de l'ID d'acte
-
-                // Exécuter la requête SQL
-                statement.executeUpdate();
-
-                // Fermer la connexion
-                connection.close();
-
-                // Afficher un message de succès
-                JOptionPane.showMessageDialog(null, "Compte rendu enregistré avec succès !");
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-                // Gérer les erreurs de connexion ou d'exécution de la requête
-                JOptionPane.showMessageDialog(null, "Erreur lors de l'enregistrement du compte rendu : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            }
-            // Fermer la fenêtre actuelle
+            Connexion nouveauJFrame = new Connexion();
+            nouveauJFrame.setVisible(true);
             dispose();
         } else if (choix == JOptionPane.CANCEL_OPTION || choix == JOptionPane.CLOSED_OPTION) {
             // Action si l'utilisateur clique sur "Annuler" ou ferme la boîte de dialogue
@@ -443,7 +402,7 @@ public class Acte extends javax.swing.JFrame {
                 // Mise à jour de l'icône avec l'image pivotée
                 ImageBrain.setIcon(new ImageIcon(modifiedImage));
             } catch (IOException ex) {
-                // Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -504,7 +463,7 @@ public class Acte extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonInversionGrisActionPerformed
-    private BufferedImage rotateImage(Image image, int angle) throws IOException {
+ private BufferedImage rotateImage(Image image, int angle) throws IOException {
         if (ImageBrain.getIcon() == null) {
             JOptionPane.showMessageDialog(this, "Aucune image chargée dans le JLabel.", "Erreur", JOptionPane.ERROR_MESSAGE);
             return null;
@@ -593,7 +552,6 @@ public class Acte extends javax.swing.JFrame {
         }
         return invertedImage;
     }
-
     /**
      * @param args the command line arguments
      */
@@ -656,6 +614,6 @@ public class Acte extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelCR;
     private javax.swing.JPanel jPanelInfoActe;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextAreaCR;
+    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }
