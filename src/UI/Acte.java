@@ -2,6 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+//bug sam 30 Mars
+//test 2
 package UI;
 
 import java.awt.Graphics2D;
@@ -9,6 +11,8 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -368,7 +372,6 @@ public class Acte extends javax.swing.JFrame {
 
     private void jButtonEnregistrerCRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnregistrerCRActionPerformed
 
-        
         // Récupérer le texte du jTextAreaCR
         String CONTENU = jTextAreaCR.getText();
         String idCR = infoID.getText(); // Récupérer l'ID stocké dans infoID
@@ -442,7 +445,7 @@ public class Acte extends javax.swing.JFrame {
                 // Mise à jour de l'icône avec l'image pivotée
                 ImageBrain.setIcon(new ImageIcon(modifiedImage));
             } catch (IOException ex) {
-                Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(Level.SEVERE, null, ex);
+               // Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
