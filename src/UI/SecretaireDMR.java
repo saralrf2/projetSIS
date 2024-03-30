@@ -12,6 +12,9 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author alexiaidrac
@@ -36,16 +39,46 @@ public class SecretaireDMR extends javax.swing.JFrame {
         initComponents();
         String idPatient = String.valueOf(idpatient);
         String dateNaissance = datenaissance.toString();
-        
-        model = new DefaultTableModel(new Object[]{"ID", "Name", "Prenom", "Date Naissance", "Adresse"}, 0);
-        jTableListeActes.setModel(model); // Appliquer le modèle au jTableDMR
-        
+      
         infoID.setText(idPatient);
         infoNom.setText(nom);
         infoPrenom.setText(prenom);
         infoDate.setText(dateNaissance);
         infoAdresse.setText(adresse);
+        
+        model = new DefaultTableModel(new Object[]{"IDACTE", "CODE ACTE", "TARIFICATION", "Date Acte", "PRATICIEN", "Signification du Code"}, 0);
+        jTableListeActes.setModel(model); // Appliquer le modèle au jTableListeActes
+        jTableListeActes.setDefaultEditor(Object.class, null); // Rendre toutes les cellules non éditables
+        try {
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
+        } catch (SQLException ex) {
+            Logger.getLogger(AjoutPatient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        // jPanel2.setVisible(false);
+//        if (conn != null) {
+//            System.out.println("Connexion établie");
+//            
+//        } else {
+//            System.out.println("connexion impossible");
+//
+//        }
+        this.idPatient = idpatient;
+        this.datenaissance = datenaissance;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.adresse = adresse;
+        infoID.setText(String.valueOf(this.idPatient));
+        infoNom.setText(this.nom);
+        infoPrenom.setText(this.prenom);
+        infoDate.setText(this.datenaissance.toString());
+        infoAdresse.setText(this.adresse);
+
+        System.out.println("constr = " + idpatient);
+
+        recuperation_donnees();
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
