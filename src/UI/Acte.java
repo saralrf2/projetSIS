@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 //bug sam 30 Mars
+//test 2
 package UI;
 
 import java.awt.Graphics2D;
