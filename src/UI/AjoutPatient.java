@@ -109,7 +109,7 @@ public class AjoutPatient extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(236, 234, 234));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ajout Patient", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Galvji", 1, 18)))); // NOI18N
 
         jLabelNumIdd.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
@@ -168,6 +168,7 @@ public class AjoutPatient extends javax.swing.JFrame {
             }
         });
 
+        jButtonAjout.setBackground(new java.awt.Color(173, 200, 213));
         jButtonAjout.setFont(new java.awt.Font("Galvji", 0, 13)); // NOI18N
         jButtonAjout.setText("Ajouter");
         jButtonAjout.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -177,6 +178,7 @@ public class AjoutPatient extends javax.swing.JFrame {
             }
         });
 
+        jButtonRetour.setBackground(new java.awt.Color(173, 200, 213));
         jButtonRetour.setFont(new java.awt.Font("Galvji", 0, 13)); // NOI18N
         jButtonRetour.setText("Retour");
         jButtonRetour.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));

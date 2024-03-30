@@ -4,10 +4,28 @@
  */
 package UI;
 
+
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
 import java.sql.Date;
-import javax.swing.RowFilter;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
+import java.sql.DriverManager;
+import java.sql.ResultSet;//cill
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;//cgvubh
 
 /**
  *
@@ -18,22 +36,33 @@ public class SecretaireDMR extends javax.swing.JFrame {
     /**
      * Creates new form SecretaireDMR
      */
-    
-     private DefaultTableModel model;
+    private DefaultTableModel model;
+    Connection conn;
+    private int idPatient;
+    private String nom;
+    private String prenom;
+    private Date datenaissance;
+    private String adresse;
     
     public SecretaireDMR(int idpatient, String nom, String prenom, Date datenaissance, String adresse) {
         initComponents();
-        String idPatient = String.valueOf(idpatient);
+        this.idPatient = idpatient;
         String dateNaissance = datenaissance.toString();
-        
-        model = new DefaultTableModel(new Object[]{"ID", "Name", "Prenom", "Date Naissance", "Adresse"}, 0);
-        jTableListeActes.setModel(model); // Appliquer le modèle au jTableDMR
-        
-        infoID.setText(idPatient);
+        infoID.setText(String.valueOf(this.idPatient));
         infoNom.setText(nom);
         infoPrenom.setText(prenom);
         infoDate.setText(dateNaissance);
         infoAdresse.setText(adresse);
+        
+        model = new DefaultTableModel(new Object[]{"IDACTE", "CODE ACTE", "TARIFICATION", "Date Acte", "PRATICIEN"}, 0);
+        jTableActeSecretaire.setModel(model); // Appliquer le modèle au jTableDMR
+        jTableActeSecretaire.setDefaultEditor(Object.class, null); // Rendre toutes les cellules non éditables
+        try {
+            conn = (Connection) DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
+        } catch (SQLException ex) {
+            Logger.getLogger(AjoutPatient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       recuperation_donnees(); 
     }
 
     /**
@@ -57,18 +86,17 @@ public class SecretaireDMR extends javax.swing.JFrame {
         infoPrenom = new javax.swing.JLabel();
         infoDate = new javax.swing.JLabel();
         infoAdresse = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableListeActes = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jButtonRechercheActe = new javax.swing.JButton();
-        jTextFieldRecherche = new javax.swing.JTextField();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableActeSecretaire = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dossier médical radiologique", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Galvji", 1, 18)))); // NOI18N
 
+        jPanel2.setBackground(new java.awt.Color(173, 200, 213));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Informations patient", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Galvji", 1, 12)))); // NOI18N
 
         jLabelNumIDD.setFont(new java.awt.Font("Galvji", 2, 13)); // NOI18N
@@ -151,7 +179,18 @@ public class SecretaireDMR extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTableListeActes.setModel(new javax.swing.table.DefaultTableModel(
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Retour");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jPanel3.setBackground(new java.awt.Color(173, 200, 213));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("Acte")));
+
+        jTableActeSecretaire.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -170,26 +209,23 @@ public class SecretaireDMR extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTableListeActes);
+        jScrollPane1.setViewportView(jTableActeSecretaire);
 
-        jButton1.setText("Retour");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setFont(new java.awt.Font("Galvji", 1, 14)); // NOI18N
-        jLabel1.setText("Actes");
-
-        jButtonRechercheActe.setText("Chercher");
-        jButtonRechercheActe.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRechercheActeActionPerformed(evt);
-            }
-        });
-
-        jTextFieldRecherche.setText("Rechercher un acte ...");
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(76, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 12, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -197,37 +233,19 @@ public class SecretaireDMR extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jTextFieldRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonRechercheActe, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButtonRechercheActe))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGap(39, 39, 39)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1))
         );
 
@@ -235,7 +253,7 @@ public class SecretaireDMR extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -251,41 +269,28 @@ public class SecretaireDMR extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButtonRechercheActeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRechercheActeActionPerformed
-       
-        String recherche = jTextFieldRecherche.getText();
-        String rech = capitalizeFirstLetter(recherche);
-        
-        System.out.println(rech);
-        
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>( model);
-        jTableListeActes.setRowSorter(sorter);
-        if (rech.length() == 0) {
-            sorter.setRowFilter(null);
-            System.out.println("ça ne correspond à aucun acte");
-        } else {
-        // Vérifie si le texte est composé uniquement de chiffres
-        boolean numero = rech.matches("\\d+");
-        if (numero) {
-            // Convertit la chaîne de chiffres en entier
-            int num = Integer.parseInt(rech);
-            // Crée un filtre pour trouver une correspondance avec le numéro exactement de l'identifiant
-            sorter.setRowFilter(RowFilter.numberFilter(RowFilter.ComparisonType.EQUAL, num));
-        } else {
-            // Applique un filtre regex pour la recherche de texte
-            sorter.setRowFilter(RowFilter.regexFilter(rech));
-        }
-        System.out.println("acte trouvé.");
-        }   
-        
-    }//GEN-LAST:event_jButtonRechercheActeActionPerformed
+    private void recuperation_donnees() {
 
-    
-     private String capitalizeFirstLetter(String input) {
-        if (input == null || input.isEmpty()) {
-            return input; // Si l'entrée est vide ou nulle, retourne la même chaîne
+        
+        try {
+
+            Statement stmt = conn.createStatement();
+            //exécutation de la requête
+            ResultSet rs = stmt.executeQuery("SELECT IDACTE, CODEACTE, TARIFICATION, DATEACTE, PRATICIEN FROM ACTERADIO WHERE IDPATIENT = " + getIdPatient());
+            //on ajoute à la ligne les informations de la tableau
+            while (rs.next()) {
+                Object[] row = new Object[]{rs.getInt("IDACTE"), rs.getString("CODEACTE"), rs.getDouble("TARIFICATION"), rs.getDate("DATEACTE"), rs.getString("PRATICIEN")};
+                model.addRow(row);
+            }
+            // on applique le model du defaulttable au jTable de l'interface
+            jTableActeSecretaire.setModel(model);
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return input.substring(0, 1).toUpperCase() + input.substring(1); // Met la première lettre en majuscule et concatène le reste de la chaîne
     }
     /**
      * @param args the command line arguments
@@ -329,8 +334,6 @@ public class SecretaireDMR extends javax.swing.JFrame {
     private javax.swing.JLabel infoNom;
     private javax.swing.JLabel infoPrenom;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButtonRechercheActe;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -338,8 +341,12 @@ public class SecretaireDMR extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelNumIDD;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableListeActes;
-    private javax.swing.JTextField jTextFieldRecherche;
+    private javax.swing.JTable jTableActeSecretaire;
     // End of variables declaration//GEN-END:variables
+public int getIdPatient() {
+        return this.idPatient;
+    }
+
 }

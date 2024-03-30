@@ -93,9 +93,9 @@ public class AjoutActe extends javax.swing.JFrame {
         Dateacte = new javax.swing.JLabel();
         jTextFieldidacte = new javax.swing.JTextField();
         jTextFieldNompracticien = new javax.swing.JTextField();
-        jComboBoxJour = new javax.swing.JComboBox<String>();
-        jComboBoxMois = new javax.swing.JComboBox<String>();
-        jComboBoxAnnee = new javax.swing.JComboBox<String>();
+        jComboBoxJour = new javax.swing.JComboBox<>();
+        jComboBoxMois = new javax.swing.JComboBox<>();
+        jComboBoxAnnee = new javax.swing.JComboBox<>();
         jButtonAjout = new javax.swing.JButton();
         jButtonRetour = new javax.swing.JButton();
         CodeACte = new javax.swing.JLabel();
@@ -119,7 +119,7 @@ public class AjoutActe extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(236, 234, 234));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ajout Examen Radiologique", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Galvji", 1, 18)))); // NOI18N
 
         IDActe.setFont(new java.awt.Font("Galvji", 2, 14)); // NOI18N
@@ -137,24 +137,28 @@ public class AjoutActe extends javax.swing.JFrame {
             }
         });
 
-        jComboBoxJour.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1 ", "2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ", "10 ", "11 ", "12 ", "13 ", "14 ", "15 ", "16 ", "17 ", "18 ", "19 ", "20 ", "21 ", "22 ", "23 ", "24 ", "25 ", "26 ", "27 ", "28 ", "29 ", "30 ", "31" }));
+        jComboBoxJour.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 ", "2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ", "10 ", "11 ", "12 ", "13 ", "14 ", "15 ", "16 ", "17 ", "18 ", "19 ", "20 ", "21 ", "22 ", "23 ", "24 ", "25 ", "26 ", "27 ", "28 ", "29 ", "30 ", "31" }));
 
-        jComboBoxMois.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", " " }));
+        jComboBoxMois.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", " " }));
 
-        jComboBoxAnnee.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2000", "2002", "2001", " " }));
+        jComboBoxAnnee.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2000", "2002", "2001", " " }));
 
+        jButtonAjout.setBackground(new java.awt.Color(173, 200, 213));
         jButtonAjout.setFont(new java.awt.Font("Galvji", 0, 13)); // NOI18N
         jButtonAjout.setText("Ajouter");
         jButtonAjout.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonAjout.setBorderPainted(false);
         jButtonAjout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAjoutActionPerformed(evt);
             }
         });
 
+        jButtonRetour.setBackground(new java.awt.Color(173, 200, 213));
         jButtonRetour.setFont(new java.awt.Font("Galvji", 0, 13)); // NOI18N
         jButtonRetour.setText("Retour");
         jButtonRetour.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonRetour.setBorderPainted(false);
         jButtonRetour.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRetourActionPerformed(evt);
