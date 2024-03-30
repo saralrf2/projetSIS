@@ -24,7 +24,9 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;//cgvubh
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -107,6 +109,8 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTableDMR = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jButtonRecherche = new javax.swing.JButton();
+        jTextFieldRecherche = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -168,7 +172,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(infoAdresse)))
-                .addContainerGap(182, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,12 +247,25 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
             }
         });
 
+        jButtonRecherche.setText("Chercher");
+        jButtonRecherche.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRechercheActionPerformed(evt);
+            }
+        });
+
+        jTextFieldRecherche.setText("Rechercher un dossier médical ...");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jTextFieldRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonRecherche)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addContainerGap())
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,7 +277,10 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jButton1)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButtonRecherche)
+                    .addComponent(jTextFieldRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 197, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
@@ -342,6 +362,41 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButtonRechercheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRechercheActionPerformed
+      
+        String recherche = jTextFieldRecherche.getText();
+        String rech = capitalizeFirstLetter(recherche);
+        
+        System.out.println(rech);
+        
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>( model);
+        jTableDMR.setRowSorter(sorter);
+        if (rech.length() == 0) {
+            sorter.setRowFilter(null);
+            System.out.println("ça ne correspond à aucun DMR");
+        } else {
+        // Vérifie si le texte est composé uniquement de chiffres
+        boolean numero = rech.matches("\\d+");
+        if (numero) {
+            // Convertit la chaîne de chiffres en entier
+            int num = Integer.parseInt(rech);
+            // Crée un filtre pour trouver une correspondance avec le numéro exactement de l'identifiant
+            sorter.setRowFilter(RowFilter.numberFilter(RowFilter.ComparisonType.EQUAL, num));
+        } else {
+            // Applique un filtre regex pour la recherche de texte
+            sorter.setRowFilter(RowFilter.regexFilter(rech));
+        }
+        System.out.println("DMR trouvé.");
+        }   
+        
+    }//GEN-LAST:event_jButtonRechercheActionPerformed
+
+         private String capitalizeFirstLetter(String input) {
+        if (input == null || input.isEmpty()) {
+            return input; // Si l'entrée est vide ou nulle, retourne la même chaîne
+        }
+        return input.substring(0, 1).toUpperCase() + input.substring(1); // Met la première lettre en majuscule et concatène le reste de la chaîne
+    }
     /**
      * @param args the command line arguments
      */
@@ -421,6 +476,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
     private javax.swing.JLabel infoNom;
     private javax.swing.JLabel infoPrenom;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonRecherche;
     private javax.swing.JButton jButtonRetour;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -432,6 +488,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTableDMR;
+    private javax.swing.JTextField jTextFieldRecherche;
     // End of variables declaration//GEN-END:variables
 
     /**
