@@ -311,8 +311,8 @@ Connection conn;
     }//GEN-LAST:event_jButtonDeconnexionActionPerformed
 
     private void jTableDMRMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDMRMouseClicked
-//        int ligne = jTableDMR.getSelectedRow(); //récuperation information ligne
-//        int colonne = jTableDMR.getSelectedColumn(); // récuperation information colonne
+        int ligne = jTableDMR.getSelectedRow(); //récuperation information ligne
+        int colonne = jTableDMR.getSelectedColumn(); // récuperation information colonne
         if (evt.getClickCount() == 2) { // Double clic sur une ligne
             
             int ligneSelectionnee = jTableDMR.getSelectedRow();// récuperation information de la ligne sélectionnée

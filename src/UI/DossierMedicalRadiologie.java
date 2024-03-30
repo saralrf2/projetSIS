@@ -31,7 +31,7 @@ import javax.swing.table.DefaultTableModel;//cgvubh
  * @author alexiaidrac
  */
 public class DossierMedicalRadiologie extends javax.swing.JFrame {
-
+    
     Connection conn;
     private int idPatient;
     private String nom;
@@ -39,15 +39,12 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
     private Date datenaissance;
     private String adresse;
 
-  
-
-    
-
     /**
      * Creates new form Acceuil
      */
-    private DefaultTableModel model;
-
+      
+     private DefaultTableModel model;
+    
     public DossierMedicalRadiologie(int idpatient, String nom, String prenom, Date datenaissance, String adresse) {
         initComponents();
         

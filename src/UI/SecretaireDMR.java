@@ -5,20 +5,31 @@
 package UI;
 
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-
+import java.sql.Connection;
 /**
  *
  * @author alexiaidrac
  */
 public class SecretaireDMR extends javax.swing.JFrame {
 
-    /**
-     * Creates new form SecretaireDMR
-     */
     
+    Connection conn;
+    private int idPatient;
+    private String nom;
+    private String prenom;
+    private Date datenaissance;
+    private String adresse;
+
+    /**
+     * Creates new form Acceuil
+     */
+      
      private DefaultTableModel model;
     
     public SecretaireDMR(int idpatient, String nom, String prenom, Date datenaissance, String adresse) {
@@ -290,6 +301,34 @@ public class SecretaireDMR extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+     
+     
+         private void recuperation_donnees() {
+
+        System.out.println("get = " + getIdPatient());
+        try {
+
+            Statement stmt = conn.createStatement();
+            //exécutation de la requête
+            ResultSet rs = stmt.executeQuery("SELECT * FROM ACTERADIO WHERE IDPATIENT = " + getIdPatient());
+            //on ajoute à la ligne les informations de la tableau
+            while (rs.next()) {
+                Object[] row = new Object[]{rs.getInt("IDACTE"), rs.getString("CODEACTE"), rs.getDouble("TARIFICATION"), rs.getDate("DATEACTE"), rs.getString("PRATICIEN"), rs.getString("SIGNIFICATIONCODE")};
+                model.addRow(row);
+            }
+            // on applique le model du defaulttable au jTable de l'interface
+            jTableListeActes.setModel(model);
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+   
+     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -342,4 +381,8 @@ public class SecretaireDMR extends javax.swing.JFrame {
     private javax.swing.JTable jTableListeActes;
     private javax.swing.JTextField jTextFieldRecherche;
     // End of variables declaration//GEN-END:variables
+
+ public int getIdPatient() {
+        return this.idPatient;
+    }
 }

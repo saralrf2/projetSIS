@@ -313,7 +313,7 @@ public class AcceuilSecretaire extends javax.swing.JFrame {
 //            Object data = jTableDMR.getValueAt(ligne, colonne);
 
 //                //ouvrir la fiche patient avec les informations sélectionnées
-            DossierMedicalRadiologie nouveauJFrame = new DossierMedicalRadiologie(idpatient, nom, prenom, datenaissance, adresse);
+            SecretaireDMR nouveauJFrame = new SecretaireDMR(idpatient, nom, prenom, datenaissance, adresse);
             this.setVisible(false);
             nouveauJFrame.setVisible(true);
             nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
