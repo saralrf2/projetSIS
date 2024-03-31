@@ -22,7 +22,6 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-
 /**
  *
  * @author alexiaidrac
@@ -30,7 +29,9 @@ import javax.swing.JOptionPane;
 public class Acte extends javax.swing.JFrame {
 
     private DossierMedicalRadiologie dmr;
-    private BufferedImage originalImage;
+    private BufferedImage originalImage = loadImage("images/brain1_0000.jpg");
+    ;
+    private BufferedImage currentImage;
     private BufferedImage modifiedImage;
     private BufferedImage invertedImage;
     private BufferedImage flippedImage;
@@ -406,8 +407,7 @@ public class Acte extends javax.swing.JFrame {
         String idCR = infoID.getText(); // Récupérer l'ID stocké dans infoID
         int ID = 1;
         int IDACTE = 1;
-        
-        
+
         // Créer des boutons personnalisés
         Object[] options = {"Valider", "Annuler"};
         System.out.println("texte CR: " + CONTENU + "-");
@@ -432,8 +432,6 @@ public class Acte extends javax.swing.JFrame {
                 // Établir la connexion à la base de données
                 Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
 
-                
-                
                 // Préparer la requête SQL pour insérer le compte rendu avec IDCR
                 String sql = "INSERT INTO CR (IDCR, ID, CONTENU, IDACTE) VALUES (?, ?, ?, ?)";
                 PreparedStatement statement = connection.prepareStatement(sql);
@@ -466,15 +464,15 @@ public class Acte extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEnregistrerCRActionPerformed
 
     private void jButtonRotate90ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRotate90ActionPerformed
-        originalImage = loadImage("images/brain1_0000.jpg");
-        if (originalImage != null) {
+
+        if (currentImage != null) {
             try {
                 // Rotation de l'image
-                modifiedImage = rotateImage(originalImage, 90 * (++rotationAngle));
+                currentImage = rotateImage(currentImage, 90 * (++rotationAngle));
                 // Mise à jour de l'icône avec l'image pivotée
-                ImageBrain.setIcon(new ImageIcon(modifiedImage));
+                ImageBrain.setIcon(new ImageIcon(currentImage));
             } catch (IOException ex) {
-               // Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(Level.SEVERE, null, ex);
+                // Gérer l'exception
             }
         } else {
             JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -482,14 +480,14 @@ public class Acte extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRotate90ActionPerformed
 
     private void jButtonIncreaseContrasteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIncreaseContrasteActionPerformed
-        originalImage = loadImage("images/brain1_0000.jpg");
 
         if (null != originalImage) {
             // Incrémentation du contraste
             contraste += 0.5; // Incrémente le contraste de 0.25 à chaque clic
 
             // Ajustement du contraste de l'image
-            modifiedImage = adjustContrast(originalImage, contraste);
+            currentImage = originalImage;
+            modifiedImage = adjustContrast(currentImage, contraste);
 
             // Mise à jour de l'icône avec l'image avec contraste ajusté
             ImageBrain.setIcon(new ImageIcon(modifiedImage));
@@ -499,14 +497,14 @@ public class Acte extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonIncreaseContrasteActionPerformed
 
     private void jButtonDecreaseContrastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDecreaseContrastActionPerformed
-        originalImage = loadImage("images/brain1_0000.jpg");
 
         if (null != originalImage) {
             // Incrémentation du contraste
             contraste -= 0.5; // Incrémente le contraste de 0.25 à chaque clic
 
             // Ajustement du contraste de l'image
-            modifiedImage = adjustContrast(originalImage, contraste);
+            currentImage = originalImage;
+            modifiedImage = adjustContrast(currentImage, contraste);
 
             // Mise à jour de l'icône avec l'image avec contraste ajusté
             ImageBrain.setIcon(new ImageIcon(modifiedImage));
@@ -516,17 +514,17 @@ public class Acte extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonDecreaseContrastActionPerformed
 
     private void jButtonRestartContrastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRestartContrastActionPerformed
-
+        originalImage = loadImage("images/brain1_0000.jpg");
         ImageBrain.setIcon(new ImageIcon(originalImage)); // Restaurer l'image originale
 
     }//GEN-LAST:event_jButtonRestartContrastActionPerformed
 
     private void jButtonInversionGrisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInversionGrisActionPerformed
-        originalImage = loadImage("images/brain1_0000.jpg");
 
         if (null != originalImage) {
             // Appliquer l'inversion des niveaux de gris et récupérer l'image inversée
-            BufferedImage invertedImage = inversionNiveauGris(originalImage);
+            currentImage = originalImage;
+            BufferedImage invertedImage = inversionNiveauGris(currentImage);
 
             // Afficher l'image inversée
             ImageBrain.setIcon(new ImageIcon(invertedImage));
@@ -543,38 +541,27 @@ public class Acte extends javax.swing.JFrame {
     private void jButtonFlipVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFlipVActionPerformed
         flipVImage();
     }//GEN-LAST:event_jButtonFlipVActionPerformed
-    private BufferedImage rotateImage(Image image, int angle) throws IOException {
-        if (ImageBrain.getIcon() == null) {
-            JOptionPane.showMessageDialog(this, "Aucune image chargée dans le JLabel.", "Erreur", JOptionPane.ERROR_MESSAGE);
-            return null;
-        }
-
-        // Créer une BufferedImage à partir de l'image
-        BufferedImage originalImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-        // Dessiner l'image sur la BufferedImage
-        Graphics2D g2d = originalImage.createGraphics();
-        g2d.drawImage(image, 0, 0, null);
-        g2d.dispose();
-
-        // Afficher les dimensions de l'image originale
-        System.out.println("Dimensions de l'image originale : " + originalImage.getWidth() + "x" + originalImage.getHeight());
-
-        // Créer une nouvelle image pour contenir l'image pivotée
-        BufferedImage rotatedImage = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
-
-        // Rotation de l'image
-        g2d = rotatedImage.createGraphics();
-        g2d.rotate(Math.toRadians(angle), rotatedImage.getWidth() / 2, rotatedImage.getHeight() / 2);
-        g2d.drawImage(originalImage, 0, 0, null);
-        g2d.dispose();
-
-        // Afficher les dimensions de l'image pivotée
-        System.out.println("Dimensions de l'image pivotée : " + rotatedImage.getWidth() + "x" + rotatedImage.getHeight());
-
-        return rotatedImage;
-
+    
+    private BufferedImage rotateImage(BufferedImage image, int angle) throws IOException {
+    if (image == null) {
+        JOptionPane.showMessageDialog(this, "Aucune image chargée dans le JLabel.", "Erreur", JOptionPane.ERROR_MESSAGE);
+        return null;
     }
+
+    // Créer une nouvelle image pour contenir l'image pivotée
+    BufferedImage rotatedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+    // Rotation de l'image
+    Graphics2D g2d = rotatedImage.createGraphics();
+    g2d.rotate(Math.toRadians(angle), rotatedImage.getWidth() / 2, rotatedImage.getHeight() / 2);
+    g2d.drawImage(image, 0, 0, null);
+    g2d.dispose();
+
+    // Afficher les dimensions de l'image pivotée
+    System.out.println("Dimensions de l'image pivotée : " + rotatedImage.getWidth() + "x" + rotatedImage.getHeight());
+
+    return rotatedImage;
+}
 
     private BufferedImage loadImage(String path) {
         try {
@@ -639,40 +626,42 @@ public class Acte extends javax.swing.JFrame {
         }
         return invertedImage;
     }
-    
+
     private void flipHImage() {
-        originalImage = loadImage("images/brain1_0000.jpg");
-    System.out.println("Méthode flipImage appelée !");
-    if (originalImage != null) {
-        AffineTransform tx = AffineTransform.getScaleInstance(1, -1);
-        tx.translate(0, -originalImage.getHeight(null));
-        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-        flippedImage = op.filter(originalImage, null);
 
-        // Afficher l'image retournée
-        ImageIcon flippedIcon = new ImageIcon(flippedImage);
-        ImageBrain.setIcon(flippedIcon); 
-    } else {
-        System.out.println("L'image originale est null !");
+        System.out.println("Méthode flipImage appelée !");
+        if (originalImage != null) {
+            AffineTransform tx = AffineTransform.getScaleInstance(1, -1);
+            tx.translate(0, -originalImage.getHeight(null));
+            AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+            originalImage = op.filter(originalImage, null);
+
+            // Afficher l'image retournée
+            currentImage = originalImage;
+            ImageIcon flippedIcon = new ImageIcon(currentImage);
+            ImageBrain.setIcon(flippedIcon);
+        } else {
+            System.out.println("L'image originale est null !");
+        }
     }
-}
+
     private void flipVImage() {
-        originalImage = loadImage("images/brain1_0000.jpg");
-    System.out.println("Méthode flipImage appelée !");
-    if (originalImage != null) {
-        AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
-        tx.translate(-originalImage.getWidth(null), 0);
-        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-        flippedImage = op.filter(originalImage, null);
 
-        // Afficher l'image retournée
-        ImageIcon flippedIcon = new ImageIcon(flippedImage);
-        ImageBrain.setIcon(flippedIcon); 
-    } else {
-        System.out.println("L'image originale est null !");
+        System.out.println("Méthode flipImage appelée !");
+        if (originalImage != null) {
+            AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+            tx.translate(-originalImage.getWidth(null), 0);
+            AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+            originalImage = op.filter(originalImage, null);
+
+            // Afficher l'image retournée
+            currentImage = originalImage;
+            ImageIcon flippedIcon = new ImageIcon(currentImage);
+            ImageBrain.setIcon(flippedIcon);
+        } else {
+            System.out.println("L'image originale est null !");
+        }
     }
-}
-
 
     /**
      * @param args the command line arguments
