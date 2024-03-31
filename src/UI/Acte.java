@@ -8,11 +8,11 @@ package UI;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -33,6 +33,7 @@ public class Acte extends javax.swing.JFrame {
     private BufferedImage originalImage;
     private BufferedImage modifiedImage;
     private BufferedImage invertedImage;
+    private BufferedImage flippedImage;
 
     private int rotationAngle = 0; // Variable pour suivre l'angle de rotation
     private double contraste = 0.25; //variable contraste de base
@@ -47,6 +48,8 @@ public class Acte extends javax.swing.JFrame {
                 jButtonIncreaseContrasteActionPerformed(evt);
                 jButtonDecreaseContrastActionPerformed(evt);
                 jButtonRestartContrastActionPerformed(evt);
+                jButtonFlipHActionPerformed(evt);
+                jButtonFlipVActionPerformed(evt);
             }
         });
         String idActe = String.valueOf(idacte);
@@ -76,6 +79,8 @@ public class Acte extends javax.swing.JFrame {
         jButtonDecreaseContrast = new javax.swing.JButton();
         jButtonRestartContrast = new javax.swing.JButton();
         jButtonInversionGris = new javax.swing.JButton();
+        jButtonFlipH = new javax.swing.JButton();
+        jButtonFlipV = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanelInfoActe = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -138,6 +143,20 @@ public class Acte extends javax.swing.JFrame {
             }
         });
 
+        jButtonFlipH.setText("Retournement horizontal");
+        jButtonFlipH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonFlipHActionPerformed(evt);
+            }
+        });
+
+        jButtonFlipV.setText("Retournement vertical");
+        jButtonFlipV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonFlipVActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -148,18 +167,25 @@ public class Acte extends javax.swing.JFrame {
                 .addGap(105, 105, 105))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(44, 44, 44)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonInversionGris, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonRotate90, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addComponent(jButtonIncreaseContraste)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonDecreaseContrast))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonInversionGris, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonRotate90, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addComponent(jButtonIncreaseContraste)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonDecreaseContrast))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonRestartContrast, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonRestartContrast, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonFlipV)
+                            .addComponent(jButtonFlipH))))
                 .addContainerGap(48, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -176,6 +202,10 @@ public class Acte extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonInversionGris)
                     .addComponent(jButtonRestartContrast))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonFlipH)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonFlipV)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -505,6 +535,14 @@ public class Acte extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonInversionGrisActionPerformed
+
+    private void jButtonFlipHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFlipHActionPerformed
+        flipHImage();
+    }//GEN-LAST:event_jButtonFlipHActionPerformed
+
+    private void jButtonFlipVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFlipVActionPerformed
+        flipVImage();
+    }//GEN-LAST:event_jButtonFlipVActionPerformed
     private BufferedImage rotateImage(Image image, int angle) throws IOException {
         if (ImageBrain.getIcon() == null) {
             JOptionPane.showMessageDialog(this, "Aucune image chargée dans le JLabel.", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -601,6 +639,40 @@ public class Acte extends javax.swing.JFrame {
         }
         return invertedImage;
     }
+    
+    private void flipHImage() {
+        originalImage = loadImage("images/brain1_0000.jpg");
+    System.out.println("Méthode flipImage appelée !");
+    if (originalImage != null) {
+        AffineTransform tx = AffineTransform.getScaleInstance(1, -1);
+        tx.translate(0, -originalImage.getHeight(null));
+        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+        flippedImage = op.filter(originalImage, null);
+
+        // Afficher l'image retournée
+        ImageIcon flippedIcon = new ImageIcon(flippedImage);
+        ImageBrain.setIcon(flippedIcon); 
+    } else {
+        System.out.println("L'image originale est null !");
+    }
+}
+    private void flipVImage() {
+        originalImage = loadImage("images/brain1_0000.jpg");
+    System.out.println("Méthode flipImage appelée !");
+    if (originalImage != null) {
+        AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+        tx.translate(-originalImage.getWidth(null), 0);
+        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+        flippedImage = op.filter(originalImage, null);
+
+        // Afficher l'image retournée
+        ImageIcon flippedIcon = new ImageIcon(flippedImage);
+        ImageBrain.setIcon(flippedIcon); 
+    } else {
+        System.out.println("L'image originale est null !");
+    }
+}
+
 
     /**
      * @param args the command line arguments
@@ -648,6 +720,8 @@ public class Acte extends javax.swing.JFrame {
     private javax.swing.JLabel infoPrenom;
     private javax.swing.JButton jButtonDecreaseContrast;
     private javax.swing.JButton jButtonEnregistrerCR;
+    private javax.swing.JButton jButtonFlipH;
+    private javax.swing.JButton jButtonFlipV;
     private javax.swing.JButton jButtonIncreaseContraste;
     private javax.swing.JButton jButtonInversionGris;
     private javax.swing.JButton jButtonRestartContrast;
