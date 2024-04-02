@@ -17,16 +17,21 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 
 /**
  *
  * @author alexiaidrac
  */
+
+
 public class Acte extends javax.swing.JFrame {
 
     private DossierMedicalRadiologie dmr;
@@ -36,6 +41,9 @@ public class Acte extends javax.swing.JFrame {
 
     private int rotationAngle = 0; // Variable pour suivre l'angle de rotation
     private double contraste = 0.25; //variable contraste de base
+    
+    private DefaultTableModel model;
+    Connection conn;
 
     /**
      * Creates new form DMR
@@ -58,8 +66,25 @@ public class Acte extends javax.swing.JFrame {
         infoAdresse.setText(String.valueOf(tarification));
         this.acte.setText(acte);
         this.dmr = dmr;
+        
+        
+        
+        model = new DefaultTableModel(new Object[]{"IDACTE", "CODE ACTE", "TARIFICATION", "Date Acte", "PRATICIEN", "Signification du Code"}, 0);
+        jTextAreaCR.setModel(model); // Appliquer le modèle au jTextAreaCR
+        jTextAreaCR.setDefaultEditor(Object.class, null); // Rendre toutes les cellules non éditables
+        
+            try {
+                conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
+            } catch (SQLException ex) {
+                java.util.logging.Logger.getLogger(Acte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+         
+        
+        
     }
 
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -370,13 +395,11 @@ public class Acte extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRetourActionPerformed
 
     private void jButtonEnregistrerCRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnregistrerCRActionPerformed
-
+        int ID = 1; //recup l'id patient ? 
+        String idCR = infoID.getText(); // Récupérer l'ID stocké dans infoID À VERIFIER CAR DANS LA BD C'EST UN INT
         // Récupérer le texte du jTextAreaCR
         String CONTENU = jTextAreaCR.getText();
-        String idCR = infoID.getText(); // Récupérer l'ID stocké dans infoID
-        int ID = 1;
-        int IDACTE = 1;
-        
+        String IDACTE = infoCode.getText(); // Récupérer l'ID stocké dans infoID
         
         // Créer des boutons personnalisés
         Object[] options = {"Valider", "Annuler"};
@@ -401,16 +424,14 @@ public class Acte extends javax.swing.JFrame {
             try {
                 // Établir la connexion à la base de données
                 Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
-
-                
-                
+ 
                 // Préparer la requête SQL pour insérer le compte rendu avec IDCR
                 String sql = "INSERT INTO CR (IDCR, ID, CONTENU, IDACTE) VALUES (?, ?, ?, ?)";
                 PreparedStatement statement = connection.prepareStatement(sql);
                 statement.setString(1, idCR); // Remplace le premier paramètre (?) par la valeur de idCR
                 statement.setInt(2, ID); // Remplace le deuxième paramètre (?) par la valeur de l'ID
                 statement.setString(3, CONTENU); // Remplace le troisième paramètre (?) par la valeur du contenu
-                statement.setInt(4, IDACTE); // Remplace le quatrième paramètre (?) par la valeur de l'ID d'acte
+                statement.setString(4, IDACTE); // Remplace le quatrième paramètre (?) par la valeur de l'ID d'acte
 
                 // Exécuter la requête SQL
                 statement.executeUpdate();
@@ -425,6 +446,7 @@ public class Acte extends javax.swing.JFrame {
                 // Gérer les erreurs de connexion ou d'exécution de la requête
                 JOptionPane.showMessageDialog(null, "Erreur lors de l'enregistrement du compte rendu : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
+            
             // Fermer la fenêtre actuelle
             dispose();
         } else if (choix == JOptionPane.CANCEL_OPTION || choix == JOptionPane.CLOSED_OPTION) {
@@ -602,6 +624,29 @@ public class Acte extends javax.swing.JFrame {
         return invertedImage;
     }
 
+        private void recuperation_donnees() {
+
+        System.out.println("get = " + getIdPatient());
+        try {
+
+            Statement stmt = conn.createStatement();
+            //exécutation de la requête
+            ResultSet rs = stmt.executeQuery("SELECT * FROM ACTERADIO WHERE IDPATIENT = " + getIdPatient());
+            //on ajoute à la ligne les informations de la tableau
+            while (rs.next()) {
+                Object[] row = new Object[]{rs.getInt("IDACTE"), rs.getString("CODEACTE"), rs.getDouble("TARIFICATION"), rs.getDate("DATEACTE"), rs.getString("PRATICIEN"), rs.getString("SIGNIFICATIONCODE")};
+                model.addRow(row);
+            }
+            // on applique le model du defaulttable au jTable de l'interface
+            jTextAreaCR.setModel(model);
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * @param args the command line arguments
      */
