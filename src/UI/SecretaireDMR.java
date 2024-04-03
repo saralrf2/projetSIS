@@ -46,7 +46,7 @@ public class SecretaireDMR extends javax.swing.JFrame {
         infoDate.setText(dateNaissance);
         infoAdresse.setText(adresse);
         
-        model = new DefaultTableModel(new Object[]{"IDACTE", "CODE ACTE", "TARIFICATION", "Date Acte", "PRATICIEN", "Signification du Code"}, 0);
+        model = new DefaultTableModel(new Object[]{"IDACTE", "CODE ACTE", "TARIFICATION", "Date Acte", "PRATICIEN"}, 0);
         jTableListeActes.setModel(model); // Appliquer le modèle au jTableListeActes
         jTableListeActes.setDefaultEditor(Object.class, null); // Rendre toutes les cellules non éditables
         try {
@@ -383,10 +383,10 @@ public class SecretaireDMR extends javax.swing.JFrame {
 
             Statement stmt = conn.createStatement();
             //exécutation de la requête
-            ResultSet rs = stmt.executeQuery("SELECT * FROM ACTERADIO WHERE IDPATIENT = " + getIdPatient());
+            ResultSet rs = stmt.executeQuery("SELECT IDACTE, CODEACTE, TARIFICATION, DATEACTE, PRATICIEN FROM ACTERADIO WHERE IDPATIENT = " + getIdPatient());
             //on ajoute à la ligne les informations de la tableau
             while (rs.next()) {
-                Object[] row = new Object[]{rs.getInt("IDACTE"), rs.getString("CODEACTE"), rs.getDouble("TARIFICATION"), rs.getDate("DATEACTE"), rs.getString("PRATICIEN"), rs.getString("SIGNIFICATIONCODE")};
+                Object[] row = new Object[]{rs.getInt("IDACTE"), rs.getString("CODEACTE"), rs.getDouble("TARIFICATION"), rs.getDate("DATEACTE"), rs.getString("PRATICIEN")};
                 model.addRow(row);
             }
             // on applique le model du defaulttable au jTable de l'interface
