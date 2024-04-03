@@ -20,6 +20,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -48,7 +49,7 @@ public class Acte extends javax.swing.JFrame {
     /**
      * Creates new form DMR
      */
-    public Acte(DossierMedicalRadiologie dmr, int idacte, String codeActe, String nomPracticien, Date dateActe, double tarification, String acte) {
+    public Acte(DossierMedicalRadiologie dmr, int idacte, String codeActe, String nomPracticien, Date dateActe, double tarification, String acte, byte[] imageData) {
         initComponents();
         jButtonIncreaseContraste.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -490,12 +491,13 @@ public class Acte extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEnregistrerCRActionPerformed
 
     private void jButtonRotate90ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRotate90ActionPerformed
-        originalImage = loadImage("images/brain1_0000.jpg");
+        
         if (originalImage != null) {
             try {
                 // Rotation de l'image
                 modifiedImage = rotateImage(originalImage, 90 * (++rotationAngle));
                 // Mise à jour de l'icône avec l'image pivotée
+                
                 ImageBrain.setIcon(new ImageIcon(modifiedImage));
             } catch (IOException ex) {
                // Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(Level.SEVERE, null, ex);
@@ -506,13 +508,14 @@ public class Acte extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRotate90ActionPerformed
 
     private void jButtonIncreaseContrasteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIncreaseContrasteActionPerformed
-        originalImage = loadImage("images/brain1_0000.jpg");
+        
 
         if (null != originalImage) {
             // Incrémentation du contraste
             contraste += 0.5; // Incrémente le contraste de 0.25 à chaque clic
 
             // Ajustement du contraste de l'image
+            currentImage = originalImage;
             modifiedImage = adjustContrast(originalImage, contraste);
 
             // Mise à jour de l'icône avec l'image avec contraste ajusté
@@ -523,13 +526,14 @@ public class Acte extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonIncreaseContrasteActionPerformed
 
     private void jButtonDecreaseContrastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDecreaseContrastActionPerformed
-        originalImage = loadImage("images/brain1_0000.jpg");
+        
 
         if (null != originalImage) {
             // Incrémentation du contraste
             contraste -= 0.5; // Incrémente le contraste de 0.25 à chaque clic
 
             // Ajustement du contraste de l'image
+            currentImage = originalImage;
             modifiedImage = adjustContrast(originalImage, contraste);
 
             // Mise à jour de l'icône avec l'image avec contraste ajusté
@@ -546,14 +550,15 @@ public class Acte extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRestartContrastActionPerformed
 
     private void jButtonInversionGrisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInversionGrisActionPerformed
-        originalImage = loadImage("images/brain1_0000.jpg");
-
+        
+        //originalImage = currentImage;
         if (null != originalImage) {
             // Appliquer l'inversion des niveaux de gris et récupérer l'image inversée
             BufferedImage invertedImage = inversionNiveauGris(originalImage);
 
             // Afficher l'image inversée
-            ImageBrain.setIcon(new ImageIcon(invertedImage));
+            currentImage = invertedImage;
+            ImageBrain.setIcon(new ImageIcon(currentImage));
 
         } else {
             JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -665,7 +670,7 @@ public class Acte extends javax.swing.JFrame {
     }
     
        private void flipHImage() {
-
+        //originalImage = currentImage;
         System.out.println("Méthode flipImage appelée !");
         if (originalImage != null) {
             AffineTransform tx = AffineTransform.getScaleInstance(1, -1);
@@ -699,6 +704,12 @@ public class Acte extends javax.swing.JFrame {
             System.out.println("L'image originale est null !");
         }
     }
+    
+    public JLabel getImageBrain(){
+        return ImageBrain;
+    }
+    
+   
 
 //
 //        private void recuperation_donnees() {

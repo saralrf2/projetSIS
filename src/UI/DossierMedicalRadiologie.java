@@ -17,12 +17,14 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;//cill
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;//cgvubh
@@ -33,7 +35,7 @@ import javax.swing.table.TableRowSorter;
  * @author alexiaidrac
  */
 public class DossierMedicalRadiologie extends javax.swing.JFrame {
-    
+
     Connection conn;
     private int idPatient;
     private String nom;
@@ -44,12 +46,11 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
     /**
      * Creates new form Acceuil
      */
-      
-     private DefaultTableModel model;
-    
+    private DefaultTableModel model;
+
     public DossierMedicalRadiologie(int idpatient, String nom, String prenom, Date datenaissance, String adresse) {
         initComponents();
-        
+
         model = new DefaultTableModel(new Object[]{"IDACTE", "CODE ACTE", "TARIFICATION", "Date Acte", "PRATICIEN", "Signification du Code"}, 0);
         jTableDMR.setModel(model); // Appliquer le modèle au jTableDMR
         jTableDMR.setDefaultEditor(Object.class, null); // Rendre toutes les cellules non éditables
@@ -332,8 +333,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRetourActionPerformed
 
     private void jTableDMRMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDMRMouseClicked
-//        int ligne = jTableDMR.getSelectedRow(); //récuperation information ligne
-//        int colonne = jTableDMR.getSelectedColumn(); // récuperation information colonne
+
         if (evt.getClickCount() == 2) { // Double clic sur une ligne
 
             int ligneSelectionnee = jTableDMR.getSelectedRow();// récuperation information de la ligne sélectionnée
@@ -345,9 +345,22 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
             Date dateActe = Date.valueOf(jTableDMR.getValueAt(ligneSelectionnee, 3).toString());
             double tarification = (double) jTableDMR.getValueAt(ligneSelectionnee, 2);
             String acte = jTableDMR.getValueAt(ligneSelectionnee, 5).toString();
-//            Object data = jTableDMR.getValueAt(ligne, colonne);
+
+            // Récupération de l'image correspondant à l'acte depuis la base de données
+            byte[] imageData = getImageFromDatabase(idPatient);
+
             //                //ouvrir la fiche patient avec les informations sélectionnées
-            Acte nouveauJFrame = new Acte(this, idActe, codeActe, nomPracticien, dateActe, tarification, acte);
+            Acte nouveauJFrame = new Acte(this, idActe, codeActe, nomPracticien, dateActe, tarification, acte, imageData);
+            // Si des données d'image sont récupérées, les afficher dans le JLabel correspondant
+            if (imageData != null) {
+                // Obtenez le JLabel depuis la classe Acte et mettez à jour son icône
+                JLabel ImageBrain = nouveauJFrame.getImageBrain();
+                // Convertir les données de l'image en ImageIcon
+                ImageIcon imageIcon = new ImageIcon(imageData);
+                // Mettre à jour le JLabel pour afficher l'image
+                ImageBrain.setIcon(imageIcon);
+            }
+
             this.setVisible(false);
             nouveauJFrame.setVisible(true);
             nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -363,40 +376,83 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButtonRechercheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRechercheActionPerformed
-      
+
         String recherche = jTextFieldRecherche.getText();
         String rech = capitalizeFirstLetter(recherche);
-        
+
         System.out.println(rech);
-        
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>( model);
+
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
         jTableDMR.setRowSorter(sorter);
         if (rech.length() == 0) {
             sorter.setRowFilter(null);
             System.out.println("ça ne correspond à aucun DMR");
         } else {
-        // Vérifie si le texte est composé uniquement de chiffres
-        boolean numero = rech.matches("\\d+");
-        if (numero) {
-            // Convertit la chaîne de chiffres en entier
-            int num = Integer.parseInt(rech);
-            // Crée un filtre pour trouver une correspondance avec le numéro exactement de l'identifiant
-            sorter.setRowFilter(RowFilter.numberFilter(RowFilter.ComparisonType.EQUAL, num));
-        } else {
-            // Applique un filtre regex pour la recherche de texte
-            sorter.setRowFilter(RowFilter.regexFilter(rech));
+            // Vérifie si le texte est composé uniquement de chiffres
+            boolean numero = rech.matches("\\d+");
+            if (numero) {
+                // Convertit la chaîne de chiffres en entier
+                int num = Integer.parseInt(rech);
+                // Crée un filtre pour trouver une correspondance avec le numéro exactement de l'identifiant
+                sorter.setRowFilter(RowFilter.numberFilter(RowFilter.ComparisonType.EQUAL, num));
+            } else {
+                // Applique un filtre regex pour la recherche de texte
+                sorter.setRowFilter(RowFilter.regexFilter(rech));
+            }
+            System.out.println("DMR trouvé.");
         }
-        System.out.println("DMR trouvé.");
-        }   
-        
+
     }//GEN-LAST:event_jButtonRechercheActionPerformed
 
-         private String capitalizeFirstLetter(String input) {
+    private String capitalizeFirstLetter(String input) {
         if (input == null || input.isEmpty()) {
             return input; // Si l'entrée est vide ou nulle, retourne la même chaîne
         }
         return input.substring(0, 1).toUpperCase() + input.substring(1); // Met la première lettre en majuscule et concatène le reste de la chaîne
     }
+
+    private byte[] getImageFromDatabase(int idPatient) {
+        byte[] imageData = null;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // Établir une connexion à la base de données
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
+            // Requête SQL pour récupérer les données de l'image en fonction de l'ID de l'acte
+            String sql = "SELECT image FROM imagee WHERE IDPATIENT = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, idPatient);
+            resultSet = statement.executeQuery();
+
+            // Si une ligne est trouvée, récupérer les données de l'image
+            if (resultSet.next()) {
+                imageData = resultSet.getBytes("image");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Gérer les exceptions selon votre cas d'utilisation
+        } finally {
+            // Fermer les ressources JDBC
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return imageData;
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -424,7 +480,6 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         }
     }
 
-   
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
