@@ -646,7 +646,7 @@ public class Acte extends javax.swing.JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }//
     /**
      * @param args the command line arguments
      */
