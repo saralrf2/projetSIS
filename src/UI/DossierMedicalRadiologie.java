@@ -29,6 +29,7 @@ import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;//cgvubh
 import javax.swing.table.TableRowSorter;
+import UI.Acte;
 
 /**
  *
