@@ -249,14 +249,13 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
             }
         });
 
-        jButtonRecherche.setText("Chercher");
+        jButtonRecherche.setBackground(new java.awt.Color(255, 255, 255));
+        jButtonRecherche.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/images/loupe.png"))); // NOI18N
         jButtonRecherche.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRechercheActionPerformed(evt);
             }
         });
-
-        jTextFieldRecherche.setText("Rechercher un dossier médical ...");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -265,9 +264,9 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTextFieldRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonRecherche)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonRecherche)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -306,7 +305,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addComponent(jButtonRetour)
@@ -348,7 +347,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
             String acte = jTableDMR.getValueAt(ligneSelectionnee, 5).toString();
 
             // Récupération de l'image correspondant à l'acte depuis la base de données
-            byte[] imageData = getImageFromDatabase(idPatient);
+            byte[] imageData = getImageFromDatabase(getIdActe());
 
             //                //ouvrir la fiche patient avec les informations sélectionnées
             Acte nouveauJFrame = new Acte(this, idActe, codeActe, nomPracticien, dateActe, tarification, acte, imageData);
@@ -402,6 +401,14 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
             }
             System.out.println("DMR trouvé.");
         }
+        // Vérifie si aucun DMR ne correspond à la recherche
+        if (jTableDMR.getRowCount() == 0) {
+            // Afficher une fenêtre de message d'erreur
+            JOptionPane.showMessageDialog(this, "Aucun acte ne correspond à votre recherche.", "Erreur de Recherche", JOptionPane.ERROR_MESSAGE);
+            System.out.println("ça ne correspond à aucun acte");
+        } else {
+            System.out.println("acte trouvé.");
+        }
 
     }//GEN-LAST:event_jButtonRechercheActionPerformed
 
@@ -412,24 +419,27 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         return input.substring(0, 1).toUpperCase() + input.substring(1); // Met la première lettre en majuscule et concatène le reste de la chaîne
     }
 
-    private byte[] getImageFromDatabase(int idPatient) {
+    private byte[] getImageFromDatabase(int idActe) {
         byte[] imageData = null;
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
         try {
+            // Affichage de l'ID de l'acte pour vérification
+        System.out.println("ID de l'acte : " + idActe);
             // Établir une connexion à la base de données
             connection = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
             // Requête SQL pour récupérer les données de l'image en fonction de l'ID de l'acte
-            String sql = "SELECT image FROM imagee WHERE IDPATIENT = ?";
+            String sql = "SELECT image FROM Imagees WHERE IDACTE = ?";
             statement = connection.prepareStatement(sql);
-            statement.setInt(1, idPatient);
+            statement.setInt(1, idActe);
             resultSet = statement.executeQuery();
 
             // Si une ligne est trouvée, récupérer les données de l'image
             if (resultSet.next()) {
                 imageData = resultSet.getBytes("image");
+                System.out.println("Taille des données d'image récupérées : " + imageData.length);
                 System.out.println("Image affichée");
             }
         } catch (SQLException e) {
@@ -551,6 +561,21 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
     /**
      * @return the idPatient
      */
+    public int getIdActe() {
+        // Récupérer l'indice de la ligne sélectionnée dans le tableau
+        int ligneSelectionnee = jTableDMR.getSelectedRow();
+
+        // Si aucune ligne n'est sélectionnée, retourner une valeur par défaut
+        if (ligneSelectionnee == -1) {
+            return -1; // Ou une autre valeur par défaut selon votre logique
+        }
+
+        // Récupérer l'ID de l'acte dans la colonne IDACTE (colonne 0) de la ligne sélectionnée
+        int idActe = Integer.parseInt(jTableDMR.getValueAt(ligneSelectionnee, 0).toString());
+
+        return idActe;
+    }
+
     public int getIdPatient() {
         return this.idPatient;
     }

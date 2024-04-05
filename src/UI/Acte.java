@@ -97,6 +97,7 @@ public class Acte extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jProgressBar1 = new javax.swing.JProgressBar();
         jPanel2 = new javax.swing.JPanel();
         ImageBrain = new javax.swing.JLabel();
         jButtonRotate90 = new javax.swing.JButton();
@@ -133,7 +134,7 @@ public class Acte extends javax.swing.JFrame {
 
         ImageBrain.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/images/sinus1_0000.jpg"))); // NOI18N
 
-        jButtonRotate90.setText("Rotate");
+        jButtonRotate90.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/images/rafraichir.png"))); // NOI18N
         jButtonRotate90.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRotate90ActionPerformed(evt);
@@ -154,28 +155,28 @@ public class Acte extends javax.swing.JFrame {
             }
         });
 
-        jButtonRestartContrast.setText("réinitialiser");
+        jButtonRestartContrast.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/images/reinitialiser.png"))); // NOI18N
         jButtonRestartContrast.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRestartContrastActionPerformed(evt);
             }
         });
 
-        jButtonInversionGris.setText("inversion gris");
+        jButtonInversionGris.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/images/echanger.png"))); // NOI18N
         jButtonInversionGris.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonInversionGrisActionPerformed(evt);
             }
         });
 
-        jButtonFlipH.setText("retournement horizontale");
+        jButtonFlipH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/images/retournement-vertical.png"))); // NOI18N
         jButtonFlipH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonFlipHActionPerformed(evt);
             }
         });
 
-        jButtonFlipV.setText("retournement vertica");
+        jButtonFlipV.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/images/retournement-horizontal.png"))); // NOI18N
         jButtonFlipV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonFlipVActionPerformed(evt);
@@ -186,55 +187,46 @@ public class Acte extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(ImageBrain)
-                .addGap(105, 105, 105))
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(51, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jButtonFlipH))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jButtonInversionGris, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButtonRotate90, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(13, 13, 13)
-                                        .addComponent(jButtonIncreaseContraste)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButtonDecreaseContrast))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButtonRestartContrast, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(88, 88, 88)
-                        .addComponent(jButtonFlipV)))
-                .addContainerGap(54, Short.MAX_VALUE))
+                                .addComponent(jButtonRotate90, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonInversionGris, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonFlipH)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonFlipV)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonIncreaseContraste, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonDecreaseContrast, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButtonRestartContrast, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(44, 44, 44))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(ImageBrain)
+                        .addGap(61, 61, 61))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(ImageBrain)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonRotate90)
-                    .addComponent(jButtonIncreaseContraste)
-                    .addComponent(jButtonDecreaseContrast))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(48, 48, 48)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonRotate90)
+                        .addComponent(jButtonIncreaseContraste)
+                        .addComponent(jButtonDecreaseContrast))
                     .addComponent(jButtonInversionGris)
-                    .addComponent(jButtonRestartContrast))
+                    .addComponent(jButtonFlipH)
+                    .addComponent(jButtonFlipV))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonFlipH)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonFlipV)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jButtonRestartContrast)
+                .addGap(67, 67, 67))
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -304,7 +296,7 @@ public class Acte extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(acte)))
-                .addContainerGap(140, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
         jPanelInfoActeLayout.setVerticalGroup(
             jPanelInfoActeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -364,7 +356,7 @@ public class Acte extends javax.swing.JFrame {
             jPanelCRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCRLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
                 .addGap(3, 3, 3))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCRLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -794,6 +786,7 @@ public class Acte extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelCR;
     private javax.swing.JPanel jPanelInfoActe;
+    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextAreaCR;
     // End of variables declaration//GEN-END:variables
