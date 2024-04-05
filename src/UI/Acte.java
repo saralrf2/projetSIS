@@ -428,12 +428,12 @@ public class Acte extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRetourActionPerformed
 
     private void jButtonEnregistrerCRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnregistrerCRActionPerformed
-        int ID = 1; //recup l'id patient ? 
-        String idCR = infoID.getText(); // Récupérer l'ID stocké dans infoID À VERIFIER CAR DANS LA BD C'EST UN INT
+        int ID = 4; //recup l'id patient ? 
+        int idCR = 4; // Récupérer l'ID stocké dans infoID À VERIFIER CAR DANS LA BD C'EST UN INT sara
         // Récupérer le texte du jTextAreaCR
         String CONTENU = jTextAreaCR.getText();
-        String IDACTE = infoCode.getText(); // Récupérer l'ID stocké dans infoIDll
-        //test
+        int IDACTE = 4; // Récupérer l'ID stocké dans infoID sara
+  
         
         
         // Créer des boutons personnalisés
@@ -463,10 +463,10 @@ public class Acte extends javax.swing.JFrame {
                 // Préparer la requête SQL pour insérer le compte rendu avec IDCR
                 String sql = "INSERT INTO CR (IDCR, ID, CONTENU, IDACTE) VALUES (?, ?, ?, ?)";
                 PreparedStatement statement = connection.prepareStatement(sql);
-                statement.setString(1, idCR); // Remplace le premier paramètre (?) par la valeur de idCR
+                statement.setInt(1, idCR); // Remplace le premier paramètre (?) par la valeur de idCR
                 statement.setInt(2, ID); // Remplace le deuxième paramètre (?) par la valeur de l'ID
                 statement.setString(3, CONTENU); // Remplace le troisième paramètre (?) par la valeur du contenu
-                statement.setString(4, IDACTE); // Remplace le quatrième paramètre (?) par la valeur de l'ID d'acte
+                statement.setInt(4, IDACTE); // Remplace le quatrième paramètre (?) par la valeur de l'ID d'acte
 
                 // Exécuter la requête SQL
                 statement.executeUpdate();
