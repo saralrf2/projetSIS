@@ -432,7 +432,9 @@ public class Acte extends javax.swing.JFrame {
         String idCR = infoID.getText(); // Récupérer l'ID stocké dans infoID À VERIFIER CAR DANS LA BD C'EST UN INT
         // Récupérer le texte du jTextAreaCR
         String CONTENU = jTextAreaCR.getText();
-        String IDACTE = infoCode.getText(); // Récupérer l'ID stocké dans infoID
+        String IDACTE = infoCode.getText(); // Récupérer l'ID stocké dans infoIDll
+        //test
+        
         
         // Créer des boutons personnalisés
         Object[] options = {"Valider", "Annuler"};
