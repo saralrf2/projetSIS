@@ -435,7 +435,7 @@ public class Acte extends javax.swing.JFrame {
         String IDACTE = infoCode.getText(); // Récupérer l'ID stocké dans infoIDll
         //test
         
-        
+        //bug alexia 
         // Créer des boutons personnalisés
         Object[] options = {"Valider", "Annuler"};
         System.out.println("texte CR: " + CONTENU + "-");
