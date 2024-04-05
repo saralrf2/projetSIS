@@ -348,7 +348,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
             String acte = jTableDMR.getValueAt(ligneSelectionnee, 5).toString();
 
             // Récupération de l'image correspondant à l'acte depuis la base de données
-            byte[] imageData = getImageFromDatabase(idPatient);
+            byte[] imageData = getImageFromDatabase(getIdActe());
 
             //                //ouvrir la fiche patient avec les informations sélectionnées
             Acte nouveauJFrame = new Acte(this, idActe, codeActe, nomPracticien, dateActe, tarification, acte, imageData);
@@ -412,19 +412,15 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         return input.substring(0, 1).toUpperCase() + input.substring(1); // Met la première lettre en majuscule et concatène le reste de la chaîne
     }
 
-    private byte[] getImageFromDatabase(int idPatient) {
+    private byte[] getImageFromDatabase(int idActe) {
         byte[] imageData = null;
-        Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
         try {
-            // Établir une connexion à la base de données
-            conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
-            // Requête SQL pour récupérer les données de l'image en fonction de l'ID de l'acte
-            String sql = "SELECT image FROM imagee WHERE IDPATIENT = ?";
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, idPatient);
+            // Utilisez la connexion stockée dans la variable d'instance conn
+            statement = conn.prepareStatement("SELECT image FROM IMGS WHERE IDACTE = ?");
+            statement.setInt(1, idActe);
             resultSet = statement.executeQuery();
 
             // Si une ligne est trouvée, récupérer les données de l'image
@@ -442,9 +438,6 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
                 }
                 if (statement != null) {
                     statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -550,6 +543,21 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
     /**
      * @return the idPatient
      */
+    public int getIdActe() {
+        // Récupérer l'indice de la ligne sélectionnée dans le tableau
+        int ligneSelectionnee = jTableDMR.getSelectedRow();
+
+        // Si aucune ligne n'est sélectionnée, retourner une valeur par défaut
+        if (ligneSelectionnee == -1) {
+            return -1; // Ou une autre valeur par défaut selon votre logique
+        }
+
+        // Récupérer l'ID de l'acte dans la colonne IDACTE (colonne 0) de la ligne sélectionnée
+        int idActe = Integer.parseInt(jTableDMR.getValueAt(ligneSelectionnee, 0).toString());
+
+        return idActe;
+    }
+
     public int getIdPatient() {
         return this.idPatient;
     }

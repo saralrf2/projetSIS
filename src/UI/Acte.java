@@ -131,7 +131,7 @@ public class Acte extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(173, 200, 213));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Radiographie", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Galvji", 1, 14)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Galvji", 1, 13))); // NOI18N
 
-        ImageBrain.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/images/brain1_0000.jpg"))); // NOI18N
+        ImageBrain.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/images/sinus1_0000.jpg"))); // NOI18N
 
         jButtonRotate90.setText("Rotate");
         jButtonRotate90.addActionListener(new java.awt.event.ActionListener() {
