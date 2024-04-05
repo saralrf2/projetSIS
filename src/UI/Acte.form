@@ -133,7 +133,7 @@
         <Component class="javax.swing.JLabel" name="ImageBrain">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/UI/images/sinus1_0000.jpg"/>
+              <Image iconType="3" name="/UI/images/brain1_0000.jpg"/>
             </Property>
           </Properties>
         </Component>

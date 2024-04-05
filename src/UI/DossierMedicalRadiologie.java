@@ -420,7 +420,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
 
         try {
             // Établir une connexion à la base de données
-            connection = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
             // Requête SQL pour récupérer les données de l'image en fonction de l'ID de l'acte
             String sql = "SELECT image FROM imagee WHERE IDPATIENT = ?";
             statement = connection.prepareStatement(sql);
@@ -430,7 +430,6 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
             // Si une ligne est trouvée, récupérer les données de l'image
             if (resultSet.next()) {
                 imageData = resultSet.getBytes("image");
-                System.out.println("Image affichée");
             }
         } catch (SQLException e) {
             e.printStackTrace();
