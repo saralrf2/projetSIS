@@ -42,16 +42,19 @@ public class Acte extends javax.swing.JFrame {
     private double contraste = 0.25; //variable contraste de base
 
     private DefaultTableModel model;
-    Connection conn;
-
     private int idacte;
     private int idPatient;
+    Connection conn;
 
     /**
      * Creates new form DMR
      */
     public Acte(DossierMedicalRadiologie dmr, int idacte, String codeActe, String nomPracticien, Date dateActe, double tarification, String acte, byte[] imageData) {
         initComponents();
+        this.idPatient = dmr.getIdPatient();
+        this.dmr = dmr;
+        this.acte.setText(acte);
+
         jButtonIncreaseContraste.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonIncreaseContrasteActionPerformed(evt);
@@ -61,60 +64,25 @@ public class Acte extends javax.swing.JFrame {
                 jButtonFlipVActionPerformed(evt);
             }
         });
+        System.out.println("interface Acte");
         String idActe = String.valueOf(idacte);
+        infoID.setText(String.valueOf(this.idacte));
+        System.out.println("idacte :" + idacte);
         String datedeActe = dateActe.toString();
+
         infoID.setText(idActe);
         infoCode.setText(codeActe);
         infoPrenom.setText(nomPracticien);
         infoDate.setText(datedeActe);
         infoAdresse.setText(String.valueOf(tarification));
-        this.acte.setText(acte);
-        this.dmr = dmr;
 
-       // this.idacte = idacte;
-        //  this.idPatient = idpatient;
-        infoID.setText(String.valueOf(this.idPatient));
-
-        this.idPatient = dmr.getIdPatient(); // Récupérer l'ID du patient à partir de DossierMedicalRadiologie
-
-        try {
-
-            int ID = idPatient; //recup l'id patient  
-            String CONTENU = jTextAreaCR.getText();// Récupérer le texte du jTextAreaCR
+// Afficher le compte rendu correspondant à l'IDCR dans jTextAreaCR
+        int ID = idPatient; //recup l'id patient  
         String IDACTE = infoID.getText(); // Récupérer l'ID stocké dans infoID sara
-            String idCR = String.valueOf(ID) + String.valueOf(IDACTE); // Concaténer l'ID et l'ID d'acte pour former idCR
-            System.out.println("idacte : " + IDACTE + "---");
-            System.out.println("idpatient :" + idPatient + "-");
-            int idCRint = Integer.parseInt(idCR);//converti en int
+        String idCR = String.valueOf(ID) + String.valueOf(IDACTE); // Concaténer l'ID et l'ID d'acte pour former idCR
+        int idCRint = Integer.parseInt(idCR);//converti en int
 
-            conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
-            String sql = "SELECT CONTENU FROM CR WHERE IDCR = ?";
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, idCRint); // Remplacer le premier paramètre (?) par la valeur de IDCRint
-            ResultSet resultSet = statement.executeQuery();
-
-            StringBuilder contentBuilder = new StringBuilder();
-            while (resultSet.next()) {
-                String contenu = resultSet.getString("CONTENU");
-                contentBuilder.append(contenu).append("\n"); // Ajouter le contenu au StringBuilder avec un saut de ligne
-            }
-
-            // Mettre à jour le texte du jTextAreaCR avec les contenus correspondants à IDCRint
-            jTextAreaCR.setText(contentBuilder.toString());
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            // Gérer les erreurs de connexion ou d'exécution de la requête
-            JOptionPane.showMessageDialog(null, "Erreur lors de la récupération des comptes-rendus : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            // Fermer la connexion et les ressources JDBC
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
+        afficherCompteRendu(idCRint); // Appel de la méthode pour afficher le compte rendu
     }
 
     /**
@@ -455,7 +423,6 @@ public class Acte extends javax.swing.JFrame {
         nouveauJFrame.setVisible(true);
         dispose();
 
-
     }//GEN-LAST:event_jButtonRetourActionPerformed
 
     private void jButtonEnregistrerCRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnregistrerCRActionPerformed
@@ -464,6 +431,8 @@ public class Acte extends javax.swing.JFrame {
         String IDACTE = infoID.getText(); // Récupérer l'ID stocké dans infoID sara
         String idCR = String.valueOf(ID) + String.valueOf(IDACTE); // Concaténer l'ID et l'ID d'acte pour former idCR
         System.out.println("idacte : " + idacte + "-");
+        System.out.println("IDACTE:" + IDACTE);
+        //System.out.println("idActe:" + idActe);
         System.out.println("idpatient :" + idPatient + "-");
         int idCRint = Integer.parseInt(idCR);//converti en int
         int IDACTEint = Integer.parseInt(IDACTE);
@@ -736,30 +705,6 @@ public class Acte extends javax.swing.JFrame {
         return ImageBrain;
     }
 
-//
-//        private void recuperation_donnees() {
-//
-//        System.out.println("get = " + getIdPatient());
-//        try {
-//
-//            Statement stmt = conn.createStatement();
-//            //exécutation de la requête
-//            ResultSet rs = stmt.executeQuery("SELECT * FROM ACTERADIO WHERE IDPATIENT = " + getIdPatient());
-//            //on ajoute à la ligne les informations de la tableau
-//            while (rs.next()) {
-//                Object[] row = new Object[]{rs.getInt("IDACTE"), rs.getString("CODEACTE"), rs.getDouble("TARIFICATION"), rs.getDate("DATEACTE"), rs.getString("PRATICIEN"), rs.getString("SIGNIFICATIONCODE")};
-//                model.addRow(row);
-//            }
-//            // on applique le model du defaulttable au jTable de l'interface
-//            jTextAreaCR.setModel(model);
-//
-//            rs.close();
-//            stmt.close();
-//            conn.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }//
     /**
      * @param args the command line arguments
      */
@@ -826,4 +771,37 @@ public class Acte extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextAreaCR;
     // End of variables declaration//GEN-END:variables
+private void afficherCompteRendu(int idCRint) {
+        try {
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
+            String sql = "SELECT CONTENU FROM CR WHERE IDCR = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, idCRint);
+            ResultSet resultSet = statement.executeQuery();
+
+            StringBuilder contentBuilder = new StringBuilder();
+            while (resultSet.next()) {
+                String contenu = resultSet.getString("CONTENU");
+                contentBuilder.append(contenu).append("\n");
+                System.out.println("idpatient :" + idPatient + "-");
+                System.out.println("texte CR: " + contenu + "-");
+                System.out.println("idCRint: " + idCRint + "-");
+
+            }
+
+            jTextAreaCR.setText(contentBuilder.toString()); // Mettre à jour le texte du jTextAreaCR avec le contenu du compte rendu
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erreur lors de la récupération du compte rendu : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
 }
