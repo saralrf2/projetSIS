@@ -480,14 +480,11 @@ public class Acte extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Erreur lors de l'enregistrement du compte rendu : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
 
-            // Fermer la fenêtre actuelle
-            dispose();
+           
         } else if (choix == JOptionPane.CANCEL_OPTION || choix == JOptionPane.CLOSED_OPTION) {
             // Action si l'utilisateur clique sur "Annuler" ou ferme la boîte de dialogue
             JOptionPane.getRootFrame().dispose();
         }
-
-
     }//GEN-LAST:event_jButtonEnregistrerCRActionPerformed
 
     private void jButtonRotate90ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRotate90ActionPerformed
@@ -793,15 +790,7 @@ private void afficherCompteRendu(int idCRint) {
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erreur lors de la récupération du compte rendu : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
+        } 
     }
 
 }
