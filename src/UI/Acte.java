@@ -23,6 +23,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.sql.ResultSet;
 
 /**
  *
@@ -70,25 +71,50 @@ public class Acte extends javax.swing.JFrame {
         this.acte.setText(acte);
         this.dmr = dmr;
 
-        this.idacte = idacte;
+       // this.idacte = idacte;
         //  this.idPatient = idpatient;
         infoID.setText(String.valueOf(this.idPatient));
 
         this.idPatient = dmr.getIdPatient(); // Récupérer l'ID du patient à partir de DossierMedicalRadiologie
 
-        System.out.println("idacte : " + idacte + "-");
-        System.out.println("idpatient :" + idPatient + "-");
-
-//        model = new DefaultTableModel(new Object[]{"IDACTE", "CODE ACTE", "TARIFICATION", "Date Acte", "PRATICIEN", "Signification du Code"}, 0);
-//        jTextAreaCR.setModel(model); // Appliquer le modèle au jTextAreaCR
-//        jTextAreaCR.setDefaultEditor(Object.class, null); // Rendre toutes les cellules non éditables
-//        
         try {
-            conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
-        } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(Acte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
 
+            int ID = idPatient; //recup l'id patient  
+            String CONTENU = jTextAreaCR.getText();// Récupérer le texte du jTextAreaCR
+        String IDACTE = infoID.getText(); // Récupérer l'ID stocké dans infoID sara
+            String idCR = String.valueOf(ID) + String.valueOf(IDACTE); // Concaténer l'ID et l'ID d'acte pour former idCR
+            System.out.println("idacte : " + IDACTE + "---");
+            System.out.println("idpatient :" + idPatient + "-");
+            int idCRint = Integer.parseInt(idCR);//converti en int
+
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
+            String sql = "SELECT CONTENU FROM CR WHERE IDCR = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, idCRint); // Remplacer le premier paramètre (?) par la valeur de IDCRint
+            ResultSet resultSet = statement.executeQuery();
+
+            StringBuilder contentBuilder = new StringBuilder();
+            while (resultSet.next()) {
+                String contenu = resultSet.getString("CONTENU");
+                contentBuilder.append(contenu).append("\n"); // Ajouter le contenu au StringBuilder avec un saut de ligne
+            }
+
+            // Mettre à jour le texte du jTextAreaCR avec les contenus correspondants à IDCRint
+            jTextAreaCR.setText(contentBuilder.toString());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            // Gérer les erreurs de connexion ou d'exécution de la requête
+            JOptionPane.showMessageDialog(null, "Erreur lors de la récupération des comptes-rendus : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            // Fermer la connexion et les ressources JDBC
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -435,12 +461,16 @@ public class Acte extends javax.swing.JFrame {
     private void jButtonEnregistrerCRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnregistrerCRActionPerformed
         int ID = idPatient; //recup l'id patient  
         String CONTENU = jTextAreaCR.getText();// Récupérer le texte du jTextAreaCR
-        int IDACTE = idacte; // Récupérer l'ID stocké dans infoID sara
+        String IDACTE = infoID.getText(); // Récupérer l'ID stocké dans infoID sara
         String idCR = String.valueOf(ID) + String.valueOf(IDACTE); // Concaténer l'ID et l'ID d'acte pour former idCR
+        System.out.println("idacte : " + idacte + "-");
+        System.out.println("idpatient :" + idPatient + "-");
+        int idCRint = Integer.parseInt(idCR);//converti en int
+        int IDACTEint = Integer.parseInt(IDACTE);
         // Créer des boutons personnalisés
         Object[] options = {"Valider", "Annuler"};
         System.out.println("texte CR: " + CONTENU + "-");
-        System.out.println("idCR: " + idCR + "-");
+        System.out.println("idCR: " + idCRint + "-");
 
         // Afficher la boîte de dialogue avec les boutons personnalisés
         int choix = JOptionPane.showOptionDialog(
@@ -458,22 +488,20 @@ public class Acte extends javax.swing.JFrame {
 //            Connexion nouveauJFrame = new Connexion();
 //            nouveauJFrame.setVisible(true);
             try {
-                // Établir la connexion à la base de données
-                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
 
                 // Préparer la requête SQL pour insérer le compte rendu avec IDCR
                 String sql = "INSERT INTO CR (IDCR, ID, CONTENU, IDACTE) VALUES (?, ?, ?, ?)";
-                PreparedStatement statement = connection.prepareStatement(sql);
-                statement.setString(1, idCR); // Remplace le premier paramètre (?) par la valeur de idCR
+                PreparedStatement statement = conn.prepareStatement(sql);
+                statement.setInt(1, idCRint); // Remplace le premier paramètre (?) par la valeur de idCR
                 statement.setInt(2, ID); // Remplace le deuxième paramètre (?) par la valeur de l'ID
                 statement.setString(3, CONTENU); // Remplace le troisième paramètre (?) par la valeur du contenu
-                statement.setInt(4, IDACTE); // Remplace le quatrième paramètre (?) par la valeur de l'ID d'acte
+                statement.setInt(4, IDACTEint); // Remplace le quatrième paramètre (?) par la valeur de l'ID d'acte
 
                 // Exécuter la requête SQL
                 statement.executeUpdate();
 
                 // Fermer la connexion
-                connection.close();
+                conn.close();
 
                 // Afficher un message de succès
                 JOptionPane.showMessageDialog(null, "Compte rendu enregistré avec succès !");
