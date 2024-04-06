@@ -24,13 +24,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
 /**
  *
  * @author alexiaidrac
  */
-
-
 public class Acte extends javax.swing.JFrame {
 
     private DossierMedicalRadiologie dmr;
@@ -42,9 +39,12 @@ public class Acte extends javax.swing.JFrame {
 
     private int rotationAngle = 0; // Variable pour suivre l'angle de rotation
     private double contraste = 0.25; //variable contraste de base
-    
+
     private DefaultTableModel model;
     Connection conn;
+
+    private int idacte;
+    private int idPatient;
 
     /**
      * Creates new form DMR
@@ -69,25 +69,28 @@ public class Acte extends javax.swing.JFrame {
         infoAdresse.setText(String.valueOf(tarification));
         this.acte.setText(acte);
         this.dmr = dmr;
-        
-        
-        
+
+        this.idacte = idacte;
+        //  this.idPatient = idpatient;
+        infoID.setText(String.valueOf(this.idPatient));
+
+        this.idPatient = dmr.getIdPatient(); // Récupérer l'ID du patient à partir de DossierMedicalRadiologie
+
+        System.out.println("idacte : " + idacte + "-");
+        System.out.println("idpatient :" + idPatient + "-");
+
 //        model = new DefaultTableModel(new Object[]{"IDACTE", "CODE ACTE", "TARIFICATION", "Date Acte", "PRATICIEN", "Signification du Code"}, 0);
 //        jTextAreaCR.setModel(model); // Appliquer le modèle au jTextAreaCR
 //        jTextAreaCR.setDefaultEditor(Object.class, null); // Rendre toutes les cellules non éditables
 //        
-            try {
-                conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
-            } catch (SQLException ex) {
-                java.util.logging.Logger.getLogger(Acte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            }
-         
-        
-        
+        try {
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(Acte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -425,17 +428,15 @@ public class Acte extends javax.swing.JFrame {
         DossierMedicalRadiologie nouveauJFrame = dmr;
         nouveauJFrame.setVisible(true);
         dispose();
+
+
     }//GEN-LAST:event_jButtonRetourActionPerformed
 
     private void jButtonEnregistrerCRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnregistrerCRActionPerformed
-        int ID = 4; //recup l'id patient ? 
-        int idCR = 4; // Récupérer l'ID stocké dans infoID À VERIFIER CAR DANS LA BD C'EST UN INT sara
-        // Récupérer le texte du jTextAreaCR
-        String CONTENU = jTextAreaCR.getText();
-        int IDACTE = 4; // Récupérer l'ID stocké dans infoID sara
-  
-        
-        
+        int ID = idPatient; //recup l'id patient  
+        String CONTENU = jTextAreaCR.getText();// Récupérer le texte du jTextAreaCR
+        int IDACTE = idacte; // Récupérer l'ID stocké dans infoID sara
+        String idCR = String.valueOf(ID) + String.valueOf(IDACTE); // Concaténer l'ID et l'ID d'acte pour former idCR
         // Créer des boutons personnalisés
         Object[] options = {"Valider", "Annuler"};
         System.out.println("texte CR: " + CONTENU + "-");
@@ -459,11 +460,11 @@ public class Acte extends javax.swing.JFrame {
             try {
                 // Établir la connexion à la base de données
                 Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
- 
+
                 // Préparer la requête SQL pour insérer le compte rendu avec IDCR
                 String sql = "INSERT INTO CR (IDCR, ID, CONTENU, IDACTE) VALUES (?, ?, ?, ?)";
                 PreparedStatement statement = connection.prepareStatement(sql);
-                statement.setInt(1, idCR); // Remplace le premier paramètre (?) par la valeur de idCR
+                statement.setString(1, idCR); // Remplace le premier paramètre (?) par la valeur de idCR
                 statement.setInt(2, ID); // Remplace le deuxième paramètre (?) par la valeur de l'ID
                 statement.setString(3, CONTENU); // Remplace le troisième paramètre (?) par la valeur du contenu
                 statement.setInt(4, IDACTE); // Remplace le quatrième paramètre (?) par la valeur de l'ID d'acte
@@ -481,7 +482,7 @@ public class Acte extends javax.swing.JFrame {
                 // Gérer les erreurs de connexion ou d'exécution de la requête
                 JOptionPane.showMessageDialog(null, "Erreur lors de l'enregistrement du compte rendu : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
-            
+
             // Fermer la fenêtre actuelle
             dispose();
         } else if (choix == JOptionPane.CANCEL_OPTION || choix == JOptionPane.CLOSED_OPTION) {
@@ -501,7 +502,7 @@ public class Acte extends javax.swing.JFrame {
                 // Mise à jour de l'icône avec l'image pivotée
                 ImageBrain.setIcon(new ImageIcon(modifiedImage));
             } catch (IOException ex) {
-               // Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(Level.SEVERE, null, ex);
+                // Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -666,8 +667,8 @@ public class Acte extends javax.swing.JFrame {
         }
         return invertedImage;
     }
-    
-       private void flipHImage() {
+
+    private void flipHImage() {
 
         System.out.println("Méthode flipImage appelée !");
         if (originalImage != null) {
@@ -702,9 +703,9 @@ public class Acte extends javax.swing.JFrame {
             System.out.println("L'image originale est null !");
         }
     }
-    
-    public JLabel getImageBrain(){
-        return ImageBrain; 
+
+    public JLabel getImageBrain() {
+        return ImageBrain;
     }
 
 //
