@@ -27,7 +27,7 @@ Connection conn;
      */
     private DefaultTableModel model;//lm
     
-    public Acceuil() {
+    public Acceuil() {//test
         initComponents();
         model = new DefaultTableModel(new Object[]{"ID", "Name", "Prenom", "Date Naissance", "Adresse"}, 0);
         jTableDMR.setModel(model); // Appliquer le modèle au jTableDMR
