@@ -11,6 +11,9 @@ import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -24,13 +27,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
 /**
  *
  * @author alexiaidrac
  */
-
-
 public class Acte extends javax.swing.JFrame {
 
     private DossierMedicalRadiologie dmr;
@@ -38,11 +38,13 @@ public class Acte extends javax.swing.JFrame {
     private BufferedImage modifiedImage;
     private BufferedImage invertedImage;
     private BufferedImage flippedImage;
-    private BufferedImage originalImage = loadImage("images/brain1_0000.jpg");
+    private BufferedImage currentImageFromDB;
+    private byte[] imageData;
+    private BufferedImage originalImageFromDB;
 
     private int rotationAngle = 0; // Variable pour suivre l'angle de rotation
     private double contraste = 0.25; //variable contraste de base
-    
+
     private DefaultTableModel model;
     Connection conn;
 
@@ -69,25 +71,20 @@ public class Acte extends javax.swing.JFrame {
         infoAdresse.setText(String.valueOf(tarification));
         this.acte.setText(acte);
         this.dmr = dmr;
-        
-        
-        
+        this.imageData = imageData;
+
 //        model = new DefaultTableModel(new Object[]{"IDACTE", "CODE ACTE", "TARIFICATION", "Date Acte", "PRATICIEN", "Signification du Code"}, 0);
 //        jTextAreaCR.setModel(model); // Appliquer le modèle au jTextAreaCR
 //        jTextAreaCR.setDefaultEditor(Object.class, null); // Rendre toutes les cellules non éditables
 //        
-            try {
-                conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
-            } catch (SQLException ex) {
-                java.util.logging.Logger.getLogger(Acte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            }
-         
-        
-        
+        try {
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(Acte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -132,7 +129,7 @@ public class Acte extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(173, 200, 213));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Radiographie", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Galvji", 1, 14)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Galvji", 1, 13))); // NOI18N
 
-        ImageBrain.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/images/sinus1_0000.jpg"))); // NOI18N
+        ImageBrain.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/images/brain1_0000.jpg"))); // NOI18N
 
         jButtonRotate90.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/images/rafraichir.png"))); // NOI18N
         jButtonRotate90.addActionListener(new java.awt.event.ActionListener() {
@@ -188,7 +185,7 @@ public class Acte extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(51, Short.MAX_VALUE)
+                .addContainerGap(59, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -213,9 +210,9 @@ public class Acte extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(212, Short.MAX_VALUE)
                 .addComponent(ImageBrain)
-                .addGap(48, 48, 48)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButtonRotate90)
@@ -385,7 +382,7 @@ public class Acte extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
+                .addContainerGap(89, Short.MAX_VALUE)
                 .addComponent(jPanelInfoActe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanelCR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -426,7 +423,7 @@ public class Acte extends javax.swing.JFrame {
         String CONTENU = jTextAreaCR.getText();
         String IDACTE = infoCode.getText(); // Récupérer l'ID stocké dans infoIDll
         //test
-        
+
         //bug alexia 
         // Créer des boutons personnalisés
         Object[] options = {"Valider", "Annuler"};
@@ -451,7 +448,7 @@ public class Acte extends javax.swing.JFrame {
             try {
                 // Établir la connexion à la base de données
                 Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
- 
+
                 // Préparer la requête SQL pour insérer le compte rendu avec IDCR
                 String sql = "INSERT INTO CR (IDCR, ID, CONTENU, IDACTE) VALUES (?, ?, ?, ?)";
                 PreparedStatement statement = connection.prepareStatement(sql);
@@ -473,7 +470,7 @@ public class Acte extends javax.swing.JFrame {
                 // Gérer les erreurs de connexion ou d'exécution de la requête
                 JOptionPane.showMessageDialog(null, "Erreur lors de l'enregistrement du compte rendu : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
-            
+
             // Fermer la fenêtre actuelle
             dispose();
         } else if (choix == JOptionPane.CANCEL_OPTION || choix == JOptionPane.CLOSED_OPTION) {
@@ -485,73 +482,80 @@ public class Acte extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEnregistrerCRActionPerformed
 
     private void jButtonRotate90ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRotate90ActionPerformed
-        originalImage = loadImage("images/brain1_0000.jpg");
-        if (originalImage != null) {
-            try {
-                // Rotation de l'image
-                modifiedImage = rotateImage(originalImage, 90 * (++rotationAngle));
-                // Mise à jour de l'icône avec l'image pivotée
-                ImageBrain.setIcon(new ImageIcon(modifiedImage));
-            } catch (IOException ex) {
-               // Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(Level.SEVERE, null, ex);
+        if (imageData != null) {
+            BufferedImage imageFromDB = loadImageFromBytes(imageData);
+            if (imageFromDB != null) {
+                try {
+                    // Rotation de l'image
+                    BufferedImage rotatedImage = rotateImage(imageFromDB, 90 * (++rotationAngle));
+                    // Mise à jour de l'image actuelle dans le JLabel
+                    applyProcessing(rotatedImage);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                System.out.println("Impossible de charger l'image depuis la base de données.");
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Aucune image chargée depuis la base de données.");
         }
     }//GEN-LAST:event_jButtonRotate90ActionPerformed
 
     private void jButtonIncreaseContrasteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIncreaseContrasteActionPerformed
-        originalImage = loadImage("images/brain1_0000.jpg");
-
-        if (null != originalImage) {
-            // Incrémentation du contraste
-            contraste += 0.5; // Incrémente le contraste de 0.25 à chaque clic
-
-            // Ajustement du contraste de l'image
-            modifiedImage = adjustContrast(originalImage, contraste);
-
-            // Mise à jour de l'icône avec l'image avec contraste ajusté
-            ImageBrain.setIcon(new ImageIcon(modifiedImage));
+        if (imageData != null) {
+            BufferedImage imageFromDB = loadImageFromBytes(imageData);
+            if (imageFromDB != null) {
+                // Incrémentation du contraste
+                contraste += 0.5; // Incrémente le contraste de 0.25 à chaque clic
+                // Ajustement du contraste de l'image
+                BufferedImage adjustedImage = adjustContrast(imageFromDB, contraste);
+                // Mise à jour de l'image actuelle dans le JLabel
+                applyProcessing(adjustedImage);
+            } else {
+                System.out.println("Impossible de charger l'image depuis la base de données.");
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Aucune image chargée depuis la base de données.");
         }
     }//GEN-LAST:event_jButtonIncreaseContrasteActionPerformed
 
     private void jButtonDecreaseContrastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDecreaseContrastActionPerformed
-        originalImage = loadImage("images/brain1_0000.jpg");
-
-        if (null != originalImage) {
-            // Incrémentation du contraste
-            contraste -= 0.5; // Incrémente le contraste de 0.25 à chaque clic
-
-            // Ajustement du contraste de l'image
-            modifiedImage = adjustContrast(originalImage, contraste);
-
-            // Mise à jour de l'icône avec l'image avec contraste ajusté
-            ImageBrain.setIcon(new ImageIcon(modifiedImage));
+        if (imageData != null) {
+            BufferedImage imageFromDB = loadImageFromBytes(imageData);
+            if (imageFromDB != null) {
+                // Incrémentation du contraste
+                contraste -= 0.5; // Incrémente le contraste de 0.25 à chaque clic
+                // Ajustement du contraste de l'image
+                BufferedImage adjustedImage = adjustContrast(imageFromDB, contraste);
+                // Mise à jour de l'image actuelle dans le JLabel
+                applyProcessing(adjustedImage);
+            } else {
+                System.out.println("Impossible de charger l'image depuis la base de données.");
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Aucune image chargée depuis la base de données.");
         }
     }//GEN-LAST:event_jButtonDecreaseContrastActionPerformed
 
     private void jButtonRestartContrastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRestartContrastActionPerformed
 
-        ImageBrain.setIcon(new ImageIcon(originalImage)); // Restaurer l'image originale
+        ImageBrain.setIcon(new ImageIcon(loadImageFromBytes(imageData))); // Restaurer l'image originale
 
     }//GEN-LAST:event_jButtonRestartContrastActionPerformed
 
     private void jButtonInversionGrisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInversionGrisActionPerformed
-        originalImage = loadImage("images/brain1_0000.jpg");
-
-        if (null != originalImage) {
-            // Appliquer l'inversion des niveaux de gris et récupérer l'image inversée
-            BufferedImage invertedImage = inversionNiveauGris(originalImage);
-
-            // Afficher l'image inversée
-            ImageBrain.setIcon(new ImageIcon(invertedImage));
-
+        if (imageData != null) {
+            BufferedImage imageFromDB = loadImageFromBytes(imageData);
+            if (imageFromDB != null) {
+                // Appliquer l'inversion des niveaux de gris
+                BufferedImage invertedImage = inversionNiveauGris(imageFromDB);
+                // Mise à jour de l'image actuelle dans le JLabel
+                applyProcessing(invertedImage);
+            } else {
+                System.out.println("Impossible de charger l'image depuis la base de données.");
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Aucune image chargée depuis la base de données.");
         }
     }//GEN-LAST:event_jButtonInversionGrisActionPerformed
 
@@ -635,10 +639,6 @@ public class Acte extends javax.swing.JFrame {
         return adjustedImage;
     }
 
-    private void chargerImageOriginale() {
-        originalImage = loadImage("images/brain1_0000.jpg");
-    }
-
     private BufferedImage inversionNiveauGris(BufferedImage image) {
         // Créer une copie de l'image originale pour inverser le niveau de gris
         BufferedImage invertedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
@@ -658,45 +658,81 @@ public class Acte extends javax.swing.JFrame {
         }
         return invertedImage;
     }
-    
-       private void flipHImage() {
 
-        System.out.println("Méthode flipImage appelée !");
-        if (originalImage != null) {
-            AffineTransform tx = AffineTransform.getScaleInstance(1, -1);
-            tx.translate(0, -originalImage.getHeight(null));
-            AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-            originalImage = op.filter(originalImage, null);
-
-            // Afficher l'image retournée
-            currentImage = originalImage;
-            ImageIcon flippedIcon = new ImageIcon(currentImage);
-            ImageBrain.setIcon(flippedIcon);
+    // Méthode pour flipper horizontalement l'image de la base de données
+    private void flipHImage() {
+        if (imageData != null) {
+            if (originalImageFromDB == null) {
+                originalImageFromDB = loadImageFromBytes(imageData);
+            }
+            if (originalImageFromDB != null) {
+                AffineTransform tx = AffineTransform.getScaleInstance(1, -1);
+                tx.translate(0, -originalImageFromDB.getHeight());
+                AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+                BufferedImage flippedImage = op.filter(originalImageFromDB, null);
+                // Mettre à jour l'image originale
+                originalImageFromDB = flippedImage;
+                // Afficher l'image retournée
+                applyProcessing(flippedImage);
+            } else {
+                System.out.println("Impossible de charger l'image depuis les données de la base de données.");
+            }
         } else {
-            System.out.println("L'image originale est null !");
+            System.out.println("Aucune donnée d'image disponible depuis la base de données.");
         }
     }
 
+// Méthode pour flipper verticalement l'image de la base de données
     private void flipVImage() {
-
-        System.out.println("Méthode flipImage appelée !");
-        if (originalImage != null) {
-            AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
-            tx.translate(-originalImage.getWidth(null), 0);
-            AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-            originalImage = op.filter(originalImage, null);
-
-            // Afficher l'image retournée
-            currentImage = originalImage;
-            ImageIcon flippedIcon = new ImageIcon(currentImage);
-            ImageBrain.setIcon(flippedIcon);
+        if (imageData != null) {
+            if (originalImageFromDB == null) {
+                originalImageFromDB = loadImageFromBytes(imageData);
+            }
+            if (originalImageFromDB != null) {
+                AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+                tx.translate(-originalImageFromDB.getWidth(), 0);
+                AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+                BufferedImage flippedImage = op.filter(originalImageFromDB, null);
+                // Mettre à jour l'image originale
+                originalImageFromDB = flippedImage;
+                // Afficher l'image retournée
+                applyProcessing(flippedImage);
+            } else {
+                System.out.println("Impossible de charger l'image depuis les données de la base de données.");
+            }
         } else {
-            System.out.println("L'image originale est null !");
+            System.out.println("Aucune donnée d'image disponible depuis la base de données.");
         }
     }
-    
-    public JLabel getImageBrain(){
-        return ImageBrain; 
+
+    public JLabel getImageBrain() {
+        return ImageBrain;
+    }
+
+    private BufferedImage loadImageFromBytes(byte[] imageData) {
+        try {
+            InputStream inputStream = new ByteArrayInputStream(imageData);
+            BufferedImage image = ImageIO.read(inputStream);
+            inputStream.close();
+            return image;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    // Méthode pour afficher l'image actuelle dans le JLabel
+
+    private void displayCurrentImage() {
+        if (currentImageFromDB != null) {
+            ImageIcon icon = new ImageIcon(currentImageFromDB);
+            ImageBrain.setIcon(icon);
+        }
+    }
+
+    // Méthode pour appliquer le traitement et mettre à jour l'image actuelle
+    private void applyProcessing(BufferedImage processedImage) {
+        currentImageFromDB = processedImage;
+        displayCurrentImage();
     }
 
 //
