@@ -368,7 +368,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
             nouveauJFrame.setVisible(true);
             nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-            System.out.println("IdActe = "+getIdActe());
+           // System.out.println("IdActe = "+getIdActe());
         }
     }//GEN-LAST:event_jTableDMRMouseClicked
 

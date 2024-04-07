@@ -2,8 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-//bug sam 30 Mars
-//test 2
 package UI;
 
 import java.awt.Graphics2D;
@@ -454,8 +452,6 @@ public class Acte extends javax.swing.JFrame {
 
         // Gérer la réponse de l'utilisateur
         if (choix == JOptionPane.YES_OPTION) {
-//            Connexion nouveauJFrame = new Connexion();
-//            nouveauJFrame.setVisible(true);
             try {
 
                 // Préparer la requête SQL pour insérer le compte rendu avec IDCR
@@ -480,7 +476,6 @@ public class Acte extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Erreur lors de l'enregistrement du compte rendu : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
 
-           
         } else if (choix == JOptionPane.CANCEL_OPTION || choix == JOptionPane.CLOSED_OPTION) {
             // Action si l'utilisateur clique sur "Annuler" ou ferme la boîte de dialogue
             JOptionPane.getRootFrame().dispose();
@@ -783,14 +778,21 @@ private void afficherCompteRendu(int idCRint) {
                 System.out.println("idpatient :" + idPatient + "-");
                 System.out.println("texte CR: " + contenu + "-");
                 System.out.println("idCRint: " + idCRint + "-");
-
             }
 
-            jTextAreaCR.setText(contentBuilder.toString()); // Mettre à jour le texte du jTextAreaCR avec le contenu du compte rendu
+            String contenuCR = contentBuilder.toString();
+            //   if (jTextAreaCR.getClickCount() == 2) { // Double clic sur une ligne
+            if (contenuCR.isEmpty()) { // si il y a déja un contenu on n'a pas le droit de le modifier 
+                jTextAreaCR.setEditable(true); // Autoriser la modification si le contenu est vide
+            } else {
+                jTextAreaCR.setText(contenuCR); // Mettre à jour le texte du jTextAreaCR avec le contenu du compte rendu
+                jTextAreaCR.setEditable(false); // Bloquer la modification si le contenu est déjà présent
+                this.jButtonEnregistrerCR.setVisible(false);// Masquer le bouton pour ajouter le CR
+                JOptionPane.showMessageDialog(null, "Le compte rendu ne peut pas être modifié car il contient déjà du texte.", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erreur lors de la récupération du compte rendu : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        } 
+        }
     }
-
 }
