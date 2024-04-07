@@ -40,7 +40,7 @@ public class Acte extends javax.swing.JFrame {
     private BufferedImage flippedImage;
     private BufferedImage currentImageFromDB;
     private byte[] imageData;
-    private BufferedImage originalImageFromDB;
+    BufferedImage imageFromDB;
 
     private int rotationAngle = 0; // Variable pour suivre l'angle de rotation
     private double contraste = 0.25; //variable contraste de base
@@ -72,6 +72,7 @@ public class Acte extends javax.swing.JFrame {
         this.acte.setText(acte);
         this.dmr = dmr;
         this.imageData = imageData;
+        imageFromDB = loadImageFromBytes(imageData);
 
 //        model = new DefaultTableModel(new Object[]{"IDACTE", "CODE ACTE", "TARIFICATION", "Date Acte", "PRATICIEN", "Signification du Code"}, 0);
 //        jTextAreaCR.setModel(model); // Appliquer le modèle au jTextAreaCR
@@ -186,12 +187,14 @@ public class Acte extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(59, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonRestartContrast, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButtonRotate90, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ImageBrain)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jButtonRotate90, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonInversionGris, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonFlipH)
@@ -200,19 +203,15 @@ public class Acte extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonIncreaseContraste, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonDecreaseContrast, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButtonRestartContrast, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(44, 44, 44))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(ImageBrain)
-                        .addGap(61, 61, 61))))
+                                .addComponent(jButtonDecreaseContrast, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(44, 44, 44))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(212, Short.MAX_VALUE)
+                .addGap(79, 79, 79)
                 .addComponent(ImageBrain)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButtonRotate90)
@@ -382,7 +381,7 @@ public class Acte extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(89, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanelInfoActe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanelCR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -398,12 +397,12 @@ public class Acte extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -483,13 +482,14 @@ public class Acte extends javax.swing.JFrame {
 
     private void jButtonRotate90ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRotate90ActionPerformed
         if (imageData != null) {
-            BufferedImage imageFromDB = loadImageFromBytes(imageData);
+            //BufferedImage imageFromDB = loadImageFromBytes(imageData);
             if (imageFromDB != null) {
                 try {
                     // Rotation de l'image
                     BufferedImage rotatedImage = rotateImage(imageFromDB, 90 * (++rotationAngle));
                     // Mise à jour de l'image actuelle dans le JLabel
                     applyProcessing(rotatedImage);
+                    imageFromDB = rotatedImage;
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -545,12 +545,13 @@ public class Acte extends javax.swing.JFrame {
 
     private void jButtonInversionGrisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInversionGrisActionPerformed
         if (imageData != null) {
-            BufferedImage imageFromDB = loadImageFromBytes(imageData);
+            //BufferedImage imageFromDB = loadImageFromBytes(imageData);
             if (imageFromDB != null) {
                 // Appliquer l'inversion des niveaux de gris
                 BufferedImage invertedImage = inversionNiveauGris(imageFromDB);
                 // Mise à jour de l'image actuelle dans le JLabel
                 applyProcessing(invertedImage);
+                imageFromDB = invertedImage;
             } else {
                 System.out.println("Impossible de charger l'image depuis la base de données.");
             }
@@ -662,18 +663,20 @@ public class Acte extends javax.swing.JFrame {
     // Méthode pour flipper horizontalement l'image de la base de données
     private void flipHImage() {
         if (imageData != null) {
-            if (originalImageFromDB == null) {
-                originalImageFromDB = loadImageFromBytes(imageData);
+            
+            if (imageFromDB == null) {
+                
             }
-            if (originalImageFromDB != null) {
+            if (imageFromDB != null) {
                 AffineTransform tx = AffineTransform.getScaleInstance(1, -1);
-                tx.translate(0, -originalImageFromDB.getHeight());
+                tx.translate(0, -imageFromDB.getHeight());
                 AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-                BufferedImage flippedImage = op.filter(originalImageFromDB, null);
+                BufferedImage flippedImage = op.filter(imageFromDB, null);
                 // Mettre à jour l'image originale
-                originalImageFromDB = flippedImage;
+                imageFromDB = flippedImage;
                 // Afficher l'image retournée
                 applyProcessing(flippedImage);
+                
             } else {
                 System.out.println("Impossible de charger l'image depuis les données de la base de données.");
             }
@@ -685,16 +688,17 @@ public class Acte extends javax.swing.JFrame {
 // Méthode pour flipper verticalement l'image de la base de données
     private void flipVImage() {
         if (imageData != null) {
-            if (originalImageFromDB == null) {
-                originalImageFromDB = loadImageFromBytes(imageData);
+            //BufferedImage imageFromDB = loadImageFromBytes(imageData);
+            if (imageFromDB == null) {
+                
             }
-            if (originalImageFromDB != null) {
+            if (imageFromDB != null) {
                 AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
-                tx.translate(-originalImageFromDB.getWidth(), 0);
+                tx.translate(-imageFromDB.getWidth(), 0);
                 AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-                BufferedImage flippedImage = op.filter(originalImageFromDB, null);
+                BufferedImage flippedImage = op.filter(imageFromDB, null);
                 // Mettre à jour l'image originale
-                originalImageFromDB = flippedImage;
+                imageFromDB = flippedImage;
                 // Afficher l'image retournée
                 applyProcessing(flippedImage);
             } else {
