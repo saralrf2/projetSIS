@@ -34,7 +34,7 @@ public class ProjetSIS {
 //                + "PID|1||123456789|test||19700101|M|||123 Main St^^Anytown^TX^12345^USA||(555)555-5555|||||1234567890|\n"
 //                + "PV1|1|I|^^^Service^1||||12345^Doe^John^^^^^Facility|||||||||V1234^Doe^Jane^^^^^Facility|";
 
-        Message messageBuilder = new Message();
+        MessageADT messageBuilder = new MessageADT();
         
         String test = messageBuilder.getHL7Message();
         System.out.println(test);

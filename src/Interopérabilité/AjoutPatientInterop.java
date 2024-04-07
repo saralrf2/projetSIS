@@ -35,7 +35,7 @@ public class AjoutPatientInterop {
     private Connection conn;
 
     public AjoutPatientInterop(ADT_A01 admission) throws HL7Exception, IOException {
-        Message messageBuilder = new Message();
+        MessageADT messageBuilder = new MessageADT();
         admission = messageBuilder.build();
 
         id = Integer.parseInt(String.valueOf(admission.getPID().getPatientIdentifierList(0).getID()));

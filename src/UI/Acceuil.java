@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package UI;//test
+
+import Interopérabilité.HL7ListeningThread;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -16,19 +18,22 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 //
+
 /**
  *
  * @author alexiaidrac
  */
 public class Acceuil extends javax.swing.JFrame {
-Connection conn;
+
+    Connection conn;
     /**
      * Creates new form Acceuil
      */
     private DefaultTableModel model;//lm
-    
+
     public Acceuil() {//test
         initComponents();
+
         model = new DefaultTableModel(new Object[]{"ID", "Name", "Prenom", "Date Naissance", "Adresse"}, 0);
         jTableDMR.setModel(model); // Appliquer le modèle au jTableDMR
         jTableDMR.setDefaultEditor(Object.class, null); // Rendre toutes les cellules non éditables
@@ -44,6 +49,13 @@ Connection conn;
             System.out.println("connexion impossible");
 
         }
+        startHL7Listening();
+    }
+
+    private void startHL7Listening() {
+        int port = 50000; // Port d'écoute des messages HL7
+        HL7ListeningThread listeningThread = new HL7ListeningThread(port);
+        listeningThread.start(); // Démarrer le thread d'écoute des messages HL7
     }
 
     /**
@@ -274,9 +286,9 @@ Connection conn;
 
     private void jButtonAjoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjoutActionPerformed
         AjoutPatient nouveauJFrame = new AjoutPatient();
-        nouveauJFrame.setVisible(true);  
+        nouveauJFrame.setVisible(true);
         dispose();
-        
+
     }//GEN-LAST:event_jButtonAjoutActionPerformed
 
     private void jTextFieldRechercheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldRechercheActionPerformed
@@ -284,7 +296,7 @@ Connection conn;
     }//GEN-LAST:event_jTextFieldRechercheActionPerformed
 
     private void jButtonDeconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeconnexionActionPerformed
-         // Créer des boutons personnalisés
+        // Créer des boutons personnalisés
         Object[] options = {"Valider", "Annuler"};
 
         // Afficher la boîte de dialogue avec les boutons personnalisés
@@ -301,98 +313,93 @@ Connection conn;
         // Gérer la réponse de l'utilisateur
         if (choix == JOptionPane.YES_OPTION) {
             Connexion nouveauJFrame = new Connexion();
-            nouveauJFrame.setVisible(true);     
-            dispose();   
-        }  else if (choix == JOptionPane.CANCEL_OPTION || choix == JOptionPane.CLOSED_OPTION) {
+            nouveauJFrame.setVisible(true);
+            dispose();
+        } else if (choix == JOptionPane.CANCEL_OPTION || choix == JOptionPane.CLOSED_OPTION) {
             // Action si l'utilisateur clique sur "Annuler" ou ferme la boîte de dialogue
             JOptionPane.getRootFrame().dispose();
         }
-        
+
     }//GEN-LAST:event_jButtonDeconnexionActionPerformed
 
     private void jTableDMRMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDMRMouseClicked
         int ligne = jTableDMR.getSelectedRow(); //récuperation information ligne
         int colonne = jTableDMR.getSelectedColumn(); // récuperation information colonne
         if (evt.getClickCount() == 2) { // Double clic sur une ligne
-            
+
             int ligneSelectionnee = jTableDMR.getSelectedRow();// récuperation information de la ligne sélectionnée
-            
-                //information de la ligne sélectionnée
-                int idpatient = Integer.parseInt(jTableDMR.getValueAt(ligneSelectionnee, 0).toString());
-                String nom = jTableDMR.getValueAt(ligneSelectionnee, 1).toString();
-                String prenom = jTableDMR.getValueAt(ligneSelectionnee, 2).toString();
-                Date datenaissance = Date.valueOf(jTableDMR.getValueAt(ligneSelectionnee, 3).toString());
-                String adresse = jTableDMR.getValueAt(ligneSelectionnee, 4).toString();
-                
-                
+
+            //information de la ligne sélectionnée
+            int idpatient = Integer.parseInt(jTableDMR.getValueAt(ligneSelectionnee, 0).toString());
+            String nom = jTableDMR.getValueAt(ligneSelectionnee, 1).toString();
+            String prenom = jTableDMR.getValueAt(ligneSelectionnee, 2).toString();
+            Date datenaissance = Date.valueOf(jTableDMR.getValueAt(ligneSelectionnee, 3).toString());
+            String adresse = jTableDMR.getValueAt(ligneSelectionnee, 4).toString();
+
 //                Object data = jTableDMR.getValueAt(ligne, colonne);
-                
 //                //ouvrir la fiche patient avec les informations sélectionnées
+            DossierMedicalRadiologie nouveauJFrame = new DossierMedicalRadiologie(idpatient, nom, prenom, datenaissance, adresse);
+            this.setVisible(false);
+            nouveauJFrame.setVisible(true);
+            nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-                DossierMedicalRadiologie nouveauJFrame = new DossierMedicalRadiologie(idpatient, nom, prenom, datenaissance, adresse);
-                this.setVisible(false);
-                nouveauJFrame.setVisible(true);
-                nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+            dispose();
 
-                dispose();
-               
-
-                System.out.println(idpatient);
+            System.out.println(idpatient);
 
         }
 
     }//GEN-LAST:event_jTableDMRMouseClicked
 
     private void jButtonRechercheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRechercheActionPerformed
-        
+
         String recherche = jTextFieldRecherche.getText();
         String rech = capitalizeFirstLetter(recherche);
-        
+
         System.out.println(rech);
-        
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>( model);
+
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
         jTableDMR.setRowSorter(sorter);
         if (rech.length() == 0) {
             sorter.setRowFilter(null);
             System.out.println("ça ne correspond à aucun patient");
         } else {
-        // Vérifie si le texte est composé uniquement de chiffres
-        boolean numero = rech.matches("\\d+");
-        if (numero) {
-            // Convertit la chaîne de chiffres en entier
-            int num = Integer.parseInt(rech);
-            // Crée un filtre pour trouver une correspondance avec le numéro exactement de l'identifiant
-            sorter.setRowFilter(RowFilter.numberFilter(RowFilter.ComparisonType.EQUAL, num));
-        } else {
-            // Applique un filtre regex pour la recherche de texte
-            sorter.setRowFilter(RowFilter.regexFilter(rech));
+            // Vérifie si le texte est composé uniquement de chiffres
+            boolean numero = rech.matches("\\d+");
+            if (numero) {
+                // Convertit la chaîne de chiffres en entier
+                int num = Integer.parseInt(rech);
+                // Crée un filtre pour trouver une correspondance avec le numéro exactement de l'identifiant
+                sorter.setRowFilter(RowFilter.numberFilter(RowFilter.ComparisonType.EQUAL, num));
+            } else {
+                // Applique un filtre regex pour la recherche de texte
+                sorter.setRowFilter(RowFilter.regexFilter(rech));
+            }
+            System.out.println("Patient trouvé.");
         }
-        System.out.println("Patient trouvé.");
-        }
-           
+
     }//GEN-LAST:event_jButtonRechercheActionPerformed
 
     private void jTextFieldRechercheFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldRechercheFocusGained
-        
+
     }//GEN-LAST:event_jTextFieldRechercheFocusGained
 
     private void recuperation_donnees() {
-        
+
         //ajouter les colonnes à notre nouveau tableau
 //        model.addColumn("ID");
 //        model.addColumn("Name");
 //        model.addColumn("Prenom");
 //        model.addColumn("Date Naissance");
 //        model.addColumn("Adresse");
-
         try {
-          
+
             Statement stmt = conn.createStatement();
             //exécutation de la requête
             ResultSet rs = stmt.executeQuery("SELECT * FROM PATIENT");
             //on ajoute à la ligne les informations de la tableau
             while (rs.next()) {
-                Object[] row = new Object[]{rs.getInt("IDPATIENT"), rs.getString("NOM"), rs.getString("PRENOM"),rs.getDate("DATENAISSANCE"), rs.getString("ADRESSE")};
+                Object[] row = new Object[]{rs.getInt("IDPATIENT"), rs.getString("NOM"), rs.getString("PRENOM"), rs.getDate("DATENAISSANCE"), rs.getString("ADRESSE")};
                 model.addRow(row);
             }
             // on applique le model du defaulttable au jTable de l'interface
@@ -405,6 +412,7 @@ Connection conn;
             e.printStackTrace();
         }
     }
+
     private String capitalizeFirstLetter(String input) {
         if (input == null || input.isEmpty()) {
             return input; // Si l'entrée est vide ou nulle, retourne la même chaîne
@@ -443,7 +451,7 @@ Connection conn;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Acceuil().setVisible(true);
-                
+
             }
         });
     }

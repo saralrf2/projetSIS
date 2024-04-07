@@ -12,11 +12,11 @@ import ca.uhn.hl7v2.model.v24.segment.MSH;
 import ca.uhn.hl7v2.model.v24.segment.PID;
 import ca.uhn.hl7v2.model.v24.segment.PV1;
 
-public class Message {
+public class MessageADT {
 
     private ADT_A01 adtMessage;
     
-    public Message() throws HL7Exception, IOException{
+    public MessageADT() throws HL7Exception, IOException{
         adtMessage = this.build();
     }
 

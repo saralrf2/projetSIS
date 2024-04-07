@@ -59,12 +59,7 @@ public class HL7Listener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String msg = "MSH|^~\\&|SystèmeEmetteur|FaciliteDestinataire|ApplicationEmetteur|ApplicationDestinataire|20240328120000||ADT^A04|MSGID20240328120000001|P|2.5|\n" +
-                                   "EVN|A04|20240328120000|\n" +
-                                   "PID|1||123456789|Doe^John||19700101|M|||123 Main St^^Anytown^TX^12345^USA||(555)555-5555|||||1234567890|\n" +
-                                   "PV1|1|I|^^^Service^1||||12345^Doe^John^^^^^Facility|||||||||V1234^Doe^Jane^^^^^Facility|";
-        
-        //séparation 
+       
     }
 
 }
