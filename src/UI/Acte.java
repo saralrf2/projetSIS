@@ -22,6 +22,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.sql.ResultSet;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+
+
 
 /**
  *
@@ -79,7 +86,7 @@ public class Acte extends javax.swing.JFrame {
         String IDACTE = infoID.getText(); // Récupérer l'ID stocké dans infoID sara
         String idCR = String.valueOf(ID) + String.valueOf(IDACTE); // Concaténer l'ID et l'ID d'acte pour former idCR
         int idCRint = Integer.parseInt(idCR);//converti en int
-
+        
         afficherCompteRendu(idCRint); // Appel de la méthode pour afficher le compte rendu
     }
 
@@ -120,6 +127,7 @@ public class Acte extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaCR = new javax.swing.JTextArea();
         jButtonEnregistrerCR = new javax.swing.JButton();
+        jButtonImprimer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -209,7 +217,7 @@ public class Acte extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(88, 88, 88)
                         .addComponent(jButtonFlipV)))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -299,7 +307,7 @@ public class Acte extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(acte)))
-                .addContainerGap(140, Short.MAX_VALUE))
+                .addContainerGap(170, Short.MAX_VALUE))
         );
         jPanelInfoActeLayout.setVerticalGroup(
             jPanelInfoActeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -353,25 +361,36 @@ public class Acte extends javax.swing.JFrame {
             }
         });
 
+        jButtonImprimer.setText("Imprimer");
+        jButtonImprimer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImprimerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelCRLayout = new javax.swing.GroupLayout(jPanelCR);
         jPanelCR.setLayout(jPanelCRLayout);
         jPanelCRLayout.setHorizontalGroup(
             jPanelCRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelCRLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-                .addGap(3, 3, 3))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCRLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButtonEnregistrerCR))
+                .addComponent(jButtonEnregistrerCR)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonImprimer))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCRLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanelCRLayout.setVerticalGroup(
             jPanelCRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCRLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(7, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                .addComponent(jButtonEnregistrerCR))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelCRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonEnregistrerCR)
+                    .addComponent(jButtonImprimer)))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -560,6 +579,18 @@ public class Acte extends javax.swing.JFrame {
     private void jButtonFlipVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFlipVActionPerformed
         flipVImage();
     }//GEN-LAST:event_jButtonFlipVActionPerformed
+
+    private void jButtonImprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimerActionPerformed
+
+   PrinterJob imprimer = PrinterJob.getPrinterJob();
+        if (imprimer.printDialog()) {
+            try {
+                imprimer.print();
+            } catch (PrinterException ex) {
+                ex.printStackTrace();
+            }
+        } 
+    }//GEN-LAST:event_jButtonImprimerActionPerformed
     private BufferedImage rotateImage(Image image, int angle) throws IOException {
         if (ImageBrain.getIcon() == null) {
             JOptionPane.showMessageDialog(this, "Aucune image chargée dans le JLabel.", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -745,6 +776,7 @@ public class Acte extends javax.swing.JFrame {
     private javax.swing.JButton jButtonEnregistrerCR;
     private javax.swing.JButton jButtonFlipH;
     private javax.swing.JButton jButtonFlipV;
+    private javax.swing.JButton jButtonImprimer;
     private javax.swing.JButton jButtonIncreaseContraste;
     private javax.swing.JButton jButtonInversionGris;
     private javax.swing.JButton jButtonRestartContrast;
@@ -763,7 +795,10 @@ public class Acte extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextAreaCR;
     // End of variables declaration//GEN-END:variables
-private void afficherCompteRendu(int idCRint) {
+
+    
+
+    private void afficherCompteRendu(int idCRint) {
         try {
             conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
             String sql = "SELECT CONTENU FROM CR WHERE IDCR = ?";
@@ -781,7 +816,7 @@ private void afficherCompteRendu(int idCRint) {
             }
 
             String contenuCR = contentBuilder.toString();
-            //   if (jTextAreaCR.getClickCount() == 2) { // Double clic sur une ligne
+            //   if (jTextAreaCR.getClickCount() == 2) { // Double clic sur une ligne 
             if (contenuCR.isEmpty()) { // si il y a déja un contenu on n'a pas le droit de le modifier 
                 jTextAreaCR.setEditable(true); // Autoriser la modification si le contenu est vide
             } else {
