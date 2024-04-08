@@ -580,6 +580,7 @@ public class Acte extends javax.swing.JFrame {
                 BufferedImage adjustedImage = adjustContrast(imageFromDB, contraste);
                 // Mise à jour de l'image actuelle dans le JLabel
                 applyProcessing(adjustedImage);
+                
             } else {
                 System.out.println("Impossible de charger l'image depuis la base de données.");
             }
