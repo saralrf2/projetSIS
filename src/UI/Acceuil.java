@@ -377,7 +377,17 @@ public class Acceuil extends javax.swing.JFrame {
             }
             System.out.println("Patient trouvé.");
         }
-
+        System.out.println("Patient trouvé.");
+        }
+        // Vérifie si aucun DMR ne correspond à la recherche
+        if (jTableDMR.getRowCount() == 0) {
+            // Afficher une fenêtre de message d'erreur
+            JOptionPane.showMessageDialog(this, "Aucun DMR ne correspond à votre recherche.", "Erreur de Recherche", JOptionPane.ERROR_MESSAGE);
+            System.out.println("ça ne correspond à aucun DMR");
+        } else {
+            System.out.println("DMR trouvé.");
+        }
+           
     }//GEN-LAST:event_jButtonRechercheActionPerformed
 
     private void jTextFieldRechercheFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldRechercheFocusGained

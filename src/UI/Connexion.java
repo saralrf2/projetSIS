@@ -105,11 +105,14 @@ public class Connexion extends javax.swing.JFrame {
             }
         });
 
-        jButtonConnexion.setBackground(new java.awt.Color(113, 146, 163));
+        jButtonConnexion.setBackground(new java.awt.Color(76, 133, 160));
         jButtonConnexion.setFont(new java.awt.Font("Galvji", 0, 13)); // NOI18N
         jButtonConnexion.setText("Connexion");
         jButtonConnexion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, null, new java.awt.Color(0, 102, 153)));
         jButtonConnexion.setBorderPainted(false);
+        jButtonConnexion.setMaximumSize(new java.awt.Dimension(57, 23));
+        jButtonConnexion.setMinimumSize(new java.awt.Dimension(57, 23));
+        jButtonConnexion.setPreferredSize(new java.awt.Dimension(57, 23));
         jButtonConnexion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonConnexionActionPerformed(evt);
@@ -153,7 +156,7 @@ public class Connexion extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonConnexion)
+                .addComponent(jButtonConnexion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(14, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()

@@ -204,9 +204,14 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButtonRetour.setBackground(new java.awt.Color(255, 255, 255));
+        jButtonRetour.setBackground(new java.awt.Color(76, 133, 160));
         jButtonRetour.setFont(new java.awt.Font("Galvji", 0, 13)); // NOI18N
         jButtonRetour.setText("Retour");
+        jButtonRetour.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonRetour.setBorderPainted(false);
+        jButtonRetour.setMaximumSize(new java.awt.Dimension(57, 23));
+        jButtonRetour.setMinimumSize(new java.awt.Dimension(57, 23));
+        jButtonRetour.setPreferredSize(new java.awt.Dimension(57, 23));
         jButtonRetour.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRetourActionPerformed(evt);
@@ -244,21 +249,26 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         jScrollPane4.setViewportView(jTableDMR);
 
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
+        jButton1.setFont(new java.awt.Font("Galvji", 0, 13)); // NOI18N
         jButton1.setText("Ajouter");
+        jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1.setBorderPainted(false);
+        jButton1.setMaximumSize(new java.awt.Dimension(57, 23));
+        jButton1.setMinimumSize(new java.awt.Dimension(57, 23));
+        jButton1.setPreferredSize(new java.awt.Dimension(57, 23));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButtonRecherche.setText("Chercher");
+        jButtonRecherche.setBackground(new java.awt.Color(255, 255, 255));
+        jButtonRecherche.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/images/loupe.png"))); // NOI18N
         jButtonRecherche.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRechercheActionPerformed(evt);
             }
         });
-
-        jTextFieldRecherche.setText("Rechercher un dossier médical ...");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -267,10 +277,10 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTextFieldRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonRecherche)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(jButtonRecherche)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
@@ -281,10 +291,10 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonRecherche)
-                    .addComponent(jTextFieldRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 197, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
@@ -298,10 +308,10 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jButtonRetour)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jButtonRetour, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -311,7 +321,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
-                .addComponent(jButtonRetour)
+                .addComponent(jButtonRetour, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -350,7 +360,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
             String acte = jTableDMR.getValueAt(ligneSelectionnee, 5).toString();
 
             // Récupération de l'image correspondant à l'acte depuis la base de données
-            byte[] imageData = getImageFromDatabase(idPatient);
+            byte[] imageData = getImageFromDatabase(getIdActe());
 
             //                //ouvrir la fiche patient avec les informations sélectionnées
             Acte nouveauJFrame = new Acte(this, idActe, codeActe, nomPracticien, dateActe, tarification, acte, imageData);
@@ -406,6 +416,14 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
             System.out.println("DMR trouvé.");
             
         }
+        // Vérifie si aucun DMR ne correspond à la recherche
+        if (jTableDMR.getRowCount() == 0) {
+            // Afficher une fenêtre de message d'erreur
+            JOptionPane.showMessageDialog(this, "Aucun acte ne correspond à votre recherche.", "Erreur de Recherche", JOptionPane.ERROR_MESSAGE);
+            System.out.println("ça ne correspond à aucun acte");
+        } else {
+            System.out.println("acte trouvé.");
+        }
 
     }//GEN-LAST:event_jButtonRechercheActionPerformed
 
@@ -416,23 +434,26 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         return input.substring(0, 1).toUpperCase() + input.substring(1); // Met la première lettre en majuscule et concatène le reste de la chaîne
     }
 
-    private byte[] getImageFromDatabase(int idPatient) {
+    private byte[] getImageFromDatabase(int idActe) {
         byte[] imageData = null;
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
         try {
+            // Affichage de l'ID de l'acte pour vérification
+        System.out.println("ID de l'acte : " + idActe);
             // Établir une connexion à la base de données
             connection = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
             // Requête SQL pour récupérer les données de l'image en fonction de l'ID de l'acte
-            String sql = "SELECT image FROM imagees WHERE IDPATIENT = ?";
+            String sql = "SELECT image FROM Imagees WHERE IDACTE = ?";
             statement = connection.prepareStatement(sql);
-            statement.setInt(1, idPatient);
+            statement.setInt(1, idActe);
             resultSet = statement.executeQuery();
             // Si une ligne est trouvée, récupérer les données de l'image
             if (resultSet.next()) {
                 imageData = resultSet.getBytes("image");
+                System.out.println("Taille des données d'image récupérées : " + imageData.length);
                 System.out.println("Image affichée");
             }
         } catch (SQLException e) {
@@ -554,8 +575,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
     /**
      * @return the idPatient
      */
-    
-        public int getIdActe() {
+    public int getIdActe() {
         // Récupérer l'indice de la ligne sélectionnée dans le tableau
         int ligneSelectionnee = jTableDMR.getSelectedRow();
 
@@ -568,10 +588,8 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         int idActe = Integer.parseInt(jTableDMR.getValueAt(ligneSelectionnee, 0).toString());
 
         return idActe;
-           
     }
 
-    
     public int getIdPatient() {
         return this.idPatient;
     }
