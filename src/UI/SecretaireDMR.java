@@ -109,7 +109,6 @@ public class SecretaireDMR extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableListeActes = new javax.swing.JTable();
         jButtonRechercheActe = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -221,6 +220,8 @@ public class SecretaireDMR extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
+        jButton1.setFont(new java.awt.Font("Galvji", 0, 13)); // NOI18N
         jButton1.setText("Retour");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -229,9 +230,13 @@ public class SecretaireDMR extends javax.swing.JFrame {
         });
 
         jPanelActes.setBackground(new java.awt.Color(173, 200, 213));
-        jPanelActes.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Informations patient", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Galvji", 1, 12)))); // NOI18N
+        jPanelActes.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Liste des examens", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Galvji", 1, 12)))); // NOI18N
 
-        jTextFieldRecherche.setText("Rechercher un acte ...");
+        jTextFieldRecherche.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldRechercheActionPerformed(evt);
+            }
+        });
 
         jTableListeActes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -254,15 +259,14 @@ public class SecretaireDMR extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTableListeActes);
 
-        jButtonRechercheActe.setText("Chercher");
+        jButtonRechercheActe.setBackground(new java.awt.Color(255, 255, 255));
+        jButtonRechercheActe.setFont(new java.awt.Font("Galvji", 0, 13)); // NOI18N
+        jButtonRechercheActe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/images/loupe.png"))); // NOI18N
         jButtonRechercheActe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRechercheActeActionPerformed(evt);
             }
         });
-
-        jLabel1.setFont(new java.awt.Font("Galvji", 1, 14)); // NOI18N
-        jLabel1.setText("Actes");
 
         javax.swing.GroupLayout jPanelActesLayout = new javax.swing.GroupLayout(jPanelActes);
         jPanelActes.setLayout(jPanelActesLayout);
@@ -270,27 +274,26 @@ public class SecretaireDMR extends javax.swing.JFrame {
             jPanelActesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelActesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelActesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelActesLayout.createSequentialGroup()
-                        .addComponent(jTextFieldRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonRechercheActe, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jTextFieldRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonRechercheActe, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelActesLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanelActesLayout.setVerticalGroup(
             jPanelActesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelActesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelActesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonRechercheActe)
-                    .addComponent(jTextFieldRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelActesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelActesLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jTextFieldRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonRechercheActe))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -310,8 +313,8 @@ public class SecretaireDMR extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41)
-                .addComponent(jPanelActes, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(jPanelActes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addComponent(jButton1))
         );
 
@@ -363,6 +366,10 @@ public class SecretaireDMR extends javax.swing.JFrame {
         }   
         
     }//GEN-LAST:event_jButtonRechercheActeActionPerformed
+
+    private void jTextFieldRechercheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldRechercheActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldRechercheActionPerformed
 
     
      private String capitalizeFirstLetter(String input) {
@@ -442,7 +449,6 @@ public class SecretaireDMR extends javax.swing.JFrame {
     private javax.swing.JLabel infoPrenom;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonRechercheActe;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

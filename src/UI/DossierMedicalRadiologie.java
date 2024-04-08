@@ -75,13 +75,13 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
         this.nom = nom;
         this.prenom = prenom;
         this.adresse = adresse;
-        
+
         infoID.setText(String.valueOf(this.idPatient));
         infoNom.setText(this.nom);
         infoPrenom.setText(this.prenom);
         infoDate.setText(this.datenaissance.toString());
         infoAdresse.setText(this.adresse);
-         
+
         System.out.println("constr = " + idpatient);
 
         recuperation_donnees();
@@ -362,23 +362,25 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
             // Récupération de l'image correspondant à l'acte depuis la base de données
             byte[] imageData = getImageFromDatabase(getIdActe());
 
-            //                //ouvrir la fiche patient avec les informations sélectionnées
+            // Création de la JFrame pour afficher les détails de l'acte
             Acte nouveauJFrame = new Acte(this, idActe, codeActe, nomPracticien, dateActe, tarification, acte, imageData);
-            // Si des données d'image sont récupérées, les afficher dans le JLabel correspondant
+
+            // Obtenez le JLabel depuis la classe Acte
+            JLabel ImageBrain = nouveauJFrame.getImageBrain();
+
             if (imageData != null) {
-                // Obtenez le JLabel depuis la classe Acte et mettez à jour son icône
-                JLabel ImageBrain = nouveauJFrame.getImageBrain();
                 // Convertir les données de l'image en ImageIcon
                 ImageIcon imageIcon = new ImageIcon(imageData);
                 // Mettre à jour le JLabel pour afficher l'image
                 ImageBrain.setIcon(imageIcon);
+            } else {
+                // Si aucune image n'est disponible, définir l'icône du JLabel sur null
+                ImageBrain.setIcon(null);
             }
 
             this.setVisible(false);
             nouveauJFrame.setVisible(true);
             nouveauJFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-           // System.out.println("IdActe = "+getIdActe());
         }
     }//GEN-LAST:event_jTableDMRMouseClicked
 
@@ -414,7 +416,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
                 sorter.setRowFilter(RowFilter.regexFilter(rech));
             }
             System.out.println("DMR trouvé.");
-            
+
         }
         // Vérifie si aucun DMR ne correspond à la recherche
         if (jTableDMR.getRowCount() == 0) {
@@ -442,7 +444,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
 
         try {
             // Affichage de l'ID de l'acte pour vérification
-        System.out.println("ID de l'acte : " + idActe);
+            System.out.println("ID de l'acte : " + idActe);
             // Établir une connexion à la base de données
             connection = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
             // Requête SQL pour récupérer les données de l'image en fonction de l'ID de l'acte
@@ -483,7 +485,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     private void recuperation_donnees() {
-        
+
         System.out.println("IdPatient = " + getIdPatient());
         try {
 
@@ -593,8 +595,7 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
     public int getIdPatient() {
         return this.idPatient;
     }
-    
-    
+
     /**
      * @return the nom
      */

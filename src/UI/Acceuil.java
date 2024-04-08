@@ -76,7 +76,6 @@ public class Acceuil extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jTextFieldRecherche = new javax.swing.JTextField();
-        jButtonAjout = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableDMR = new javax.swing.JTable();
         jButtonDeconnexion = new javax.swing.JButton();
@@ -169,17 +168,6 @@ public class Acceuil extends javax.swing.JFrame {
             }
         });
 
-        jButtonAjout.setBackground(new java.awt.Color(255, 255, 255));
-        jButtonAjout.setFont(new java.awt.Font("Galvji", 0, 14)); // NOI18N
-        jButtonAjout.setText("Ajouter");
-        jButtonAjout.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButtonAjout.setBorderPainted(false);
-        jButtonAjout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAjoutActionPerformed(evt);
-            }
-        });
-
         jTableDMR.setFont(new java.awt.Font("Galvji", 0, 14)); // NOI18N
         jTableDMR.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -240,8 +228,6 @@ public class Acceuil extends javax.swing.JFrame {
                         .addComponent(jTextFieldRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonRecherche)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonAjout, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -256,9 +242,7 @@ public class Acceuil extends javax.swing.JFrame {
                     .addComponent(jTextFieldRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonAjout, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonRecherche))))
+                        .addComponent(jButtonRecherche)))
                 .addGap(17, 17, 17)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -283,13 +267,6 @@ public class Acceuil extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButtonAjoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjoutActionPerformed
-        AjoutPatient nouveauJFrame = new AjoutPatient();
-        nouveauJFrame.setVisible(true);
-        dispose();
-
-    }//GEN-LAST:event_jButtonAjoutActionPerformed
 
     private void jTextFieldRechercheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldRechercheActionPerformed
         // TODO add your handling code here:
@@ -475,7 +452,6 @@ public class Acceuil extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAjout;
     private javax.swing.JButton jButtonDeconnexion;
     private javax.swing.JButton jButtonRecherche;
     private javax.swing.JLabel jLabel1;
