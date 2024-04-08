@@ -31,7 +31,6 @@ import java.awt.event.MouseListener;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
-
 /**
  *
  * @author alexiaidrac
@@ -90,7 +89,7 @@ public class Acte extends javax.swing.JFrame {
         String IDACTE = infoID.getText(); // Récupérer l'ID stocké dans infoID sara
         String idCR = String.valueOf(ID) + String.valueOf(IDACTE); // Concaténer l'ID et l'ID d'acte pour former idCR
         int idCRint = Integer.parseInt(idCR);//converti en int
-        
+
         afficherCompteRendu(idCRint); // Appel de la méthode pour afficher le compte rendu
         this.acte.setText(acte);
         this.dmr = dmr;
@@ -226,25 +225,16 @@ public class Acte extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ImageBrain)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jButtonFlipH))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jButtonInversionGris, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButtonRotate90, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(13, 13, 13)
-                                        .addComponent(jButtonIncreaseContraste)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButtonDecreaseContrast))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButtonRestartContrast, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(88, 88, 88)
-                        .addComponent(jButtonFlipV)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jButtonInversionGris, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonFlipH)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonFlipV)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonIncreaseContraste, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonDecreaseContrast, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(44, 44, 44))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -332,6 +322,7 @@ public class Acte extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(acte)))
+                .addContainerGap(209, Short.MAX_VALUE))
         );
         jPanelInfoActeLayout.setVerticalGroup(
             jPanelInfoActeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -379,6 +370,7 @@ public class Acte extends javax.swing.JFrame {
 
         jPanelCR.setBackground(new java.awt.Color(173, 200, 213));
         jPanelCR.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Compte rendu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Galvji", 1, 14)))); // NOI18N
+        jPanelCR.setMaximumSize(new java.awt.Dimension(32769, 32767));
 
         jTextAreaCR.setColumns(20);
         jTextAreaCR.setRows(5);
@@ -409,14 +401,23 @@ public class Acte extends javax.swing.JFrame {
         jPanelCR.setLayout(jPanelCRLayout);
         jPanelCRLayout.setHorizontalGroup(
             jPanelCRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addContainerGap(170, Short.MAX_VALUE))
+            .addGroup(jPanelCRLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelCRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanelCRLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonEnregistrerCR, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanelCRLayout.setVerticalGroup(
             jPanelCRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCRLayout.createSequentialGroup()
-                .addContainerGap(7, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonEnregistrerCR, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -471,14 +472,16 @@ public class Acte extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRetourActionPerformed
 
     private void jButtonEnregistrerCRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnregistrerCRActionPerformed
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCRLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButtonEnregistrerCR)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonImprimer))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCRLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
+        int ID = idPatient; //recup l'id patient  
+        String CONTENU = jTextAreaCR.getText();// Récupérer le texte du jTextAreaCR
+        String IDACTE = infoID.getText(); // Récupérer l'ID stocké dans infoID sara
+        String idCR = String.valueOf(ID) + String.valueOf(IDACTE); // Concaténer l'ID et l'ID d'acte pour former idCR
+        System.out.println("idacte : " + idacte + "-");
+        System.out.println("IDACTE:" + IDACTE);
+        //System.out.println("idActe:" + idActe);
+        System.out.println("idpatient :" + idPatient + "-");
+        int idCRint = Integer.parseInt(idCR);//converti en int
+        int IDACTEint = Integer.parseInt(IDACTE);
         // Créer des boutons personnalisés
         Object[] options = {"Valider", "Annuler"};
         System.out.println("texte CR: " + CONTENU + "-");
@@ -498,10 +501,6 @@ public class Acte extends javax.swing.JFrame {
         // Gérer la réponse de l'utilisateur
         if (choix == JOptionPane.YES_OPTION) {
             try {
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelCRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonEnregistrerCR)
-                    .addComponent(jButtonImprimer)))
 
                 // Préparer la requête SQL pour insérer le compte rendu avec IDCR
                 String sql = "INSERT INTO CR (IDCR, ID, CONTENU, IDACTE) VALUES (?, ?, ?, ?)";
@@ -525,25 +524,28 @@ public class Acte extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Erreur lors de l'enregistrement du compte rendu : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
 
-        int ID = idPatient; //recup l'id patient  
-        String CONTENU = jTextAreaCR.getText();// Récupérer le texte du jTextAreaCR
-        String IDACTE = infoID.getText(); // Récupérer l'ID stocké dans infoID sara
-        String idCR = String.valueOf(ID) + String.valueOf(IDACTE); // Concaténer l'ID et l'ID d'acte pour former idCR
-        System.out.println("idacte : " + idacte + "-");
-        System.out.println("IDACTE:" + IDACTE);
-        //System.out.println("idActe:" + idActe);
-        System.out.println("idpatient :" + idPatient + "-");
-        int idCRint = Integer.parseInt(idCR);//converti en int
-        int IDACTEint = Integer.parseInt(IDACTE);
         } else if (choix == JOptionPane.CANCEL_OPTION || choix == JOptionPane.CLOSED_OPTION) {
             // Action si l'utilisateur clique sur "Annuler" ou ferme la boîte de dialogue
             JOptionPane.getRootFrame().dispose();
         }
+
     }//GEN-LAST:event_jButtonEnregistrerCRActionPerformed
 
     private void jButtonRotate90ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRotate90ActionPerformed
-                // Établir la connexion à la base de données
-                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
+        if (imageData != null) {
+            //BufferedImage imageFromDB = loadImageFromBytes(imageData);
+            if (imageFromDB != null) {
+                try {
+                    // Rotation de l'image
+                    BufferedImage rotatedImage = rotateImage(imageFromDB, 90 * (++rotationAngle));
+                    // Mise à jour de l'image actuelle dans le JLabel
+                    applyProcessing(rotatedImage);
+                    imageFromDB = rotatedImage;
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                System.out.println("Impossible de charger l'image depuis la base de données.");
             }
         } else {
             System.out.println("Aucune image chargée depuis la base de données.");
@@ -619,14 +621,14 @@ public class Acte extends javax.swing.JFrame {
 
     private void jButtonImprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimerActionPerformed
 
-   PrinterJob imprimer = PrinterJob.getPrinterJob();
+        PrinterJob imprimer = PrinterJob.getPrinterJob();
         if (imprimer.printDialog()) {
             try {
                 imprimer.print();
             } catch (PrinterException ex) {
                 ex.printStackTrace();
             }
-        } 
+        }
     }//GEN-LAST:event_jButtonImprimerActionPerformed
     private BufferedImage rotateImage(Image image, int angle) throws IOException {
         if (ImageBrain.getIcon() == null) {
@@ -720,15 +722,15 @@ public class Acte extends javax.swing.JFrame {
         }
         return invertedImage;
     }
-            // Fermer la fenêtre actuelle
-            dispose();
+//            // Fermer la fenêtre actuelle
+//            dispose();
 
     // Méthode pour flipper horizontalement l'image de la base de données
     private void flipHImage() {
         if (imageData != null) {
-            
+
             if (imageFromDB == null) {
-                
+
             }
             if (imageFromDB != null) {
                 AffineTransform tx = AffineTransform.getScaleInstance(1, -1);
@@ -739,7 +741,7 @@ public class Acte extends javax.swing.JFrame {
                 imageFromDB = flippedImage;
                 // Afficher l'image retournée
                 applyProcessing(flippedImage);
-                
+
             } else {
                 System.out.println("Impossible de charger l'image depuis les données de la base de données.");
             }
@@ -753,7 +755,7 @@ public class Acte extends javax.swing.JFrame {
         if (imageData != null) {
             //BufferedImage imageFromDB = loadImageFromBytes(imageData);
             if (imageFromDB == null) {
-                
+
             }
             if (imageFromDB != null) {
                 AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
@@ -772,22 +774,40 @@ public class Acte extends javax.swing.JFrame {
         }
     }
 
-    public JLabel getImageBrain() {
-        return ImageBrain;
-        if (imageData != null) {
-            //BufferedImage imageFromDB = loadImageFromBytes(imageData);
-            if (imageFromDB != null) {
-                try {
-                    // Rotation de l'image
-                    BufferedImage rotatedImage = rotateImage(imageFromDB, 90 * (++rotationAngle));
-                    // Mise à jour de l'image actuelle dans le JLabel
-                    applyProcessing(rotatedImage);
-                    imageFromDB = rotatedImage;
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            } else {
-                System.out.println("Impossible de charger l'image depuis la base de données.");
+//    public JLabel getImageBrain() {
+//        return ImageBrain;
+//        if (imageData != null) {
+//            //BufferedImage imageFromDB = loadImageFromBytes(imageData);
+//            if (imageFromDB != null) {
+//                try {
+//                    // Rotation de l'image
+//                    BufferedImage rotatedImage = rotateImage(imageFromDB, 90 * (++rotationAngle));
+//                    // Mise à jour de l'image actuelle dans le JLabel
+//                    applyProcessing(rotatedImage);
+//                    imageFromDB = rotatedImage;
+//                } catch (IOException ex) {
+//                    ex.printStackTrace();
+//                }
+//            } else {
+//                System.out.println("Impossible de charger l'image depuis la base de données.");
+//            }
+//        }
+//    }
+    private BufferedImage loadImageFromBytes(byte[] imageData) {
+        try {
+            InputStream inputStream = new ByteArrayInputStream(imageData);
+            BufferedImage image = ImageIO.read(inputStream);
+            inputStream.close();
+            return image;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // Méthode pour appliquer le traitement et mettre à jour l'image actuelle
+    private void applyProcessing(BufferedImage processedImage) {
+        currentImageFromDB = processedImage;
     }
 
     /**
@@ -804,16 +824,24 @@ public class Acte extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Acte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Acte.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Acte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Acte.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Acte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Acte.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Acte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Acte.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -859,8 +887,6 @@ public class Acte extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextAreaCR;
     // End of variables declaration//GEN-END:variables
 
-    
-
     private void afficherCompteRendu(int idCRint) {
         try {
             conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
@@ -892,5 +918,8 @@ public class Acte extends javax.swing.JFrame {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erreur lors de la récupération du compte rendu : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    public JLabel getImageBrain() {
+        return ImageBrain;
     }
 }

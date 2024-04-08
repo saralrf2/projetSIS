@@ -593,7 +593,8 @@ public class DossierMedicalRadiologie extends javax.swing.JFrame {
     public int getIdPatient() {
         return this.idPatient;
     }
-
+    
+    
     /**
      * @return the nom
      */
