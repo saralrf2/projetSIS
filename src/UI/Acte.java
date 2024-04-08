@@ -2,8 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-//bug sam 30 Mars
-//test 2
 package UI;
 
 import java.awt.Graphics2D;
@@ -23,14 +21,19 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.sql.ResultSet;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+
 
 
 /**
  *
  * @author alexiaidrac
  */
-
-
 public class Acte extends javax.swing.JFrame {
 
     private DossierMedicalRadiologie dmr;
@@ -42,8 +45,10 @@ public class Acte extends javax.swing.JFrame {
 
     private int rotationAngle = 0; // Variable pour suivre l'angle de rotation
     private double contraste = 0.25; //variable contraste de base
-    
+
     private DefaultTableModel model;
+    private int idacte;
+    private int idPatient;
     Connection conn;
 
     /**
@@ -51,6 +56,10 @@ public class Acte extends javax.swing.JFrame {
      */
     public Acte(DossierMedicalRadiologie dmr, int idacte, String codeActe, String nomPracticien, Date dateActe, double tarification, String acte, byte[] imageData) {
         initComponents();
+        this.idPatient = dmr.getIdPatient();
+        this.dmr = dmr;
+        this.acte.setText(acte);
+
         jButtonIncreaseContraste.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonIncreaseContrasteActionPerformed(evt);
@@ -60,34 +69,27 @@ public class Acte extends javax.swing.JFrame {
                 jButtonFlipVActionPerformed(evt);
             }
         });
+        System.out.println("interface Acte");
         String idActe = String.valueOf(idacte);
+        infoID.setText(String.valueOf(this.idacte));
+        System.out.println("idacte :" + idacte);
         String datedeActe = dateActe.toString();
+
         infoID.setText(idActe);
         infoCode.setText(codeActe);
         infoPrenom.setText(nomPracticien);
         infoDate.setText(datedeActe);
         infoAdresse.setText(String.valueOf(tarification));
-        this.acte.setText(acte);
-        this.dmr = dmr;
+
+// Afficher le compte rendu correspondant à l'IDCR dans jTextAreaCR
+        int ID = idPatient; //recup l'id patient  
+        String IDACTE = infoID.getText(); // Récupérer l'ID stocké dans infoID sara
+        String idCR = String.valueOf(ID) + String.valueOf(IDACTE); // Concaténer l'ID et l'ID d'acte pour former idCR
+        int idCRint = Integer.parseInt(idCR);//converti en int
         
-        
-        
-//        model = new DefaultTableModel(new Object[]{"IDACTE", "CODE ACTE", "TARIFICATION", "Date Acte", "PRATICIEN", "Signification du Code"}, 0);
-//        jTextAreaCR.setModel(model); // Appliquer le modèle au jTextAreaCR
-//        jTextAreaCR.setDefaultEditor(Object.class, null); // Rendre toutes les cellules non éditables
-//        
-            try {
-                conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
-            } catch (SQLException ex) {
-                java.util.logging.Logger.getLogger(Acte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            }
-         
-        
-        
+        afficherCompteRendu(idCRint); // Appel de la méthode pour afficher le compte rendu
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -125,6 +127,7 @@ public class Acte extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaCR = new javax.swing.JTextArea();
         jButtonEnregistrerCR = new javax.swing.JButton();
+        jButtonImprimer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -214,7 +217,7 @@ public class Acte extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(88, 88, 88)
                         .addComponent(jButtonFlipV)))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,7 +307,7 @@ public class Acte extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(acte)))
-                .addContainerGap(140, Short.MAX_VALUE))
+                .addContainerGap(170, Short.MAX_VALUE))
         );
         jPanelInfoActeLayout.setVerticalGroup(
             jPanelInfoActeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -358,25 +361,36 @@ public class Acte extends javax.swing.JFrame {
             }
         });
 
+        jButtonImprimer.setText("Imprimer");
+        jButtonImprimer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImprimerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelCRLayout = new javax.swing.GroupLayout(jPanelCR);
         jPanelCR.setLayout(jPanelCRLayout);
         jPanelCRLayout.setHorizontalGroup(
             jPanelCRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelCRLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-                .addGap(3, 3, 3))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCRLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButtonEnregistrerCR))
+                .addComponent(jButtonEnregistrerCR)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonImprimer))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCRLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanelCRLayout.setVerticalGroup(
             jPanelCRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCRLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(7, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                .addComponent(jButtonEnregistrerCR))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelCRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonEnregistrerCR)
+                    .addComponent(jButtonImprimer)))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -425,21 +439,24 @@ public class Acte extends javax.swing.JFrame {
         DossierMedicalRadiologie nouveauJFrame = dmr;
         nouveauJFrame.setVisible(true);
         dispose();
+
     }//GEN-LAST:event_jButtonRetourActionPerformed
 
     private void jButtonEnregistrerCRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnregistrerCRActionPerformed
-        int ID = 1; //recup l'id patient ? 
-        String idCR = infoID.getText(); // Récupérer l'ID stocké dans infoID À VERIFIER CAR DANS LA BD C'EST UN INT
-        // Récupérer le texte du jTextAreaCR
-        String CONTENU = jTextAreaCR.getText();
-        String IDACTE = infoCode.getText(); // Récupérer l'ID stocké dans infoIDll
-        //test
-        
-        //test test 
+        int ID = idPatient; //recup l'id patient  
+        String CONTENU = jTextAreaCR.getText();// Récupérer le texte du jTextAreaCR
+        String IDACTE = infoID.getText(); // Récupérer l'ID stocké dans infoID sara
+        String idCR = String.valueOf(ID) + String.valueOf(IDACTE); // Concaténer l'ID et l'ID d'acte pour former idCR
+        System.out.println("idacte : " + idacte + "-");
+        System.out.println("IDACTE:" + IDACTE);
+        //System.out.println("idActe:" + idActe);
+        System.out.println("idpatient :" + idPatient + "-");
+        int idCRint = Integer.parseInt(idCR);//converti en int
+        int IDACTEint = Integer.parseInt(IDACTE);
         // Créer des boutons personnalisés
         Object[] options = {"Valider", "Annuler"};
         System.out.println("texte CR: " + CONTENU + "-");
-        System.out.println("idCR: " + idCR + "-");
+        System.out.println("idCR: " + idCRint + "-");
 
         // Afficher la boîte de dialogue avec les boutons personnalisés
         int choix = JOptionPane.showOptionDialog(
@@ -454,25 +471,21 @@ public class Acte extends javax.swing.JFrame {
 
         // Gérer la réponse de l'utilisateur
         if (choix == JOptionPane.YES_OPTION) {
-//            Connexion nouveauJFrame = new Connexion();
-//            nouveauJFrame.setVisible(true);
             try {
-                // Établir la connexion à la base de données
-                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
- 
+
                 // Préparer la requête SQL pour insérer le compte rendu avec IDCR
                 String sql = "INSERT INTO CR (IDCR, ID, CONTENU, IDACTE) VALUES (?, ?, ?, ?)";
-                PreparedStatement statement = connection.prepareStatement(sql);
-                statement.setString(1, idCR); // Remplace le premier paramètre (?) par la valeur de idCR
+                PreparedStatement statement = conn.prepareStatement(sql);
+                statement.setInt(1, idCRint); // Remplace le premier paramètre (?) par la valeur de idCR
                 statement.setInt(2, ID); // Remplace le deuxième paramètre (?) par la valeur de l'ID
                 statement.setString(3, CONTENU); // Remplace le troisième paramètre (?) par la valeur du contenu
-                statement.setString(4, IDACTE); // Remplace le quatrième paramètre (?) par la valeur de l'ID d'acte
+                statement.setInt(4, IDACTEint); // Remplace le quatrième paramètre (?) par la valeur de l'ID d'acte
 
                 // Exécuter la requête SQL
                 statement.executeUpdate();
 
                 // Fermer la connexion
-                connection.close();
+                conn.close();
 
                 // Afficher un message de succès
                 JOptionPane.showMessageDialog(null, "Compte rendu enregistré avec succès !");
@@ -481,15 +494,11 @@ public class Acte extends javax.swing.JFrame {
                 // Gérer les erreurs de connexion ou d'exécution de la requête
                 JOptionPane.showMessageDialog(null, "Erreur lors de l'enregistrement du compte rendu : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
-            
-            // Fermer la fenêtre actuelle
-            dispose();
+
         } else if (choix == JOptionPane.CANCEL_OPTION || choix == JOptionPane.CLOSED_OPTION) {
             // Action si l'utilisateur clique sur "Annuler" ou ferme la boîte de dialogue
             JOptionPane.getRootFrame().dispose();
         }
-
-
     }//GEN-LAST:event_jButtonEnregistrerCRActionPerformed
 
     private void jButtonRotate90ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRotate90ActionPerformed
@@ -501,7 +510,7 @@ public class Acte extends javax.swing.JFrame {
                 // Mise à jour de l'icône avec l'image pivotée
                 ImageBrain.setIcon(new ImageIcon(modifiedImage));
             } catch (IOException ex) {
-               // Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(Level.SEVERE, null, ex);
+                // Logger.getLogger(DossierMedicalRadiologie.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -570,6 +579,18 @@ public class Acte extends javax.swing.JFrame {
     private void jButtonFlipVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFlipVActionPerformed
         flipVImage();
     }//GEN-LAST:event_jButtonFlipVActionPerformed
+
+    private void jButtonImprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimerActionPerformed
+
+   PrinterJob imprimer = PrinterJob.getPrinterJob();
+        if (imprimer.printDialog()) {
+            try {
+                imprimer.print();
+            } catch (PrinterException ex) {
+                ex.printStackTrace();
+            }
+        } 
+    }//GEN-LAST:event_jButtonImprimerActionPerformed
     private BufferedImage rotateImage(Image image, int angle) throws IOException {
         if (ImageBrain.getIcon() == null) {
             JOptionPane.showMessageDialog(this, "Aucune image chargée dans le JLabel.", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -666,8 +687,8 @@ public class Acte extends javax.swing.JFrame {
         }
         return invertedImage;
     }
-    
-       private void flipHImage() {
+
+    private void flipHImage() {
 
         System.out.println("Méthode flipImage appelée !");
         if (originalImage != null) {
@@ -702,35 +723,11 @@ public class Acte extends javax.swing.JFrame {
             System.out.println("L'image originale est null !");
         }
     }
-    
-    public JLabel getImageBrain(){
-        return ImageBrain; 
+
+    public JLabel getImageBrain() {
+        return ImageBrain;
     }
 
-//
-//        private void recuperation_donnees() {
-//
-//        System.out.println("get = " + getIdPatient());
-//        try {
-//
-//            Statement stmt = conn.createStatement();
-//            //exécutation de la requête
-//            ResultSet rs = stmt.executeQuery("SELECT * FROM ACTERADIO WHERE IDPATIENT = " + getIdPatient());
-//            //on ajoute à la ligne les informations de la tableau
-//            while (rs.next()) {
-//                Object[] row = new Object[]{rs.getInt("IDACTE"), rs.getString("CODEACTE"), rs.getDouble("TARIFICATION"), rs.getDate("DATEACTE"), rs.getString("PRATICIEN"), rs.getString("SIGNIFICATIONCODE")};
-//                model.addRow(row);
-//            }
-//            // on applique le model du defaulttable au jTable de l'interface
-//            jTextAreaCR.setModel(model);
-//
-//            rs.close();
-//            stmt.close();
-//            conn.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }//
     /**
      * @param args the command line arguments
      */
@@ -779,6 +776,7 @@ public class Acte extends javax.swing.JFrame {
     private javax.swing.JButton jButtonEnregistrerCR;
     private javax.swing.JButton jButtonFlipH;
     private javax.swing.JButton jButtonFlipV;
+    private javax.swing.JButton jButtonImprimer;
     private javax.swing.JButton jButtonIncreaseContraste;
     private javax.swing.JButton jButtonInversionGris;
     private javax.swing.JButton jButtonRestartContrast;
@@ -797,4 +795,39 @@ public class Acte extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextAreaCR;
     // End of variables declaration//GEN-END:variables
+
+    
+
+    private void afficherCompteRendu(int idCRint) {
+        try {
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
+            String sql = "SELECT CONTENU FROM CR WHERE IDCR = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, idCRint);
+            ResultSet resultSet = statement.executeQuery();
+
+            StringBuilder contentBuilder = new StringBuilder();
+            while (resultSet.next()) {
+                String contenu = resultSet.getString("CONTENU");
+                contentBuilder.append(contenu).append("\n");
+                System.out.println("idpatient :" + idPatient + "-");
+                System.out.println("texte CR: " + contenu + "-");
+                System.out.println("idCRint: " + idCRint + "-");
+            }
+
+            String contenuCR = contentBuilder.toString();
+            //   if (jTextAreaCR.getClickCount() == 2) { // Double clic sur une ligne 
+            if (contenuCR.isEmpty()) { // si il y a déja un contenu on n'a pas le droit de le modifier 
+                jTextAreaCR.setEditable(true); // Autoriser la modification si le contenu est vide
+            } else {
+                jTextAreaCR.setText(contenuCR); // Mettre à jour le texte du jTextAreaCR avec le contenu du compte rendu
+                jTextAreaCR.setEditable(false); // Bloquer la modification si le contenu est déjà présent
+                this.jButtonEnregistrerCR.setVisible(false);// Masquer le bouton pour ajouter le CR
+                JOptionPane.showMessageDialog(null, "Le compte rendu ne peut pas être modifié car il contient déjà du texte.", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erreur lors de la récupération du compte rendu : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }
