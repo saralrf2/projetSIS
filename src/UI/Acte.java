@@ -52,7 +52,7 @@ public class Acte extends javax.swing.JFrame {
     BufferedImage imageFromDB;
 
     private int rotationAngle = 0; // Variable pour suivre l'angle de rotation
-    private double contraste = 0.25; //variable contraste de base
+    private double contraste = 0.5; //variable contraste de base
 
     private DefaultTableModel model;
     private int idacte;
@@ -258,7 +258,7 @@ public class Acte extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(145, 145, 145)
                         .addComponent(jButtonAjout)))
-                .addGap(62, 62, 62))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -348,7 +348,7 @@ public class Acte extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(acte)))
-                .addContainerGap(170, Short.MAX_VALUE))
+                .addContainerGap(141, Short.MAX_VALUE))
         );
         jPanelInfoActeLayout.setVerticalGroup(
             jPanelInfoActeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -478,8 +478,7 @@ public class Acte extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -681,6 +680,7 @@ public class Acte extends javax.swing.JFrame {
 
                     // Afficher un message de confirmation
                     JOptionPane.showMessageDialog(this, "Votre image a été téléchargée avec succès", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                    jButtonAjout.setVisible(false);
                 } else {
                     System.out.println("Aucune image sélectionnée");
                 }
