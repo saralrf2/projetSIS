@@ -1,31 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Interopérabilité;
 
-import CommunicationSQL.ConnectionSQL;
-import UI.Acceuil;
 import ca.uhn.hl7v2.DefaultHapiContext;
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.HapiContext;
 import ca.uhn.hl7v2.model.v24.message.ADT_A01;
-import ca.uhn.hl7v2.model.v24.message.MDM_T02;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-/**
- *
- * @author alana
- */
 public class ProjetSIS {
 
-    /**
-     * @param args the command line arguments
-     */
     private static HapiContext context = new DefaultHapiContext();
 
     public static void main(String[] args) throws HL7Exception, IOException, Exception {
@@ -68,5 +50,3 @@ public class ProjetSIS {
 //        System.out.println("MDM " + MDM);
 
     }
-
-}

@@ -1,11 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package UI;
 
+import CommunicationSQL.GestionnaireCommunicationSQL;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -25,99 +21,93 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.sql.ResultSet;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
 import java.nio.file.Files;
 import javax.swing.JFileChooser;
-import UI.DossierMedicalRadiologie;
 import java.awt.image.RescaleOp;
 
 /**
- *
- * @author alexiaidrac
+ * Cette classe représente l'interface graphique pour consulter un examen
+ * radiologique d'un patient.
  */
 public class Acte extends javax.swing.JFrame {
 
-    private DossierMedicalRadiologie dmr;
-    private BufferedImage currentImage;
-    private BufferedImage modifiedImage;
-    private BufferedImage invertedImage;
-    private BufferedImage flippedImage;
-    private BufferedImage currentImageFromDB;
-    private byte[] imageData;
-    BufferedImage imageFromDB;
+    private DossierMedicalRadiologie dmr; // Référence vers le dossier médical radiologique
+    private byte[] imageData; // Tableau de bytes contenant les données de l'image
+    private BufferedImage imageFromDB; // Image récupérée à partir de la base de données
 
-    private int rotationAngle = 0; // Variable pour suivre l'angle de rotation
-    private double contraste = 0.5; //variable contraste de base
+    private int rotationAngle = 0; // Angle de rotation de l'image (initialisé à 0)
+    private double contraste = 0.5; // Niveau de contraste initial (0.5 par défaut)
 
-    private DefaultTableModel model;
-    private int idacte;
-    private int idPatient;
-    Connection conn;
+    private DefaultTableModel model; // Modèle de tableau pour afficher des données
+    private int idacte; // Identifiant de l'acte médical
+    private int idPatient; // Identifiant du patient associé à l'acte
+    Connection conn; // Connexion à la base de données
 
     /**
-     * Creates new form DMR
+     * Constructeur de la classe Acte.
+     *
+     * @param dmr Référence vers le dossier médical radiologique
+     * @param idacte Identifiant de l'acte médical
+     * @param codeActe Code de l'acte médical
+     * @param nomPracticien Nom du praticien ayant réalisé l'acte
+     * @param dateActe Date de réalisation de l'acte
+     * @param tarification Coût de l'acte médical
+     * @param acte Description de l'acte médical
+     * @param imageData Données de l'image radiologique
      */
     public Acte(DossierMedicalRadiologie dmr, int idacte, String codeActe, String nomPracticien, Date dateActe, double tarification, String acte, byte[] imageData) {
-        initComponents();
+        initComponents(); // Initialise les composants de l'interface utilisateur
+
+        // Initialisation des valeurs membres avec les paramètres fournis
         this.idPatient = dmr.getIdPatient();
         this.dmr = dmr;
-        this.acte.setText(acte);
+        this.acte.setText(acte); // Affiche la description de l'acte sur un composant texte
 
+        // Ajout des ActionListeners aux boutons pour gérer les actions utilisateur
         jButtonIncreaseContraste.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonIncreaseContrasteActionPerformed(evt);
-                jButtonDecreaseContrastActionPerformed(evt);
-                jButtonRestartContrastActionPerformed(evt);
-                jButtonFlipHActionPerformed(evt);
-                jButtonFlipVActionPerformed(evt);
             }
         });
-        System.out.println("interface Acte");
-        String idActe = String.valueOf(idacte);
-        infoID.setText(String.valueOf(this.idacte));
-        System.out.println("idacte :" + idacte);
-        String datedeActe = dateActe.toString();
 
-        infoID.setText(idActe);
-        infoCode.setText(codeActe);
-        infoPrenom.setText(nomPracticien);
-        infoDate.setText(datedeActe);
-        infoAdresse.setText(String.valueOf(tarification));
+        // Initialisation des champs de l'interface avec les informations de l'acte
+        infoID.setText(String.valueOf(idacte)); // Affiche l'identifiant de l'acte
+        infoCode.setText(codeActe); // Affiche le code de l'acte
+        infoPrenom.setText(nomPracticien); // Affiche le nom du praticien
+        infoDate.setText(dateActe.toString()); // Affiche la date de l'acte
+        infoAdresse.setText(String.valueOf(tarification)); // Affiche le coût de l'acte
 
-// Afficher le compte rendu correspondant à l'IDCR dans jTextAreaCR
-        int ID = idPatient; //recup l'id patient  
-        String IDACTE = infoID.getText(); // Récupérer l'ID stocké dans infoID sara
-        String idCR = String.valueOf(ID) + String.valueOf(IDACTE); // Concaténer l'ID et l'ID d'acte pour former idCR
-        int idCRint = Integer.parseInt(idCR);//converti en int
+       
 
-        afficherCompteRendu(idCRint); // Appel de la méthode pour afficher le compte rendu
-        this.acte.setText(acte);
-        this.dmr = dmr;
-        this.imageData = imageData;
+        // Récupère l'ID d'acte à partir du champ infoID
+        String IDACTE = infoID.getText();
+
+        // Concatène l'ID du patient et l'ID d'acte pour former l'ID du compte rendu (idCR)
+        String idCR = String.valueOf(idPatient) + String.valueOf(IDACTE);
+
+        // Convertit l'ID du compte rendu en entier
+        int idCRint = Integer.parseInt(idCR);
+
+        // Appelle la méthode pour afficher le compte rendu correspondant à l'ID du compte rendu
+        afficherCompteRendu(idCRint);
+
+        // Initialise les valeurs membres avec les paramètres fournis
+        this.acte.setText(acte); // Affiche la description de l'acte sur un composant texte
+        this.dmr = dmr; // Initialise le dossier médical radiologique
+        this.imageData = imageData; // Initialise les données de l'image
+
+        // Charge l'image à partir des données binaires de l'image (imageData) en tant qu'objet BufferedImage
         imageFromDB = loadImageFromBytes(imageData);
 
-//        model = new DefaultTableModel(new Object[]{"IDACTE", "CODE ACTE", "TARIFICATION", "Date Acte", "PRATICIEN", "Signification du Code"}, 0);
-//        jTextAreaCR.setModel(model); // Appliquer le modèle au jTextAreaCR
-//        jTextAreaCR.setDefaultEditor(Object.class, null); // Rendre toutes les cellules non éditables
-//        
-        try {
-            conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
-        } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(Acte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        // Obtient une connexion à la base de données via le gestionnaire de communication SQL
+        conn = GestionnaireCommunicationSQL.obtenirConnexion();
 
     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -501,16 +491,11 @@ public class Acte extends javax.swing.JFrame {
         String CONTENU = jTextAreaCR.getText();// Récupérer le texte du jTextAreaCR
         String IDACTE = infoID.getText(); // Récupérer l'ID stocké dans infoID sara
         String idCR = String.valueOf(ID) + String.valueOf(IDACTE); // Concaténer l'ID et l'ID d'acte pour former idCR
-        System.out.println("idacte : " + idacte + "-");
-        System.out.println("IDACTE:" + IDACTE);
-        //System.out.println("idActe:" + idActe);
-        System.out.println("idpatient :" + idPatient + "-");
+
         int idCRint = Integer.parseInt(idCR);//converti en int
         int IDACTEint = Integer.parseInt(IDACTE);
         // Créer des boutons personnalisés
         Object[] options = {"Valider", "Annuler"};
-        System.out.println("texte CR: " + CONTENU + "-");
-        System.out.println("idCR: " + idCRint + "-");
 
         // Afficher la boîte de dialogue avec les boutons personnalisés
         int choix = JOptionPane.showOptionDialog(
@@ -660,8 +645,6 @@ public class Acte extends javax.swing.JFrame {
             File selectedImageFile = fileChooser.getSelectedFile();
 
             try {
-                // Établissez une connexion à la base de données
-                Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
 
                 // Générer un IDIMG aléatoire
                 int idImg = (int) (Math.random() * 1000000);
@@ -676,7 +659,6 @@ public class Acte extends javax.swing.JFrame {
                     preparedStatement.setInt(3, idPatient);
                     preparedStatement.setBytes(4, imageBytes);
                     preparedStatement.executeUpdate();
-                    System.out.println("Image insérée avec succès dans la table IMAGEES");
 
                     // Afficher un message de confirmation
                     JOptionPane.showMessageDialog(this, "Votre image a été téléchargée avec succès", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
@@ -706,26 +688,23 @@ public class Acte extends javax.swing.JFrame {
 
         return rotatedImage;
     }
-  
 
-
-    private BufferedImage loadImage(String path) {
-        try {
-            // Charger l'image depuis les ressources du package
-            InputStream inputStream = getClass().getResourceAsStream(path);
-            if (inputStream == null) {
-                JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
-                return null;
-            }
-            BufferedImage image = ImageIO.read(inputStream);
-            inputStream.close(); // Fermer le flux après utilisation
-            return image;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
+//    private BufferedImage loadImage(String path) {
+//        try {
+//            // Charger l'image depuis les ressources du package
+//            InputStream inputStream = getClass().getResourceAsStream(path);
+//            if (inputStream == null) {
+//                JOptionPane.showMessageDialog(this, "Impossible de charger l'image.", "Erreur", JOptionPane.ERROR_MESSAGE);
+//                return null;
+//            }
+//            BufferedImage image = ImageIO.read(inputStream);
+//            inputStream.close(); // Fermer le flux après utilisation
+//            return image;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
     private BufferedImage adjustContrast(BufferedImage image, double contrast) {
         // Créer une copie de l'image originale pour appliquer l'ajustement de contraste
         ColorModel cm = image.getColorModel();
@@ -805,25 +784,6 @@ public class Acte extends javax.swing.JFrame {
         }
     }
 
-//    public JLabel getImageBrain() {
-//        return ImageBrain;
-//        if (imageData != null) {
-//            //BufferedImage imageFromDB = loadImageFromBytes(imageData);
-//            if (imageFromDB != null) {
-//                try {
-//                    // Rotation de l'image
-//                    BufferedImage rotatedImage = rotateImage(imageFromDB, 90 * (++rotationAngle));
-//                    // Mise à jour de l'image actuelle dans le JLabel
-//                    applyProcessing(rotatedImage);
-//                    imageFromDB = rotatedImage;
-//                } catch (IOException ex) {
-//                    ex.printStackTrace();
-//                }
-//            } else {
-//                System.out.println("Impossible de charger l'image depuis la base de données.");
-//            }
-//        }
-//    }
     private BufferedImage loadImageFromBytes(byte[] imageData) {
         if (imageData != null) {
             try {
@@ -848,9 +808,6 @@ public class Acte extends javax.swing.JFrame {
         ImageBrain.setIcon(imageIcon);
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -939,9 +896,6 @@ public class Acte extends javax.swing.JFrame {
             while (resultSet.next()) {
                 String contenu = resultSet.getString("CONTENU");
                 contentBuilder.append(contenu).append("\n");
-                System.out.println("idpatient :" + idPatient + "-");
-                System.out.println("texte CR: " + contenu + "-");
-                System.out.println("idCRint: " + idCRint + "-");
             }
 
             String contenuCR = contentBuilder.toString();

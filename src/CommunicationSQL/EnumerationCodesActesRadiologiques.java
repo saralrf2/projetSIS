@@ -8,9 +8,9 @@ package CommunicationSQL;//mon
 // Cette enumeration fait intervenir des valeurs qui possedent des
 // attributs ('libelle' et 'cout') qui sont initialises par un appel du
 // constructeur (arguments entre parentheses apres le nom de chaque valeur).
-// Par exemple, la valeur Code.FP a un attribut 'libelle' contenant la chaine
+// Par exemple, la valeur EnumerationCodesActesRadiologiques.FP a un attribut 'libelle' contenant la chaine
 // de caracteres "forfait pediatrique" et un attribut 'cout' ayant la valeur 5.0
-enum Code {
+enum EnumerationCodesActesRadiologiques {
 
     // valeurs de l'�num :
 
@@ -75,7 +75,7 @@ enum Code {
     private double cout;
 
     // constructeur :
-    private Code(String libelle, double cout) {
+    private EnumerationCodesActesRadiologiques(String libelle, double cout) {
         this.libelle = libelle;
         this.cout = cout;
     }

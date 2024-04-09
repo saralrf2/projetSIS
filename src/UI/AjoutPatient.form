@@ -241,30 +241,18 @@
         <Component class="javax.swing.JTextField" name="jTextFieldNumIdd">
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldNom">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldNomActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldPrenom">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldPrenomActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioButtonFeminin">
           <Properties>
             <Property name="text" type="java.lang.String" value="F"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonFemininActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioButtonHomme">
           <Properties>
             <Property name="text" type="java.lang.String" value="H"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonHommeActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBoxJour">
           <Properties>
@@ -348,9 +336,6 @@
           </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldAdresse">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldAdresseActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonAjout">
           <Properties>

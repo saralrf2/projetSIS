@@ -6,7 +6,7 @@
 package Interopérabilité;
 
 import CommunicationSQL.CreationPatient;
-import CommunicationSQL.GestionnaireInsertionPatient;
+import CommunicationSQL.GestionnaireCommunicationSQL;
 import UI.AjoutPatient;
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.model.v24.datatype.ST;
@@ -44,7 +44,7 @@ public class AjoutPatientInterop {
 
         date = new DateSIS(String.valueOf(admission.getPID().getDateTimeOfBirth().getTimeOfAnEvent()));
         
-        conn = GestionnaireInsertionPatient.obtenirConnexion();
+        conn = GestionnaireCommunicationSQL.obtenirConnexion();
 
     }
 
@@ -72,7 +72,7 @@ public class AjoutPatientInterop {
     public void AjoutPatient() {
         CreationPatient nouveauPatient = new CreationPatient(id, nom, prenom, date, "adresseinconnue");
 
-        GestionnaireInsertionPatient.insererPatient(conn, nouveauPatient);
+        GestionnaireCommunicationSQL.insererPatient(conn, nouveauPatient);
     }
 
 }

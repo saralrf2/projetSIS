@@ -1,5 +1,5 @@
-
 package CommunicationSQL;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,8 +8,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-public class GestionnaireInsertionPatient {
+/**
+ * Classe utilisée pour gérer la communication avec la base de données SQL.
+ */
+public class GestionnaireCommunicationSQL {
 
+    /**
+     * Insère un nouveau patient dans la base de données.
+     *
+     * @param conn Connexion à la base de données.
+     * @param nouveauPatient Instance de CreationPatient représentant le nouveau
+     * patient à insérer.
+     */
     public static void insererPatient(Connection conn, CreationPatient nouveauPatient) {
         try {
             String sql = "INSERT INTO PATIENT (IDPATIENT, NOM, PRENOM, DATENAISSANCE, ADRESSE) VALUES (?, ?, ?, ?, ?)";
@@ -30,13 +40,18 @@ public class GestionnaireInsertionPatient {
             }
         }
     }
-    
-     public static Connection obtenirConnexion() {
+
+    /**
+     * Établit une connexion à la base de données.
+     *
+     * @return Connexion à la base de données.
+     */
+    public static Connection obtenirConnexion() {
         Connection conn = null;
         try {
             conn = DriverManager.getConnection("jdbc:oracle:thin:@im2ag-oracle.univ-grenoble-alpes.fr:1521:im2ag", "qezbourn", "d87b488b99");
         } catch (SQLException ex) {
-            Logger.getLogger(GestionnaireInsertionPatient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GestionnaireCommunicationSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
         return conn;
     }
