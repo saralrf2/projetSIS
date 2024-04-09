@@ -11,13 +11,19 @@ import ca.uhn.hl7v2.model.v24.segment.EVN;
 import ca.uhn.hl7v2.model.v24.segment.MSH;
 import ca.uhn.hl7v2.model.v24.segment.PID;
 import ca.uhn.hl7v2.model.v24.segment.PV1;
+import ca.uhn.hl7v2.parser.PipeParser;
+import projetsis.DateSIS;
 
 public class MessageADT {
 
     private ADT_A01 adtMessage;
-    
-    public MessageADT() throws HL7Exception, IOException{
+
+    public MessageADT() throws HL7Exception, IOException {
         adtMessage = this.build();
+    }
+
+    public ADT_A01 getAdtMessage() {
+        return adtMessage;
     }
 
     public ADT_A01 build() throws HL7Exception, IOException {
@@ -29,22 +35,24 @@ public class MessageADT {
         this.createPIDSegment();
         this.createPv1Segment();
         
+        
+
         return adtMessage;
     }
 
-    public String getHL7Message() throws HL7Exception, IOException {
-        // Concaténer tous les segments pour former le message complet
-        StringBuilder hl7Message = new StringBuilder();
-        hl7Message.append(adtMessage.getMSH().encode());
-        hl7Message.append('\n');
-        hl7Message.append(adtMessage.getEVN().encode());
-        hl7Message.append('\n');
-        hl7Message.append(adtMessage.getPID().encode());
-        hl7Message.append('\n');
-        hl7Message.append(adtMessage.getPV1().encode());
-
-        return hl7Message.toString();
-    }
+//    public String getHL7Message() throws HL7Exception, IOException {
+//        // Concaténer tous les segments pour former le message complet
+//        StringBuilder hl7Message = new StringBuilder();
+//        hl7Message.append(adtMessage.getMSH().encode());
+//        hl7Message.append('\n');
+//        hl7Message.append(adtMessage.getEVN().encode());
+//        hl7Message.append('\n');
+//        hl7Message.append(adtMessage.getPID().encode());
+//        hl7Message.append('\n');
+//        hl7Message.append(adtMessage.getPV1().encode());
+//
+//        return hl7Message.toString();
+//    }
 
     private void createMSHSegment(String currentDateTimeString) throws HL7Exception {
         MSH msh = adtMessage.getMSH();
@@ -69,7 +77,7 @@ public class MessageADT {
         PID pid = adtMessage.getPID();
         pid.getPatientIdentifierList(0).getID().setValue("324988"); // Patient ID
         pid.getPatientName(0).getFamilyName().getSurname().setValue("SIN");
-        pid.getPatientName(0).getGivenName().setValue("Liam");
+        pid.getPatientName(0).getGivenName().setValue("soso");
         pid.getDateTimeOfBirth().getTimeOfAnEvent().setValue("20110812");
     }
 
@@ -96,4 +104,5 @@ public class MessageADT {
     private String getSequenceNumber() {
         return String.valueOf(System.currentTimeMillis());
     }
+
 }

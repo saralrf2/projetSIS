@@ -24,8 +24,8 @@ public class MainSend_1 {
         String hl7Message = "MSH|^~\\&|Sender|Receiver|System|System|20240327120000||ADT^A01|123456|P|2.5|\nPID|1|1234567890|^^^^MR||Doe^John^^^^||19700101|M|||123 Some Street^^Somewhere^ON^A1B2C3^CA|||||||";
         String message = "aelxia";
         // Envoyer le message HL7
-        messageSender.sendMessage(message);
-        messageSender.sendMessage(hl7Message);
+//        messageSender.sendMessage(message);
+//        messageSender.sendMessage(hl7Message);
     }
     
 }

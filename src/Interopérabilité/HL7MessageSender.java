@@ -5,6 +5,8 @@
  */
 package Interopérabilité;
 
+import ca.uhn.hl7v2.model.v24.message.ADT_A01;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -20,7 +22,7 @@ public class HL7MessageSender {
         this.port = port;
     }
 
-    public void sendMessage(String hl7Message) {
+    public void sendMessage(ADT_A01 hl7Message) {
         try (Socket socket = new Socket(host, port);
              OutputStream outputStream = socket.getOutputStream();
              PrintWriter out = new PrintWriter(outputStream, true)) {
