@@ -144,6 +144,7 @@ public class Acte extends javax.swing.JFrame {
         jTextAreaCR = new javax.swing.JTextArea();
         jButtonEnregistrerCR = new javax.swing.JButton();
         jButtonImprimer = new javax.swing.JButton();
+        Imprimer = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -413,6 +414,13 @@ public class Acte extends javax.swing.JFrame {
             }
         });
 
+        Imprimer.setText("Imprimer");
+        Imprimer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ImprimerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelCRLayout = new javax.swing.GroupLayout(jPanelCR);
         jPanelCR.setLayout(jPanelCRLayout);
         jPanelCRLayout.setHorizontalGroup(
@@ -423,6 +431,8 @@ public class Acte extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(jPanelCRLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(Imprimer)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonEnregistrerCR, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -432,7 +442,9 @@ public class Acte extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonEnregistrerCR, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelCRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonEnregistrerCR, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Imprimer))
                 .addContainerGap())
         );
 
@@ -675,6 +687,17 @@ public class Acte extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButtonAjoutActionPerformed
+
+    private void ImprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImprimerActionPerformed
+        PrinterJob imprimer = PrinterJob.getPrinterJob();
+        if (imprimer.printDialog()) {
+            try {
+                imprimer.print();
+            } catch (PrinterException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_ImprimerActionPerformed
     private BufferedImage rotateImage(BufferedImage image, int angle) {
         // Créer une nouvelle image pour contenir l'image pivotée
         BufferedImage rotatedImage = new BufferedImage(image.getHeight(), image.getWidth(), image.getType());
@@ -851,6 +874,7 @@ public class Acte extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ImageBrain;
+    private javax.swing.JButton Imprimer;
     private javax.swing.JLabel acte;
     private javax.swing.JLabel infoAdresse;
     private javax.swing.JLabel infoCode;
@@ -906,8 +930,7 @@ public class Acte extends javax.swing.JFrame {
                 jTextAreaCR.setText(contenuCR); // Mettre à jour le texte du jTextAreaCR avec le contenu du compte rendu
                 jTextAreaCR.setEditable(false); // Bloquer la modification si le contenu est déjà présent
                 this.jButtonEnregistrerCR.setVisible(false);// Masquer le bouton pour ajouter le CR
-                JOptionPane.showMessageDialog(null, "Le compte rendu ne peut pas être modifié car il contient déjà du texte.", "Information", JOptionPane.INFORMATION_MESSAGE);
-            }
+                }
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erreur lors de la récupération du compte rendu : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
